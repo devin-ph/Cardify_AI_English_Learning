@@ -38,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _logout() {
     Navigator.of(context).pop();
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Đã đăng xuất')),
+      const SnackBar(content: Text('')),
     );
   }
 
