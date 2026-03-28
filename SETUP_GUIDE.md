@@ -45,7 +45,6 @@ Thay bằng API key của bạn:
 
 ```python
 client = Groq(api_key="gsk_YOUR_API_KEY_HERE")
-```
 
 ### 2.3 Chạy FastAPI Server
 
