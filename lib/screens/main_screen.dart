@@ -1,3 +1,4 @@
+import 'package:app_btl/screens/deck_list_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/profile_icon.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
@@ -47,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
       case 2:
         return const DictionaryScreen();
       case 3:
-        return FlashcardScreen();
+        return  DeckListScreen();
       case 4:
         return const Center(child: Text('Thành tựu'));
       case -1:

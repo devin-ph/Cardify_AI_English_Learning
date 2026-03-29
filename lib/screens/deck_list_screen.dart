@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'flashcard_category_screen.dart';
 
 class DeckListScreen extends StatefulWidget {
   @override
@@ -60,16 +61,11 @@ class _DeckListScreenState extends State<DeckListScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
+            // Header (no back button)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back, size: 28),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  SizedBox(width: 8),
                   Text('Study Decks', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                   Spacer(),
                   // Avatar nếu muốn
@@ -209,7 +205,10 @@ class _DeckListScreenState extends State<DeckListScreen> {
                   padding: EdgeInsets.symmetric(vertical: 12),
                 ),
                 onPressed: () {
-                  // Chuyển sang màn hình học deck này
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FlashcardScreen()),
+                  );
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -226,15 +226,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
-              // Stats row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _StatCard(title: 'Streak', value: '237'),
 
-                ],
-              ),
             ],
           ),
         ),

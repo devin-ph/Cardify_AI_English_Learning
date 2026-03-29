@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
-import 'deck_list_screen.dart';
 
 class FlashcardScreen extends StatefulWidget {
   @override
@@ -51,22 +50,17 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
+            // Header with back button
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Study Decks', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DeckListScreen()),
-                      );
-                    },
-                    child: Text('View All', style: TextStyle(fontSize: 16)),
+                  IconButton(
+                    icon: Icon(Icons.arrow_back, size: 28),
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
+                  SizedBox(width: 8),
+                  Text('Study Decks', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -149,7 +143,11 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               padding: EdgeInsets.symmetric(vertical: 27),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Đã biết')),
+                              );
+                            },
                             child: Text('I know', style: TextStyle(fontWeight: FontWeight.bold)),
                           ),
                         ),
