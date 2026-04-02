@@ -53,12 +53,6 @@ class _MainScreenState extends State<MainScreen> {
     _onNavTap(index);
   }
 
-  void _onCameraCompleted() {
-    setState(() {
-      _currentIndex = 2; // Dictionary tab
-    });
-  }
-
   void _onProfileTap() {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -219,7 +213,7 @@ class _MainScreenState extends State<MainScreen> {
       case 4:
         return const AchievementsScreen();
       case -1:
-        return ImageCaptureScreen(onDone: _onCameraCompleted);
+        return const ImageCaptureScreen();
       default:
         return const Center(child: Text('Trang chủ'));
     }
@@ -256,6 +250,267 @@ class _MainScreenState extends State<MainScreen> {
         onTap: _onNavTap,
         onCameraTap: _onCameraTap,
       ),
+    );
+  }
+}
+
+class _DrawerNavTile extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  const _DrawerNavTile({
+    required this.label,
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: onTap,
+          child: Ink(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.08),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: Colors.white24),
+            ),
+            child: Row(
+              children: [
+                Icon(icon, color: const Color(0xFF66D8FF), size: 24),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    label,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                const Icon(Icons.arrow_forward_ios_rounded,
+                    size: 14, color: Colors.white54),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+enum _ProfileMenuAction {
+  profile,
+  settings,
+  logout,
+}
+
+class _AnimatedProfileDrawer extends StatefulWidget {
+  final String userName;
+  final String userEmail;
+  final void Function(_ProfileMenuAction) onAction;
+
+  const _AnimatedProfileDrawer({
+    required this.userName,
+    required this.userEmail,
+    required this.onAction,
+  });
+
+  @override
+  State<_AnimatedProfileDrawer> createState() => _AnimatedProfileDrawerState();
+}
+
+class _AnimatedProfileDrawerState extends State<_AnimatedProfileDrawer> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _slideAnimation;
+  late Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    
+    _slideAnimation = Tween<double>(begin: 300.0, end: 0.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeOutCubic,
+      ),
+    );
+    
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.8, curve: Curves.easeIn),
+      ),
+    );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Widget _buildMenuItem({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+    bool isDestructive = false,
+  }) {
+    return ListTile(
+      leading: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: isDestructive ? Colors.red.withOpacity(0.1) : Colors.blue.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Icon(
+          icon,
+          color: isDestructive ? Colors.redAccent : const Color(0xFF1E3A8A),
+        ),
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: isDestructive ? Colors.redAccent : const Color(0xFF1E3A8A),
+        ),
+      ),
+      trailing: const Icon(Icons.chevron_right_rounded, color: Colors.black26),
+      onTap: onTap,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0, _slideAnimation.value),
+          child: Opacity(
+            opacity: _fadeAnimation.value,
+            child: Container(
+              margin: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF1E3A8A).withOpacity(0.15),
+                    blurRadius: 30,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                   Container(
+                    width: 40,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundColor: const Color(0xFF1E3A8A).withOpacity(0.1),
+                    child: Text(
+                      widget.userName.isNotEmpty ? widget.userName[0].toUpperCase() : '?',
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1E3A8A),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    widget.userName,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF1E3A8A),
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    widget.userEmail,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[50],
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.grey[200]!),
+                    ),
+                    child: Column(
+                      children: [
+                        _buildMenuItem(
+                          icon: Icons.person_rounded,
+                          title: 'Hồ sơ',
+                          onTap: () {
+                            Navigator.pop(context);
+                            widget.onAction(_ProfileMenuAction.profile);
+                          },
+                        ),
+                        Divider(height: 1, indent: 64, color: Colors.grey[200]),
+                        _buildMenuItem(
+                          icon: Icons.settings_rounded,
+                          title: 'Cài đặt',
+                          onTap: () {
+                            Navigator.pop(context);
+                            widget.onAction(_ProfileMenuAction.settings);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                     decoration: BoxDecoration(
+                      color: Colors.red[50],
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.red[100]!),
+                    ),
+                    child: _buildMenuItem(
+                      icon: Icons.logout_rounded,
+                      title: 'Đăng xuất',
+                      isDestructive: true,
+                      onTap: () {
+                        Navigator.pop(context);
+                        widget.onAction(_ProfileMenuAction.logout);
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
