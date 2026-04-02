@@ -1,14 +1,25 @@
 import 'package:app_btl/screens/deck_list_screen.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import '../models/analysis_result.dart';
+import '../services/saved_cards_repository.dart';
+import '../widgets/ai_voice_chat_dialog.dart';
+import '../widgets/profile_icon.dart';
+>>>>>>> 32aba5d9832476bdb4b8b3415725e0343e54a669
 import '../widgets/custom_bottom_nav_bar.dart';
+import 'achievements_screen.dart';
 import 'image_capture_screen.dart';
 import 'calendar_screen.dart';
 import 'home_screen.dart';
 import 'dictionary_screen.dart';
 import 'profile_screen.dart';
+<<<<<<< HEAD
 import 'achievements_screen.dart';
 
 enum _ProfileMenuAction { profile, settings, logout }
+=======
+>>>>>>> 32aba5d9832476bdb4b8b3415725e0343e54a669
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -22,6 +33,10 @@ class _MainScreenState extends State<MainScreen> {
   int _previousIndex = 0;
   final String _userName = 'Explorer';
   final String _userEmail = 'explorer.cardify@example.com';
+<<<<<<< HEAD
+=======
+  final SavedCardsRepository _cardsRepository = SavedCardsRepository.instance;
+>>>>>>> 32aba5d9832476bdb4b8b3415725e0343e54a669
 
   void _setScreenIndex(int index) {
     if (_currentIndex == index) {
@@ -51,60 +66,27 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onProfileTap() {
+<<<<<<< HEAD
     Navigator.of(
       context,
     ).push(
+=======
+    Navigator.of(context).push(
+>>>>>>> 32aba5d9832476bdb4b8b3415725e0343e54a669
       MaterialPageRoute(
-        builder: (context) => ProfileScreen(name: _userName, email: _userEmail),
+        builder: (context) => const ProfileScreen(),
       ),
     );
   }
 
-  void _onProfileMenuSelected(_ProfileMenuAction action) {
-    switch (action) {
-      case _ProfileMenuAction.profile:
-        _onProfileTap();
-      case _ProfileMenuAction.settings:
-        _showSettingsSheet();
-      case _ProfileMenuAction.logout:
-        _showLogoutDialog();
-    }
-  }
-
-  void _showSettingsSheet() {
-    showModalBottomSheet<void>(
+  void _onChatTap() {
+    showDialog(
       context: context,
-      showDragHandle: true,
-      builder: (context) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 18),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                ListTile(
-                  leading: Icon(Icons.music_note_rounded),
-                  title: Text('Âm thanh trò chơi'),
-                  subtitle: Text('Bật để học thú vị hơn'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.notifications_active_rounded),
-                  title: Text('Nhắc học hằng ngày'),
-                  subtitle: Text('Nhắc bạn hoàn thành nhiệm vụ'),
-                ),
-                ListTile(
-                  leading: Icon(Icons.palette_rounded),
-                  title: Text('Giao diện thiếu nhi'),
-                  subtitle: Text('Bảng màu tươi sáng, tương phản cao'),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+      builder: (context) => const AiVoiceChatDialog(),
     );
   }
 
+<<<<<<< HEAD
   void _showLogoutDialog() {
     showDialog<void>(
       context: context,
@@ -195,6 +177,129 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
     );
+=======
+  Future<List<String>> _showChatVocabularySaveDialog(
+    List<ChatVocabularyCandidate> candidates,
+  ) async {
+    final pending = List<ChatVocabularyCandidate>.from(candidates);
+    final savedWords = <String>[];
+
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            Future<void> saveOne(ChatVocabularyCandidate candidate) async {
+              final normalized = candidate.normalizedWord;
+              final existing = await _cardsRepository.findExistingWord(
+                normalized,
+              );
+              if (existing == null) {
+                final analysis = AnalysisResult(
+                  topic: candidate.topic,
+                  word: candidate.word,
+                  phonetic: candidate.phonetic,
+                  vietnameseMeaning: candidate.vietnameseMeaning,
+                  wordType: candidate.intentType,
+                  exampleSentence: candidate.exampleSentence,
+                  pronunciationGuide: candidate.pronunciationGuide,
+                );
+                await _cardsRepository.saveResult(analysis, null);
+                savedWords.add(candidate.word);
+              }
+
+              if (!mounted) {
+                return;
+              }
+
+              setModalState(() {
+                pending.removeWhere(
+                  (item) => item.normalizedWord == candidate.normalizedWord,
+                );
+              });
+
+              if (pending.isEmpty && Navigator.of(dialogContext).canPop()) {
+                Navigator.of(dialogContext).pop();
+              }
+            }
+
+            Future<void> saveAll() async {
+              final toSave = List<ChatVocabularyCandidate>.from(pending);
+              for (final item in toSave) {
+                await saveOne(item);
+              }
+              if (Navigator.of(dialogContext).canPop()) {
+                Navigator.of(dialogContext).pop();
+              }
+            }
+
+            return AlertDialog(
+              title: const Text('Từ phát hiện trong đoạn chat'),
+              content: SizedBox(
+                width: 420,
+                child: pending.isEmpty
+                    ? const Text('Không còn từ nào cần lưu.')
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: pending.length,
+                        separatorBuilder: (_, __) => const Divider(height: 16),
+                        itemBuilder: (context, index) {
+                          final item = pending[index];
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.word,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(item.vietnameseMeaning),
+                                    if (item.phonetic.isNotEmpty)
+                                      Text(
+                                        item.phonetic,
+                                        style: const TextStyle(
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              FilledButton(
+                                onPressed: () => saveOne(item),
+                                child: const Text('Lưu'),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(dialogContext).pop(),
+                  child: const Text('Thoát'),
+                ),
+                if (pending.isNotEmpty)
+                  FilledButton(
+                    onPressed: saveAll,
+                    child: const Text('Lưu tất cả'),
+                  ),
+              ],
+            );
+          },
+        );
+      },
+    );
+
+    return savedWords;
+>>>>>>> 32aba5d9832476bdb4b8b3415725e0343e54a669
   }
 
   Widget _getBody() {
@@ -228,6 +333,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       appBar: _buildAppBar(),
       body: _getBody(),
       floatingActionButton: Padding(
@@ -239,6 +345,31 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+=======
+      appBar: AppBar(
+        title: const Text('AI English Learning'),
+        centerTitle: true,
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.chat_bubble),
+            onPressed: _onChatTap,
+            tooltip: 'Chat với AI',
+          ),
+          ProfileIcon(onTap: _onProfileTap),
+        ],
+      ),
+        body: _getBody(),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 28.0),
+          child: FloatingActionButton(
+            onPressed: _onCameraTap,
+            child: const Icon(Icons.camera_alt),
+            tooltip: 'Chụp ảnh',
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+>>>>>>> 32aba5d9832476bdb4b8b3415725e0343e54a669
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _currentIndex < 0 ? 0 : _currentIndex,
         onTap: _onNavTap,
@@ -247,6 +378,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 }
+<<<<<<< HEAD
 
 class _DrawerNavTile extends StatelessWidget {
   final String label;
@@ -502,3 +634,5 @@ class _AnimatedProfileDrawerState extends State<_AnimatedProfileDrawer> with Sin
     );
   }
 }
+=======
+>>>>>>> 32aba5d9832476bdb4b8b3415725e0343e54a669

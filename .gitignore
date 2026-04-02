@@ -1,55 +1,68 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
-
-# IntelliJ / Android Studio related
-*.iml
-*.ipr
-*.iws
-.idea/
-.gradle/
-**/android/.gradle/
-**/android/captures/
-**/android/local.properties
-**/android/generated_plugin_registrant.java
-
-# VS Code related
-.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
+# Flutter / Dart
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.pub-cache/
+.packages
 .pub/
 build/
-/build/
-**/build/
-/coverage/
 
-# Key & Env (Bảo mật)
+# Flutter generated files
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/.last_build_id
+
+# iOS
+ios/Pods/
+
+# Generated files
+**/GeneratedPluginRegistrant.*
+**/*.g.dart
+
+# Xcode
+DerivedData/
+*.xcuserstate
+*.xcuserdata
+*.xcworkspace
+!ios/Runner.xcworkspace
+
+# Android
+android/.gradle/
+android/local.properties
+android/**/build/
+
+# Gradle
+.gradle/
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs, temp
+*.log
+*.tmp
+*.swp
+
+# Coverage
+coverage/
+reports/
+
+# Env
 .env
-*.jks
-*.keystore
-*.google_services.json
 
-# Symbolication & Obfuscation
-app.*.symbols
-app.*.map.json
-
-# Android Artifacts
-/android/app/debug
-/android/app/profile
-/android/app/release
+# Misc
+*.class
+migrate_working_dir/
+**/ephemeral/
