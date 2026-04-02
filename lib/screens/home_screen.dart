@@ -293,35 +293,37 @@ class _HomeScreenState extends State<HomeScreen>
                 slivers: [
                   SliverPadding(
                     padding: const EdgeInsets.fromLTRB(16, 14, 16, 120),
-                    sliver: SliverList(
-                      delegate: SliverChildListDelegate([
-                        _SectionReveal(delayMs: 0, child: _buildWelcomeBanner()),
-                        const SizedBox(height: 16),
-                        _SectionReveal(
-                          delayMs: 120,
-                          child: _buildStatsRow(levelProgress),
-                        ),
-                        const SizedBox(height: 20),
-                        _SectionReveal(
-                          delayMs: 170,
-                          child: _buildDailyMissionsSection(),
-                        ),
-                        const SizedBox(height: 20),
-                        _SectionReveal(
-                          delayMs: 220,
-                          child: _buildFlashcardProgressSection(),
-                        ),
-                        const SizedBox(height: 20),
-                        _SectionReveal(
-                          delayMs: 320,
-                          child: _buildMysterySuggestionsSection(),
-                        ),
-                        const SizedBox(height: 20),
-                        _SectionReveal(
-                          delayMs: 420,
-                          child: _buildRecentWordsSection(),
-                        ),
-                      ]),
+                    sliver: SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          _SectionReveal(delayMs: 0, child: _buildWelcomeBanner()),
+                          const SizedBox(height: 16),
+                          _SectionReveal(
+                            delayMs: 120,
+                            child: _buildStatsRow(levelProgress),
+                          ),
+                          const SizedBox(height: 20),
+                          _SectionReveal(
+                            delayMs: 170,
+                            child: _buildDailyMissionsSection(),
+                          ),
+                          const SizedBox(height: 20),
+                          _SectionReveal(
+                            delayMs: 220,
+                            child: _buildFlashcardProgressSection(),
+                          ),
+                          const SizedBox(height: 20),
+                          _SectionReveal(
+                            delayMs: 320,
+                            child: _buildMysterySuggestionsSection(),
+                          ),
+                          const SizedBox(height: 20),
+                          _SectionReveal(
+                            delayMs: 420,
+                            child: _buildRecentWordsSection(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
