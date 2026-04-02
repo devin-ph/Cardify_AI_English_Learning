@@ -31,37 +31,34 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
           stream: _cardsStream,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return _CenteredMessage(
-                message: 'Không thể tải dữ liệu: ${snapshot.error}',
-                icon: Icons.error_outline,
-              );
-            },
-          ),
-        );
-      },
-      transitionBuilder: (context, anim1, anim2, child) {
-        final curved = CurvedAnimation(
-          parent: anim1,
-          curve: Curves.easeOutBack,
-        );
-        return Stack(
-          children: [
-            BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 6 * anim1.value,
-                sigmaY: 6 * anim1.value,
-              ),
-              child: Container(color: Colors.black.withOpacity(0)),
-            ),
-            Center(
-              child: ScaleTransition(
-                scale: Tween<double>(begin: 0.75, end: 1.0).animate(curved),
-                child: FadeTransition(opacity: anim1, child: child),
-              ),
-            ),
-          ],
-        );
-      },
+              return Center(child: Text('Không thể tải dữ liệu: ${snapshot.error}'));
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            final items = snapshot.data ?? [];
+            if (items.isEmpty) {
+              return const Center(child: Text('Thư viện rỗng', style: TextStyle(color: Colors.grey)));
+            }
+            return ListView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                final card = items[index];
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 12.0),
+                  child: ListTile(
+                    leading: _CardThumbnail(imageUrl: card.imageUrl),
+                    title: Text(card.word, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text(card.meaning),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 }
@@ -160,3 +157,4 @@ class _CenteredMessage extends StatelessWidget {
     );
   }
 }
+
