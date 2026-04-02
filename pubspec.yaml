@@ -48,6 +48,8 @@ dependencies:
   speech_to_text: ^7.0.0
   flip_card: ^0.7.0
   intl: ^0.20.2
+  firebase_core: ^4.6.0
+  firebase_auth: ^6.3.0
   supabase_flutter: ^2.5.6
   flutter_dotenv: ^5.1.0
 
