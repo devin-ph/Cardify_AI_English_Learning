@@ -16,7 +16,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   static const List<_OnboardingSlideData> _slides = [
     _OnboardingSlideData(
       stepLabel: 'BƯỚC 1/3',
-      title: 'Học tiếng Anh\nqua những\nđồ vật xung quanh',
+      title: 'Học tiếng Anh qua những đồ vật xung quanh',
       highlight: 'đồ vật',
       subtitle:
           'Dùng camera để khám phá từ vựng. Chỉ cần hướng máy, chụp và học từ mới ngay lập tức.',
@@ -30,7 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
     _OnboardingSlideData(
       stepLabel: 'BƯỚC 2',
-      title: 'Xây dựng\nthư viện cá nhân.',
+      title: 'Xây dựng thư viện cá nhân.',
       subtitle:
           'Mỗi đồ vật bạn quét sẽ được thêm vào bộ sưu tập để ôn tập dễ dàng. Biến mọi thứ quanh bạn thành vốn từ vựng.',
       primaryActionLabel: 'Tiếp theo',
@@ -43,7 +43,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
     _OnboardingSlideData(
       stepLabel: 'BƯỚC CUỐI',
-      title: 'Mở khóa\nthành tích',
+      title: 'Mở khóa thành tích',
       subtitle:
           'Giữ động lực để chinh phục mục tiêu. Nhận huy hiệu, duy trì chuỗi học và ăn mừng từng cột mốc.',
       primaryActionLabel: 'Bắt đầu',
@@ -97,7 +97,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Text(
                           'Cardify',
                           style: TextStyle(
-                            fontSize: 22,
+                            fontSize: 20.5,
                             fontWeight: FontWeight.w800,
                             color: Colors.deepPurple.shade400,
                             letterSpacing: -0.5,
@@ -110,7 +110,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             foregroundColor: const Color(0xFF7457F0),
                             textStyle: const TextStyle(
                               fontWeight: FontWeight.w700,
-                              fontSize: 15,
+                              fontSize: 13.5,
                             ),
                           ),
                           child: const Text('Bỏ qua'),
@@ -183,7 +183,7 @@ class _OnboardingPage extends StatelessWidget {
                 color: Color(0xFF6C43F2),
                 fontWeight: FontWeight.w800,
                 letterSpacing: 3.0,
-                fontSize: 15,
+                fontSize: 13.5,
               ),
             ),
             const SizedBox(height: 18),
@@ -195,7 +195,7 @@ class _OnboardingPage extends StatelessWidget {
                 slide.subtitle,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontSize: 22,
+                  fontSize: 20.5,
                   height: 1.45,
                   color: Color(0xFF666666),
                   fontWeight: FontWeight.w400,
@@ -217,13 +217,13 @@ class _OnboardingTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lines = text.split('\n');
+    final lines = text.split(' ');
 
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
         style: const TextStyle(
-          fontSize: 58,
+          fontSize: 40.5,
           height: 0.95,
           fontWeight: FontWeight.w900,
           letterSpacing: -2.2,
@@ -231,7 +231,7 @@ class _OnboardingTitle extends StatelessWidget {
         ),
         children: [
           for (var i = 0; i < lines.length; i++) ...[
-            if (i > 0) const TextSpan(text: '\n'),
+            if (i > 0) const TextSpan(text: ' '),
             if (highlight != null && lines[i].contains(highlight!))
               () {
                 final parts = lines[i].split(highlight!);
@@ -498,13 +498,16 @@ class _SlideTwoIllustration extends StatelessWidget {
                     const Text(
                       'Máy ảnh',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22.5,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
                     const Text(
                       'Máy ảnh',
-                      style: TextStyle(color: Color(0xFF6B6B6B), fontSize: 16),
+                      style: TextStyle(
+                        color: Color(0xFF6B6B6B),
+                        fontSize: 14.5,
+                      ),
                     ),
                   ],
                 ),
@@ -551,7 +554,7 @@ class _SlideTwoIllustration extends StatelessWidget {
                     const Text(
                       'Sách',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22.5,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -599,7 +602,7 @@ class _SlideTwoIllustration extends StatelessWidget {
                     const Text(
                       'Cốc cà phê',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22.5,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
@@ -650,7 +653,7 @@ class _SlideThreeIllustration extends StatelessWidget {
                         child: _AchievementCard(
                           icon: Icons.local_fire_department_rounded,
                           iconColor: const Color(0xFFD31E7A),
-                          title: 'Chuỗi học\n7 ngày',
+                          title: 'Chuỗi học 7 ngày',
                           subtitle: 'Vua kiên trì',
                         ),
                       ),
@@ -807,7 +810,7 @@ class _AchievementCard extends StatelessWidget {
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 17,
+              fontSize: 15.5,
               fontWeight: FontWeight.w800,
               height: 1.0,
             ),
@@ -816,7 +819,7 @@ class _AchievementCard extends StatelessWidget {
           Text(
             subtitle,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 12, color: Color(0xFF666666)),
+            style: const TextStyle(fontSize: 10.5, color: Color(0xFF666666)),
           ),
         ],
       ),

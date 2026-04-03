@@ -215,7 +215,7 @@ class _CardifyLoginScreenState extends State<CardifyLoginScreen> {
 
                       onActionTap: _resetPassword,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 10),
                     _AuthInput(
                       controller: _passwordController,
                       hint: '••••••••••',
@@ -232,18 +232,18 @@ class _CardifyLoginScreenState extends State<CardifyLoginScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 54),
+                    const SizedBox(height: 24),
                     _PrimaryButton(
                       label: _isSubmitting ? 'Đăng nhập...' : 'Đăng nhập',
                       onTap: _isSubmitting ? null : _login,
                     ),
                     const SizedBox(height: 24),
                     const _OrDivider(text: 'HOẶC ĐĂNG NHẬP VỚI'),
-                    const SizedBox(height: 33),
+                    const SizedBox(height: 24),
                     _SocialButton(
                       onTap: _isSubmitting ? null : _signInWithGoogle,
                     ),
-                    const SizedBox(height: 35),
+                    const SizedBox(height: 24),
 
                     Center(
                       child: Row(
@@ -439,12 +439,6 @@ class _CardifyRegisterScreenState extends State<CardifyRegisterScreen> {
                       onTap: _isSubmitting ? null : _register,
                     ),
                     SizedBox(height: 24),
-                    _OrDivider(text: 'HOẶC ĐĂNG KÝ VỚI'),
-                    SizedBox(height: 33),
-                    _SocialButton(
-                      onTap: _isSubmitting ? null : _registerWithGoogle,
-                    ),
-                    const SizedBox(height: 33),
                     Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -687,7 +681,10 @@ class _PrimaryButton extends StatelessWidget {
       opacity: onTap == null ? 0.6 : 1,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final buttonWidth = (constraints.maxWidth * 0.76).clamp(230.0, 320.0);
+          final availableWidth = constraints.maxWidth.isFinite
+              ? constraints.maxWidth
+              : (MediaQuery.sizeOf(context).width - 44);
+          final buttonWidth = (availableWidth * 0.50).clamp(160.0, 250.0);
 
           return Center(
             child: SizedBox(
@@ -757,7 +754,10 @@ class _SocialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final buttonWidth = (constraints.maxWidth * 0.44).clamp(120.0, 180.0);
+        final availableWidth = constraints.maxWidth.isFinite
+            ? constraints.maxWidth
+            : (MediaQuery.sizeOf(context).width - 44);
+        final buttonWidth = (availableWidth * 0.28).clamp(110.0, 180.0);
 
         return Center(
           child: SizedBox(
