@@ -200,6 +200,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
           (random.nextInt(7) - 3) * 50; // Random variance in steps of 50
       int botXp = _userTotalXp + (ghost['xpOffset'] as int) + dailyVar;
       if (botXp < 0) botXp = 0;
+      botXp = (botXp / 50).round() * 50; // Ensure perfectly round numbers
 
       return {
         'name': ghost['name'],
@@ -339,7 +340,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                     ),
                     SizedBox(height: 6),
                     Text(
-                      'Mở khóa huy hiệu, leo bậc xếp hạng và trở thành nhà vô địch!',
+                      'Mở khóa huy hiệu, leo hạng và trở thành nhà vô địch!',
                       style: TextStyle(
                         color: Color(0xFF42516E),
                         fontWeight: FontWeight.w600,
@@ -521,15 +522,32 @@ class _AchievementsScreenState extends State<AchievementsScreen>
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
-                color: isMe
-                    ? const Color(0xFFE9F4FF).withOpacity(0.9)
-                    : const Color(0xFFFFFFFF).withOpacity(0.72),
-                borderRadius: BorderRadius.circular(16),
+                gradient: LinearGradient(
+                  colors: isMe
+                      ? [const Color(0xFFDBEAFE), const Color(0xFFEFF6FF)]
+                      : [
+                          Colors.white.withOpacity(0.9),
+                          Colors.white.withOpacity(0.5),
+                        ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isMe
-                      ? const Color(0xFF3B82F6).withOpacity(0.4)
-                      : Colors.black12,
+                      ? const Color(0xFF3B82F6).withOpacity(0.6)
+                      : Colors.white.withOpacity(0.8),
+                  width: isMe ? 2 : 1.5,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: isMe
+                        ? const Color(0xFF3B82F6).withOpacity(0.2)
+                        : Colors.black.withOpacity(0.04),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
@@ -542,18 +560,30 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                         color: isMe
                             ? const Color(0xFF1D4ED8)
                             : const Color(0xFF102956),
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w800,
                         fontSize: 16,
                       ),
                     ),
                   ),
-                  Text(
-                    '${g['xp']} XP',
-                    style: TextStyle(
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
                       color: isMe
-                          ? const Color(0xFF1D4ED8)
-                          : const Color(0xFF42516E),
-                      fontWeight: FontWeight.w800,
+                          ? const Color(0xFF3B82F6).withOpacity(0.1)
+                          : Colors.grey.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '${g['xp']} XP',
+                      style: TextStyle(
+                        color: isMe
+                            ? const Color(0xFF1D4ED8)
+                            : const Color(0xFF64748B),
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ),
                 ],
@@ -1270,73 +1300,51 @@ class _QuickStat extends StatelessWidget {
                 child: Icon(icon, size: 70, color: color.withOpacity(0.12)),
               ),
             ),
-            Positioned(
-              top: -20,
-              right: -10,
-              child: Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      Colors.white.withOpacity(0.8),
-                      Colors.white.withOpacity(0.0),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: color.withOpacity(0.15),
+                        blurRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
                     ],
                   ),
+                  child: Icon(icon, color: color, size: 22),
                 ),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: color.withOpacity(0.15),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 2),
+                        child: Text(
+                          value,
+                          style: const TextStyle(
+                            color: Color(0xFF0B1C3D),
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20,
+                            height: 1.1,
                           ),
-                        ],
+                        ),
                       ),
-                      child: Icon(icon, color: color, size: 18),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
+                      Text(
                         label,
                         style: TextStyle(
-                          color: color.withOpacity(0.95),
-                          fontWeight: FontWeight.w900,
-                          fontSize: 11,
-                          letterSpacing: 0.5,
+                          color: color.withOpacity(0.9),
+                          fontWeight: FontWeight.w800,
+                          fontSize: 12,
+                          height: 1.1,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  value,
-                  style: const TextStyle(
-                    color: Color(0xFF0B1C3D),
-                    fontWeight: FontWeight.w900,
-                    fontSize: 22,
-                    height: 1.1,
-                    shadows: [
-                      Shadow(
-                        color: Colors.white,
-                        blurRadius: 6,
-                        offset: Offset(0, 2),
                       ),
                     ],
                   ),
