@@ -232,7 +232,7 @@ class _CardifyLoginScreenState extends State<CardifyLoginScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 36),
                     _PrimaryButton(
                       label: _isSubmitting ? 'Đăng nhập...' : 'Đăng nhập',
                       onTap: _isSubmitting ? null : _login,
