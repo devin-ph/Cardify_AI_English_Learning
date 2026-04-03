@@ -6,7 +6,49 @@
 .pub/
 build/
 
-<<<<<<< HEAD
+<<<<<<<<< Temporary merge branch 1
+# IntelliJ / Android Studio related
+*.iml
+*.ipr
+*.iws
+.idea/
+.gradle/
+**/android/.gradle/
+**/android/captures/
+**/android/local.properties
+**/android/generated_plugin_registrant.java
+
+# VS Code related
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+/build/
+**/build/
+/coverage/
+
+# Key & Env (Bảo mật)
+.env
+*.jks
+*.keystore
+*.google_services.json
+
+# Symbolication & Obfuscation
+app.*.symbols
+app.*.map.json
+
+# Android Artifacts
+/android/app/debug
+/android/app/profile
+/android/app/release
+=========
 # Flutter generated files
 **/ios/Flutter/Generated.xcconfig
 **/ios/Flutter/flutter_export_environment.sh
@@ -67,46 +109,4 @@ reports/
 *.class
 migrate_working_dir/
 **/ephemeral/
-=======
-# IntelliJ / Android Studio related
-*.iml
-*.ipr
-*.iws
-.idea/
-.gradle/
-**/android/.gradle/
-**/android/captures/
-**/android/local.properties
-**/android/generated_plugin_registrant.java
-
-# VS Code related
-.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-build/
-/build/
-**/build/
-/coverage/
-
-# Key & Env (Bảo mật)
-.env
-*.jks
-*.keystore
-*.google_services.json
-
-# Symbolication & Obfuscation
-app.*.symbols
-app.*.map.json
-
-# Android Artifacts
-/android/app/debug
-/android/app/profile
-/android/app/release
->>>>>>> origin/main
+>>>>>>>>> Temporary merge branch 2
