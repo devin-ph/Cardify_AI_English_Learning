@@ -7,14 +7,24 @@ import 'screens/main_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: '.env');
-  await Supabase.initialize(
-    url: dotenv.get('SUPABASE_URL'),
-    anonKey: dotenv.get('SUPABASE_ANON_KEY'),
-  );
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (_) {
+    // Continue without a bundled .env file.
+  }
+
+  final supabaseUrl = dotenv.maybeGet('SUPABASE_URL');
+  final supabaseAnonKey = dotenv.maybeGet('SUPABASE_ANON_KEY');
+  if (supabaseUrl?.trim().isNotEmpty == true &&
+      supabaseAnonKey?.trim().isNotEmpty == true) {
+    await Supabase.initialize(
+      url: supabaseUrl!.trim(),
+      anonKey: supabaseAnonKey!.trim(),
+    );
+  }
+
   runApp(const MyApp());
 }
 
@@ -86,18 +96,22 @@ class _AppBootstrapState extends State<_AppBootstrap> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.error_outline, size: 44, color: Colors.redAccent),
+                    const Icon(
+                      Icons.error_outline,
+                      size: 44,
+                      color: Colors.redAccent,
+                    ),
                     const SizedBox(height: 12),
                     const Text(
                       'Khoi dong Firebase that bai',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      message,
-                      textAlign: TextAlign.center,
-                    ),
+                    Text(message, textAlign: TextAlign.center),
                     const SizedBox(height: 16),
                     FilledButton(
                       onPressed: () {
