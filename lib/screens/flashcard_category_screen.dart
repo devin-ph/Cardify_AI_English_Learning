@@ -21,9 +21,6 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
   final FlutterTts _tts = FlutterTts();
   final SavedCardsRepository _repository = SavedCardsRepository.instance;
   final ImagePicker _imagePicker = ImagePicker();
-  final PageController _cardPageController = PageController(
-    viewportFraction: 0.88,
-  );
   static const int _targetCardsPerTopic = 50;
   static const List<String> _commonPairs = [
     'Open|Mở',
@@ -598,16 +595,6 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
     await _tts.speak(word);
   }
 
-  void _syncCarouselPage(int index) {
-    if (!_cardPageController.hasClients) {
-      return;
-    }
-    final currentPage = _cardPageController.page;
-    if (currentPage == null || (currentPage - index).abs() > 0.01) {
-      _cardPageController.jumpToPage(index);
-    }
-  }
-
   bool _containsVocabularyWord(String word, String sentence) {
     final normalizedWord = word.trim().toLowerCase();
     final normalizedSentence = sentence.trim().toLowerCase();
@@ -976,7 +963,6 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
   @override
   void dispose() {
     _tts.stop();
-    _cardPageController.dispose();
     super.dispose();
   }
 
@@ -1050,14 +1036,6 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
             final safeIndex = flashcards.isEmpty
                 ? 0
                 : _currentCardIndex % flashcards.length;
-            if (flashcards.isNotEmpty) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                if (!mounted) {
-                  return;
-                }
-                _syncCarouselPage(safeIndex);
-              });
-            }
             final currentFlashcard = flashcards.isEmpty
                 ? null
                 : flashcards[safeIndex];
@@ -1141,132 +1119,153 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
                                 SizedBox(height: 16),
                                 SizedBox(
                                   height: carouselHeight,
-                                  child: PageView.builder(
-                                    controller: _cardPageController,
-                                    itemCount: flashcards.length,
-                                    onPageChanged: (index) {
-                                      setState(() {
-                                        _currentCardIndex = index;
-                                      });
-                                    },
-                                    itemBuilder: (context, index) {
-                                      final card = flashcards[index];
-                                      final wordKey = card.word
-                                          .trim()
-                                          .toLowerCase();
-                                      final isKnown = _repository.isKnown(
-                                        wordKey,
-                                        topic: displayTopic,
-                                      );
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                    ),
+                                    child: Stack(
+                                      alignment: Alignment.topCenter,
+                                      children: List.generate(3, (layer) {
+                                        final cardIndex =
+                                            (safeIndex + layer) %
+                                            flashcards.length;
+                                        final card = flashcards[cardIndex];
+                                        final wordKey = card.word
+                                            .trim()
+                                            .toLowerCase();
+                                        final isKnown = _repository.isKnown(
+                                          wordKey,
+                                          topic: displayTopic,
+                                        );
+                                        final topOffset = (layer * 10.0).clamp(
+                                          0.0,
+                                          20.0,
+                                        );
+                                        final sideInset = (layer * 14.0).clamp(
+                                          0.0,
+                                          28.0,
+                                        );
 
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
-                                        ),
-                                        child: FlipCard(
-                                          key: ValueKey(
-                                            'card-$index-${card.word}',
+                                        return Positioned(
+                                          top: topOffset,
+                                          left: sideInset,
+                                          right: sideInset,
+                                          child: IgnorePointer(
+                                            ignoring: layer != 0,
+                                            child: Opacity(
+                                              opacity: layer == 0
+                                                  ? 1.0
+                                                  : (layer == 1 ? 0.92 : 0.86),
+                                              child: FlipCard(
+                                                key: ValueKey(
+                                                  'stack-card-$cardIndex-${card.word}',
+                                                ),
+                                                direction:
+                                                    FlipDirection.HORIZONTAL,
+                                                front: FlashcardFront(
+                                                  flashcard: card,
+                                                  isKnown: isKnown,
+                                                  onSpeak: () =>
+                                                      _speakWord(card.word),
+                                                  width: double.infinity,
+                                                  height: cardHeight,
+                                                ),
+                                                back: FlashcardBack(
+                                                  flashcard: card,
+                                                  isKnown: isKnown,
+                                                  onSpeak: () =>
+                                                      _speakWord(card.word),
+                                                  width: double.infinity,
+                                                  height: cardHeight,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                          direction: FlipDirection.HORIZONTAL,
-                                          front: FlashcardFront(
-                                            flashcard: card,
-                                            isKnown: isKnown,
-                                            onSpeak: () =>
-                                                _speakWord(card.word),
-                                            width: double.infinity,
-                                            height: cardHeight,
-                                          ),
-                                          back: FlashcardBack(
-                                            flashcard: card,
-                                            isKnown: isKnown,
-                                            onSpeak: () =>
-                                                _speakWord(card.word),
-                                            width: double.infinity,
-                                            height: cardHeight,
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      }).reversed.toList(),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(height: 16),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 32.0,
+                                    horizontal: 24.0,
                                   ),
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: OutlinedButton.icon(
-                                      style: OutlinedButton.styleFrom(
-                                        foregroundColor: const Color(
-                                          0xFF0A5DB6,
-                                        ),
-                                        side: const BorderSide(
-                                          color: Color(0xFF0A5DB6),
-                                          width: 1.5,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                        ),
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 14,
-                                        ),
-                                      ),
-                                      onPressed: currentFlashcard == null
-                                          ? null
-                                          : () => _openWordOptionsDialog(
-                                              card: currentFlashcard,
-                                              displayTopic: displayTopic,
-                                              existingCard:
-                                                  currentWordKey == null
-                                                  ? null
-                                                  : savedCardsByWord[currentWordKey],
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: OutlinedButton.icon(
+                                          style: OutlinedButton.styleFrom(
+                                            foregroundColor: const Color(
+                                              0xFF0A5DB6,
                                             ),
-                                      icon: const Icon(Icons.tune),
-                                      label: const Text('Tùy chọn từ hiện tại'),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 32.0,
-                                  ),
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xFF0A5DB6),
-                                        foregroundColor: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
+                                            side: const BorderSide(
+                                              color: Color(0xFF0A5DB6),
+                                              width: 1.5,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 14,
+                                            ),
+                                          ),
+                                          onPressed: currentFlashcard == null
+                                              ? null
+                                              : () => _openWordOptionsDialog(
+                                                  card: currentFlashcard,
+                                                  displayTopic: displayTopic,
+                                                  existingCard:
+                                                      currentWordKey == null
+                                                      ? null
+                                                      : savedCardsByWord[currentWordKey],
+                                                ),
+                                          icon: const Icon(Icons.tune),
+                                          label: const Text(
+                                            'Tùy chọn từ hiện tại',
                                           ),
                                         ),
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: 20,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: const Color(
+                                              0xFF0A5DB6,
+                                            ),
+                                            foregroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 14,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            if (currentWordKey == null) {
+                                              return;
+                                            }
+                                            setState(() {
+                                              _repository.markKnown(
+                                                currentWordKey,
+                                                topic: displayTopic,
+                                              );
+                                              _currentCardIndex =
+                                                  (_currentCardIndex + 1) %
+                                                  flashcards.length;
+                                            });
+                                          },
+                                          child: const Text(
+                                            'Tôi đã biết',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
                                         ),
                                       ),
-                                      onPressed: () {
-                                        if (currentWordKey == null) {
-                                          return;
-                                        }
-                                        setState(() {
-                                          _repository.markKnown(
-                                            currentWordKey,
-                                            topic: displayTopic,
-                                          );
-                                        });
-                                      },
-                                      child: Text(
-                                        'Tôi đã biết',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
+                                    ],
                                   ),
                                 ),
                                 SizedBox(height: 8),
@@ -1506,6 +1505,42 @@ class FlashcardBack extends StatelessWidget {
     this.height = 420,
   });
 
+  Widget _buildImage() {
+    if (flashcard.imageBytes != null && flashcard.imageBytes!.isNotEmpty) {
+      return Image.memory(
+        flashcard.imageBytes!,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => _fallbackIcon(),
+      );
+    }
+
+    final source = flashcard.image.trim();
+    if (source.startsWith('http://') || source.startsWith('https://')) {
+      return Image.network(
+        source,
+        fit: BoxFit.cover,
+        errorBuilder: (_, __, ___) => _fallbackIcon(),
+      );
+    }
+
+    return Image.asset(
+      source,
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) => _fallbackIcon(),
+    );
+  }
+
+  Widget _fallbackIcon() {
+    return Container(
+      color: Colors.transparent,
+      child: const Icon(
+        Icons.auto_stories_rounded,
+        size: 60,
+        color: Colors.white,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -1520,81 +1555,63 @@ class FlashcardBack extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 92,
-              height: 92,
+              width: 120,
+              height: 120,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [Colors.blue.shade100, Colors.blue.shade200],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(24),
               ),
               clipBehavior: Clip.antiAlias,
               child: Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(10),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(14),
-                  child:
-                      flashcard.imageBytes != null &&
-                          flashcard.imageBytes!.isNotEmpty
-                      ? Image.memory(
-                          flashcard.imageBytes!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const Icon(
-                            Icons.auto_stories_rounded,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                        )
-                      : flashcard.image.trim().startsWith('http')
-                      ? Image.network(
-                          flashcard.image.trim(),
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const Icon(
-                            Icons.auto_stories_rounded,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(
-                          Icons.auto_stories_rounded,
-                          size: 40,
-                          color: Colors.white,
-                        ),
+                  borderRadius: BorderRadius.circular(18),
+                  child: _buildImage(),
                 ),
               ),
             ),
             const SizedBox(height: 18),
             Text(
               flashcard.meaning,
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
             ),
-            if (flashcard.example.trim().isNotEmpty) ...[
-              SizedBox(height: 8),
-              Text(
-                flashcard.example,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black54,
-                  height: 1.35,
-                ),
-              ),
-            ],
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               flashcard.phonetic.trim().isEmpty
                   ? '/${flashcard.word.toLowerCase()}/'
                   : flashcard.phonetic,
               style: const TextStyle(fontSize: 20, color: Colors.blueGrey),
             ),
-            SizedBox(height: 24),
-            Spacer(),
+            const SizedBox(height: 8),
+            Text(
+              flashcard.word,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+            if (flashcard.example.trim().isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(
+                flashcard.example,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.black54,
+                  height: 1.35,
+                ),
+              ),
+            ],
+            const Spacer(),
             Align(
               alignment: Alignment.bottomRight,
               child: IconButton(
-                icon: Icon(Icons.volume_up, color: Colors.blue, size: 36),
+                icon: const Icon(Icons.volume_up, color: Colors.blue, size: 36),
                 onPressed: onSpeak,
               ),
             ),

@@ -93,7 +93,7 @@ class CustomBottomNavBar extends StatelessWidget {
               color: currentIndex == 3
                   ? Colors.blue
                   : const Color.fromARGB(255, 58, 53, 53),
-              tooltip: 'Ôn Tập',
+              tooltip: 'Ôn tập',
               onTap: () => onTap(3),
             ),
           ),
@@ -103,7 +103,7 @@ class CustomBottomNavBar extends StatelessWidget {
               color: currentIndex == 4
                   ? Colors.blue
                   : const Color.fromARGB(255, 47, 34, 34),
-              tooltip: 'Thành tựu',
+              tooltip: 'Thành tích',
               onTap: () => onTap(4),
             ),
           ),
@@ -128,19 +128,22 @@ class _NavIconItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: tooltip,
-      button: true,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          splashColor: Colors.black12,
-          highlightColor: Colors.transparent,
-          borderRadius: BorderRadius.circular(22),
-          child: SizedBox(
-            height: 48,
-            child: Center(child: Icon(icon, color: color)),
+    return Tooltip(
+      message: tooltip,
+      child: Semantics(
+        label: tooltip,
+        button: true,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            splashColor: Colors.black12,
+            highlightColor: Colors.transparent,
+            borderRadius: BorderRadius.circular(22),
+            child: SizedBox(
+              height: 48,
+              child: Center(child: Icon(icon, color: color)),
+            ),
           ),
         ),
       ),
