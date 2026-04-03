@@ -29,8 +29,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   static const List<Map<String, dynamic>> _dailyMissions = [
     {
       'title': 'Hoàn thành 3 vòng quét',
@@ -59,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen>
     {
       'tag': 'TÍNH NĂNG MỚI',
       'title': 'Khám Phá Thế Giới',
-        'headline': 'Quét Ảnh Cùng AI',
+      'headline': 'Quét Ảnh Cùng AI',
       'message': 'Chụp ảnh vật thể bất kỳ để tìm từ vựng trong tích tắc.',
       'icon': Icons.document_scanner_rounded,
       'colors': [Color(0xFF169A6E), Color(0xFF28BE76), Color(0xFFA6E65D)],
@@ -69,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen>
     {
       'tag': 'HỌC TẬP THÔNG MINH',
       'title': 'Ghi Nhớ Hiệu Quả',
-        'headline': 'Flashcard Thuật Toán',
+      'headline': 'Flashcard Thuật Toán',
       'message': 'Lặp lại ngắt quãng giúp bạn thuộc bài lâu hơn.',
       'icon': Icons.psychology_rounded,
       'colors': [Color(0xFF3D46E8), Color(0xFF6656FF), Color(0xFF9B7BFF)],
@@ -79,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen>
     {
       'tag': 'THỬ THÁCH HẰNG NGÀY',
       'title': 'Thử Thách Bản Thân',
-        'headline': 'Đấu Trường Thành Tựu',
+      'headline': 'Đấu Trường Thành Tựu',
       'message': 'Nhận XP mỗi ngày, thi đua cùng bạn bè vươn lên đỉnh!',
       'icon': Icons.emoji_events_rounded,
       'colors': [Color(0xFF0098D8), Color(0xFF1DB7F7), Color(0xFF73E3FF)],
@@ -89,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen>
     {
       'tag': 'TỪ ĐIỂN SINH ĐỘNG',
       'title': 'Nâng Cao Vốn Từ',
-        'headline': 'Kho Tàng Từ Vựng',
+      'headline': 'Kho Tàng Từ Vựng',
       'message': 'Hàng ngàn từ vựng đa chủ đề kèm phát âm thực tế.',
       'icon': Icons.menu_book_rounded,
       'colors': [Color(0xFFFF7A45), Color(0xFFFF5F6D), Color(0xFFFFB347)],
@@ -122,51 +121,6 @@ class _HomeScreenState extends State<HomeScreen>
       'total': 25,
       'color': Color(0xFF8E7CFF),
       'icon': Icons.psychology_rounded,
-    },
-  ];
-
-  static const List<Map<String, dynamic>> _mysteryObjectPool = [
-    {
-      'name': 'Đèn thần',
-      'clue': 'Từ về ánh sáng và bóng tối',
-      'icon': Icons.lightbulb_rounded,
-      'rarity': 'Hiếm',
-      'color': Color(0xFFFFB703),
-    },
-    {
-      'name': 'Treasure Chest',
-      'clue': 'Complete 2 scan quests to unlock',
-      'icon': Icons.inventory_2_rounded,
-      'rarity': 'Cực hiếm',
-      'color': Color(0xFFFB8500),
-    },
-    {
-      'name': 'Mini Fan',
-      'clue': 'Learn 5 weather words today',
-      'icon': Icons.toys_rounded,
-      'rarity': 'Common',
-      'color': Color(0xFF42B7FF),
-    },
-    {
-      'name': 'Robot Spoon',
-      'clue': 'Review all kitchen flashcards',
-      'icon': Icons.restaurant_rounded,
-      'rarity': 'Cực hiếm',
-      'color': Color(0xFF7B6CFF),
-    },
-    {
-      'name': 'Cloud Pillow',
-      'clue': 'Practice pronunciation 10 minutes',
-      'icon': Icons.cloud_rounded,
-      'rarity': 'Hiếm',
-      'color': Color(0xFF06D6A0),
-    },
-    {
-      'name': 'Skate Backpack',
-      'clue': 'Win a streak of 3 study days',
-      'icon': Icons.backpack_rounded,
-      'rarity': 'Huyền thoại',
-      'color': Color(0xFFEF476F),
     },
   ];
 
@@ -209,7 +163,6 @@ class _HomeScreenState extends State<HomeScreen>
   Timer? _bannerTimer;
   int _bannerIndex = 0;
   final ValueNotifier<double> _scrollOffsetNotifier = ValueNotifier(0.0);
-  late final List<Map<String, dynamic>> _dailyMysteryCards;
 
   @override
   void initState() {
@@ -223,18 +176,7 @@ class _HomeScreenState extends State<HomeScreen>
       vsync: this,
       duration: const Duration(milliseconds: 3000),
     )..repeat();
-    _dailyMysteryCards = _pickDailyMysteryCards();
     _startBannerAutoSlide();
-  }
-
-  List<Map<String, dynamic>> _pickDailyMysteryCards() {
-    final now = DateTime.now();
-    final seed = now.year * 1000 +
-        now.difference(DateTime(now.year, 1, 1)).inDays;
-    final random = Random(seed);
-    final pool = List<Map<String, dynamic>>.from(_mysteryObjectPool);
-    pool.shuffle(random);
-    return pool.take(3).toList(growable: false);
   }
 
   void _startBannerAutoSlide() {
@@ -263,13 +205,19 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    final levelProgress =
-        (widget.experience / widget.nextLevelExperience).clamp(0.0, 1.0);
+    final levelProgress = (widget.experience / widget.nextLevelExperience)
+        .clamp(0.0, 1.0);
 
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFFE2F3FF), Color(0xFFFFF4FA), Color(0xFFE4FAEF), Color(0xFFF3E5FF)], stops: [0.0, 0.3, 0.6, 1.0],
+          colors: [
+            Color(0xFFE2F3FF),
+            Color(0xFFFFF4FA),
+            Color(0xFFE4FAEF),
+            Color(0xFFF3E5FF),
+          ],
+          stops: [0.0, 0.3, 0.6, 1.0],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -296,7 +244,10 @@ class _HomeScreenState extends State<HomeScreen>
                     sliver: SliverToBoxAdapter(
                       child: Column(
                         children: [
-                          _SectionReveal(delayMs: 0, child: _buildWelcomeBanner()),
+                          _SectionReveal(
+                            delayMs: 0,
+                            child: _buildWelcomeBanner(),
+                          ),
                           const SizedBox(height: 16),
                           _SectionReveal(
                             delayMs: 120,
@@ -340,17 +291,26 @@ class _HomeScreenState extends State<HomeScreen>
                   Positioned(
                     top: 12 - cloudParallax,
                     left: -20,
-                    child: _GlowBubble(color: const Color(0xFF5EEAD4), size: 200),
+                    child: _GlowBubble(
+                      color: const Color(0xFF5EEAD4),
+                      size: 200,
+                    ),
                   ),
                   Positioned(
                     top: 180 - bubbleParallax,
                     right: -40,
-                    child: _GlowBubble(color: const Color(0xFFC084FC), size: 240),
+                    child: _GlowBubble(
+                      color: const Color(0xFFC084FC),
+                      size: 240,
+                    ),
                   ),
                   Positioned(
                     bottom: 80 + bubbleParallax,
                     left: -30,
-                    child: _GlowBubble(color: const Color(0xFFC7E4FF), size: 150),
+                    child: _GlowBubble(
+                      color: const Color(0xFFC7E4FF),
+                      size: 150,
+                    ),
                   ),
                   Positioned(
                     top: 110 - stickerParallax,
@@ -405,17 +365,15 @@ class _HomeScreenState extends State<HomeScreen>
             spreadRadius: -4,
           ),
         ],
-        border: Border.all(
-          color: Colors.white.withOpacity(0.46),
-          width: 2,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.46), width: 2),
       ),
       clipBehavior: Clip.hardEdge,
       child: Column(
         children: [
           SizedBox(
             height: 168,
-            child: PageView.builder(clipBehavior: Clip.none,
+            child: PageView.builder(
+              clipBehavior: Clip.none,
               controller: _bannerController,
               onPageChanged: (index) {
                 setState(() {
@@ -468,7 +426,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     color: Colors.black12,
                                     offset: Offset(0, 2),
                                     blurRadius: 4,
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -496,45 +454,47 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                       ),
                     ),
-                    Padding(padding: const EdgeInsets.only(right: 6, bottom: 4), child: ScaleTransition(
-                      scale: Tween<double>(begin: 0.9, end: 1.1).animate(
-                        CurvedAnimation(
-                          parent: _pulseController,
-                          curve: Curves.easeInOut,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 6, bottom: 4),
+                      child: ScaleTransition(
+                        scale: Tween<double>(begin: 0.9, end: 1.1).animate(
+                          CurvedAnimation(
+                            parent: _pulseController,
+                            curve: Curves.easeInOut,
+                          ),
                         ),
-                      ),
-                      child: Container(
-                        width: 90,
-                        height: 90,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.white.withOpacity(0.96),
-                              Colors.white.withOpacity(0.74),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.64),
-                            width: 2,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.45),
-                              blurRadius: 16,
-                              spreadRadius: 1,
+                        child: Container(
+                          width: 90,
+                          height: 90,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.white.withOpacity(0.96),
+                                Colors.white.withOpacity(0.74),
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
-                          ],
-                        ),
-                        child: Icon(
-                          theme['icon'] as IconData,
-                          color: iconColor,
-                          size: 48,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.64),
+                              width: 2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.white.withOpacity(0.45),
+                                blurRadius: 16,
+                                spreadRadius: 1,
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            theme['icon'] as IconData,
+                            color: iconColor,
+                            size: 48,
+                          ),
                         ),
                       ),
-                    ),
                     ),
                   ],
                 );
@@ -553,7 +513,9 @@ class _HomeScreenState extends State<HomeScreen>
                 height: 8,
                 width: selected ? 24 : 8,
                 decoration: BoxDecoration(
-                  color: selected ? Colors.white : Colors.white.withOpacity(0.4),
+                  color: selected
+                      ? Colors.white
+                      : Colors.white.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(12),
                 ),
               );
@@ -644,50 +606,47 @@ class _HomeScreenState extends State<HomeScreen>
               child: Row(
                 children: [
                   Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    color: color.withOpacity(0.18),
-                    borderRadius: BorderRadius.circular(12),
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: color.withOpacity(0.18),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(mission['icon'] as IconData, color: color),
                   ),
-                  child: Icon(mission['icon'] as IconData, color: color),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        mission['title'] as String,
-                        style: const TextStyle(
-                          color: Color(0xFF2D3142),
-                          fontWeight: FontWeight.w700,
-                          fontSize: 15,
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          mission['title'] as String,
+                          style: const TextStyle(
+                            color: Color(0xFF2D3142),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 6),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: LinearProgressIndicator(
-                          minHeight: 7,
-                          value: mission['progress'] as double,
-                          backgroundColor: color.withOpacity(0.15),
-                          valueColor: AlwaysStoppedAnimation<Color>(color),
+                        const SizedBox(height: 6),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: LinearProgressIndicator(
+                            minHeight: 7,
+                            value: mission['progress'] as double,
+                            backgroundColor: color.withOpacity(0.15),
+                            valueColor: AlwaysStoppedAnimation<Color>(color),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  mission['xp'] as String,
-                  style: TextStyle(
-                    color: color,
-                    fontWeight: FontWeight.w800,
+                  const SizedBox(width: 10),
+                  Text(
+                    mission['xp'] as String,
+                    style: TextStyle(color: color, fontWeight: FontWeight.w800),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
             ),
           );
         }).toList(),
@@ -729,72 +688,72 @@ class _HomeScreenState extends State<HomeScreen>
                   ],
                 ),
                 child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          color: (deck['color'] as Color).withOpacity(0.14),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          deck['icon'] as IconData,
-                          color: deck['color'] as Color,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          deck['name'] as String,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 16,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 42,
+                          height: 42,
+                          decoration: BoxDecoration(
+                            color: (deck['color'] as Color).withOpacity(0.14),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(
+                            deck['icon'] as IconData,
+                            color: deck['color'] as Color,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Text(
-                    "Đã thuộc ${deck['learned']}/${deck['total']} thẻ",
-                    style: TextStyle(
-                      color: Colors.blueGrey.shade700,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: TweenAnimationBuilder<double>(
-                      tween: Tween<double>(begin: 0.0, end: progress),
-                      duration: Duration(milliseconds: 900 + index * 180),
-                      curve: Curves.easeOut,
-                      builder: (context, animatedProgress, child) {
-                        return LinearProgressIndicator(
-                          minHeight: 8,
-                          value: animatedProgress,
-                          backgroundColor: Colors.grey.shade200,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            deck['color'] as Color,
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            deck['name'] as String,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                            ),
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Hoàn thành ${(progress * 100).round()}%',
-                    style: TextStyle(
-                      color: (deck['color'] as Color).withOpacity(0.92),
-                      fontWeight: FontWeight.w800,
+                    const Spacer(),
+                    Text(
+                      "Đã thuộc ${deck['learned']}/${deck['total']} thẻ",
+                      style: TextStyle(
+                        color: Colors.blueGrey.shade700,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(begin: 0.0, end: progress),
+                        duration: Duration(milliseconds: 900 + index * 180),
+                        curve: Curves.easeOut,
+                        builder: (context, animatedProgress, child) {
+                          return LinearProgressIndicator(
+                            minHeight: 8,
+                            value: animatedProgress,
+                            backgroundColor: Colors.grey.shade200,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              deck['color'] as Color,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Hoàn thành ${(progress * 100).round()}%',
+                      style: TextStyle(
+                        color: (deck['color'] as Color).withOpacity(0.92),
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
             );
           },
         ),
@@ -820,70 +779,70 @@ class _HomeScreenState extends State<HomeScreen>
       actionLabel: 'Đoán ngay',
       onActionTap: widget.onOpenCameraQuest,
       child: Column(
-        children: mysteryWords.map((item) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(18),
-              onTap: () {
-                /* Show hint or dictionary */
-              },
-              child: Ink(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.5), // Faded design
+        children: mysteryWords
+            .map((item) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: InkWell(
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(
-                    color: Colors.grey.withOpacity(0.2),
+                  onTap: () {
+                    /* Show hint or dictionary */
+                  },
+                  child: Ink(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.5), // Faded design
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(color: Colors.grey.withOpacity(0.2)),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 52,
+                          height: 52,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: const Icon(
+                            Icons.question_mark_rounded,
+                            size: 32,
+                            color: Colors.blueGrey,
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Bạn biết từ này chưa?',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                item['clue'] as String,
+                                style: TextStyle(
+                                  color: Colors.blueGrey.shade600,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 52,
-                      height: 52,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: const Icon(
-                        Icons.question_mark_rounded,
-                        size: 32,
-                        color: Colors.blueGrey,
-                      ),
-                    ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Bạn biết từ này chưa?',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 16,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            item['clue'] as String,
-                            style: TextStyle(
-                              color: Colors.blueGrey.shade600,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }).toList(growable: false),
+              );
+            })
+            .toList(growable: false),
       ),
     );
   }
@@ -896,7 +855,8 @@ class _HomeScreenState extends State<HomeScreen>
       onActionTap: widget.onOpenDictionary,
       child: SizedBox(
         height: 80,
-        child: PageView.builder(clipBehavior: Clip.none,
+        child: PageView.builder(
+          clipBehavior: Clip.none,
           controller: PageController(viewportFraction: 0.85, initialPage: 1000),
           itemBuilder: (context, index) {
             final word = _recentWords[index % _recentWords.length];
@@ -1048,17 +1008,22 @@ class _BounceTap extends StatefulWidget {
   State<_BounceTap> createState() => _BounceTapState();
 }
 
-class _BounceTapState extends State<_BounceTap> with SingleTickerProviderStateMixin {
+class _BounceTapState extends State<_BounceTap>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scale;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 100));
-    _scale = Tween<double>(begin: 1.0, end: 0.95).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
     );
+    _scale = Tween<double>(
+      begin: 1.0,
+      end: 0.95,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -1148,10 +1113,7 @@ class _StatCard extends StatelessWidget {
               color: Color(0xFF0B1C3D),
             ),
           ),
-          if (trailing != null) ...[
-            const SizedBox(height: 6),
-            trailing!,
-          ],
+          if (trailing != null) ...[const SizedBox(height: 6), trailing!],
         ],
       ),
     );
@@ -1195,68 +1157,58 @@ class _FrostedPanel extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.65),
               borderRadius: BorderRadius.circular(24),
-              border: Border.all(color: Colors.white.withOpacity(0.95), width: 1.5),
+              border: Border.all(
+                color: Colors.white.withOpacity(0.95),
+                width: 1.5,
+              ),
             ),
             child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 22,
-                        color: Color(0xFF102956),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 22,
+                              color: Color(0xFF102956),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            subtitle,
+                            style: TextStyle(
+                              color: Colors.blueGrey.shade700,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        color: Colors.blueGrey.shade700,
-                        fontWeight: FontWeight.w600,
+                    TextButton(
+                      onPressed: onActionTap,
+                      child: Text(
+                        actionLabel,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF1D74FF),
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              TextButton(
-                onPressed: onActionTap,
-                child: Text(
-                  actionLabel,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xFF1D74FF),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          child,
-        ],
-      ),
+                const SizedBox(height: 10),
+                child,
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

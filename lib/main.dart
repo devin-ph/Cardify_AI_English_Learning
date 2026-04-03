@@ -15,14 +15,15 @@ Future<void> main() async {
     // Continue without a bundled .env file.
   }
 
-  final supabaseUrl = dotenv.maybeGet('SUPABASE_URL');
-  final supabaseAnonKey = dotenv.maybeGet('SUPABASE_ANON_KEY');
-  if (supabaseUrl?.trim().isNotEmpty == true &&
-      supabaseAnonKey?.trim().isNotEmpty == true) {
-    await Supabase.initialize(
-      url: supabaseUrl!.trim(),
-      anonKey: supabaseAnonKey!.trim(),
-    );
+  final supabaseUrl = dotenv.maybeGet('SUPABASE_URL')?.trim() ?? '';
+  final supabaseAnonKey = dotenv.maybeGet('SUPABASE_ANON_KEY')?.trim() ?? '';
+  final hasValidSupabaseConfig =
+      supabaseUrl.isNotEmpty &&
+      supabaseAnonKey.isNotEmpty &&
+      supabaseUrl != 'https://example.supabase.co' &&
+      supabaseAnonKey != 'example-key';
+  if (hasValidSupabaseConfig) {
+    await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
   }
 
   runApp(const MyApp());
