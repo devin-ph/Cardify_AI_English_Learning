@@ -1,31 +1,54 @@
+import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-String _authErrorMessage(Object error) {
-  final message = error.toString().toLowerCase();
-
-  if (message.contains('invalid login credentials')) {
-    return 'Email hoặc mật khẩu chưa đúng.';
+String _authErrorMessage(FirebaseAuthException error) {
+  switch (error.code) {
+    case 'channel-error':
+      return 'Firebase Auth chưa kết nối với app. Hay tắt app đang chạy và chạy lại.';
+    case 'internal-error':
+      if ((error.message ?? '').contains('FirebaseAuthHostApi')) {
+        return 'Firebase Auth chưa tải plugin native. Hay chạy lại app từ đầu sau khi flutter clean và flutter pub get.';
+      }
+      return ' lỗi hệ thống tạm thời, vui lòng thử lại.';
+    case 'invalid-email':
+      return 'Email không hợp lệ.';
+    case 'user-not-found':
+    case 'wrong-password':
+    case 'invalid-credential':
+      return 'Email hoặc mật khẩu chưa đúng.';
+    case 'email-already-in-use':
+      return 'Email này đã được sử dụng.';
+    case 'weak-password':
+      return 'Mật khẩu quá yếu, hay dùng ít nhất 6 ký tự.';
+    case 'too-many-requests':
+      return 'Bạn thao tác quá nhiều lần, hay thử lại sau ít phút.';
+    case 'network-request-failed':
+      return 'Không có kết nối mạng. Vui lòng thử lại.';
+    default:
+      return error.message ?? 'Đã có lỗi xác thực, vui lòng thử lại.';
   }
-  if (message.contains('user already registered') ||
-      message.contains('already registered')) {
-    return 'Email này đã được sử dụng.';
-  }
-  if (message.contains('password should be at least')) {
-    return 'Mật khẩu quá yếu, hãy dùng ít nhất 6 ký tự.';
-  }
-  if (message.contains('email not confirmed')) {
-    return 'Email chưa được xác nhận. Hãy kiểm tra hộp thư.';
-  }
-  if (message.contains('network') || message.contains('failed to fetch')) {
-    return 'Không có kết nối mạng. Vui lòng thử lại.';
-  }
-
-  return 'Đã có lỗi xác thực, vui lòng thử lại.';
 }
 
 Future<void> _googleSignIn() async {
-  await Supabase.instance.client.auth.signInWithOAuth(OAuthProvider.google);
+  if (kIsWeb) {
+    await FirebaseAuth.instance.signInWithPopup(GoogleAuthProvider());
+    return;
+  }
+
+  final googleUser = await GoogleSignIn(scopes: <String>['email']).signIn();
+  if (googleUser == null) {
+    return;
+  }
+
+  final googleAuth = await googleUser.authentication;
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth.accessToken,
+    idToken: googleAuth.idToken,
+  );
+
+  await FirebaseAuth.instance.signInWithCredential(credential);
 }
 
 class CardifyLoginScreen extends StatefulWidget {
@@ -79,11 +102,11 @@ class _CardifyLoginScreenState extends State<CardifyLoginScreen> {
     });
 
     try {
-      await Supabase.instance.client.auth.signInWithPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-    } catch (error) {
+    } on FirebaseAuthException catch (error) {
       _showMessage(_authErrorMessage(error), isError: true);
     } catch (_) {
       _showMessage(
@@ -110,7 +133,7 @@ class _CardifyLoginScreenState extends State<CardifyLoginScreen> {
 
     try {
       await _googleSignIn();
-    } catch (error) {
+    } on FirebaseAuthException catch (error) {
       _showMessage(_authErrorMessage(error), isError: true);
     } catch (_) {
       _showMessage(
@@ -138,9 +161,9 @@ class _CardifyLoginScreenState extends State<CardifyLoginScreen> {
     }
 
     try {
-      await Supabase.instance.client.auth.resetPasswordForEmail(email);
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       _showMessage('Đã gửi email đặt lại mật khẩu.');
-    } catch (error) {
+    } on FirebaseAuthException catch (error) {
       _showMessage(_authErrorMessage(error), isError: true);
     } catch (_) {
       _showMessage(
@@ -192,7 +215,7 @@ class _CardifyLoginScreenState extends State<CardifyLoginScreen> {
 
                       onActionTap: _resetPassword,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 24),
                     _AuthInput(
                       controller: _passwordController,
                       hint: '••••••••••',
@@ -209,18 +232,18 @@ class _CardifyLoginScreenState extends State<CardifyLoginScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 54),
                     _PrimaryButton(
                       label: _isSubmitting ? 'Đăng nhập...' : 'Đăng nhập',
                       onTap: _isSubmitting ? null : _login,
                     ),
                     const SizedBox(height: 24),
                     const _OrDivider(text: 'HOẶC ĐĂNG NHẬP VỚI'),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 33),
                     _SocialButton(
                       onTap: _isSubmitting ? null : _signInWithGoogle,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 35),
 
                     Center(
                       child: Row(
@@ -310,15 +333,11 @@ class _CardifyRegisterScreenState extends State<CardifyRegisterScreen> {
     });
 
     try {
-      await Supabase.instance.client.auth.signUp(
-        email: email,
-        password: password,
-        data: <String, dynamic>{'username': username},
-      );
-      _showMessage(
-        'Tạo tài khoản thành công. Hãy kiểm tra email nếu cần xác nhận.',
-      );
-    } catch (error) {
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      await credential.user?.updateDisplayName(username);
+      _showMessage('Tạo tài khoản thành công.');
+    } on FirebaseAuthException catch (error) {
       _showMessage(_authErrorMessage(error), isError: true);
     } catch (_) {
       _showMessage(
@@ -345,7 +364,7 @@ class _CardifyRegisterScreenState extends State<CardifyRegisterScreen> {
 
     try {
       await _googleSignIn();
-    } catch (error) {
+    } on FirebaseAuthException catch (error) {
       _showMessage(_authErrorMessage(error), isError: true);
     } catch (_) {
       _showMessage(
@@ -420,6 +439,12 @@ class _CardifyRegisterScreenState extends State<CardifyRegisterScreen> {
                       onTap: _isSubmitting ? null : _register,
                     ),
                     SizedBox(height: 24),
+                    _OrDivider(text: 'HOẶC ĐĂNG KÝ VỚI'),
+                    SizedBox(height: 33),
+                    _SocialButton(
+                      onTap: _isSubmitting ? null : _registerWithGoogle,
+                    ),
+                    const SizedBox(height: 33),
                     Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -662,10 +687,7 @@ class _PrimaryButton extends StatelessWidget {
       opacity: onTap == null ? 0.6 : 1,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final availableWidth = constraints.maxWidth.isFinite
-              ? constraints.maxWidth
-              : (MediaQuery.sizeOf(context).width - 44);
-          final buttonWidth = (availableWidth * 0.50).clamp(160.0, 250.0);
+          final buttonWidth = (constraints.maxWidth * 0.76).clamp(230.0, 320.0);
 
           return Center(
             child: SizedBox(
@@ -735,10 +757,7 @@ class _SocialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final availableWidth = constraints.maxWidth.isFinite
-            ? constraints.maxWidth
-            : (MediaQuery.sizeOf(context).width - 44);
-        final buttonWidth = (availableWidth * 0.28).clamp(110.0, 180.0);
+        final buttonWidth = (constraints.maxWidth * 0.44).clamp(120.0, 180.0);
 
         return Center(
           child: SizedBox(

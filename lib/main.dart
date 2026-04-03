@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'firebase_options.dart';
 import 'screens/auth_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/main_screen.dart';
@@ -8,23 +11,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await dotenv.load(fileName: '.env');
-  } catch (_) {
-    // Continue without a bundled .env file.
-  }
-
-  final supabaseUrl = dotenv.maybeGet('SUPABASE_URL')?.trim() ?? '';
-  final supabaseAnonKey = dotenv.maybeGet('SUPABASE_ANON_KEY')?.trim() ?? '';
-  final hasValidSupabaseConfig =
-      supabaseUrl.isNotEmpty &&
-      supabaseAnonKey.isNotEmpty &&
-      supabaseUrl != 'https://example.supabase.co' &&
-      supabaseAnonKey != 'example-key';
-  if (hasValidSupabaseConfig) {
-    await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
-  }
-
+  await dotenv.load(fileName: '.env');
+  await Supabase.initialize(
+    url: dotenv.get('SUPABASE_URL'),
+    anonKey: dotenv.get('SUPABASE_ANON_KEY'),
+  );
   runApp(const MyApp());
 }
 
@@ -68,7 +59,14 @@ class _AppBootstrapState extends State<_AppBootstrap> {
 
   static const String _onboardingSeenKey = 'onboarding_seen_v1';
 
+  Future<void> _initializeFirebase() {
+    return Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+
   Future<void> _initializeAppState() async {
+    await _initializeFirebase();
     _preferences = await SharedPreferences.getInstance();
     _shouldShowOnboarding =
         !(_preferences?.getBool(_onboardingSeenKey) ?? false);
@@ -121,7 +119,7 @@ class _AppBootstrapState extends State<_AppBootstrap> {
                     ),
                     const SizedBox(height: 12),
                     const Text(
-                      'Khoi dong ung dung that bai',
+                      'Khoi dong Firebase that bai',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -134,7 +132,7 @@ class _AppBootstrapState extends State<_AppBootstrap> {
                     FilledButton(
                       onPressed: () {
                         setState(() {
-                          _initializeFuture = _initializeAppState();
+                          _initializeFuture = _initializeFirebase();
                         });
                       },
                       child: const Text('Thu lai'),
@@ -161,8 +159,8 @@ class AuthGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<AuthState>(
-      stream: Supabase.instance.client.auth.onAuthStateChange,
+    return StreamBuilder<firebase_auth.User?>(
+      stream: firebase_auth.FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
@@ -170,8 +168,7 @@ class AuthGate extends StatelessWidget {
           );
         }
 
-        final session = snapshot.data?.session;
-        if (session != null) {
+        if (snapshot.hasData) {
           return const MainScreen();
         }
 
