@@ -29,8 +29,17 @@ local.properties
 .DS_Store
 Thumbs.db
 *.log
+*.tmp
+*.swp
 
-# Bảo mật
+# Coverage
+coverage/
+reports/
+
+# Env
 .env
-*.jks
-*.keystore
+
+# Misc
+*.class
+migrate_working_dir/
+**/ephemeral/

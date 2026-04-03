@@ -160,9 +160,6 @@ class _AchievementsScreenState extends State<AchievementsScreen>
     {'name': 'Gấu Bé', 'avatar': '🐻', 'xpOffset': -80},
   ];
 
-  int get _userLevel => (_userTotalXp / 500).floor() + 1;
-  int get _xpForNextLevel => _userLevel * 500;
-
   Map<String, dynamic> get _currentLeague {
     Map<String, dynamic> current = _milestoneLeagues.first;
     for (var league in _milestoneLeagues) {
@@ -438,27 +435,25 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: leagueColor.withOpacity(0.3)),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.insights_rounded,
-                      size: 14,
-                      color: leagueColor.withOpacity(0.8),
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      'Thành tích',
-                      style: TextStyle(
-                        color: leagueColor.withOpacity(0.9),
-                        fontWeight: FontWeight.w800,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
+                child: const Text(
+                  'Thành tích Cá nhân',
+                  style: TextStyle(
+                    color: Color(0xFF42516E),
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            next != null
+                ? '${_userTotalXp}/${next['xpReq']} XP để lên bậc tiếp theo'
+                : 'Bạn đã đạt cấp cao nhất!',
+            style: const TextStyle(
+              color: Color(0xFF42516E),
+              fontWeight: FontWeight.w600,
+            ),
           ),
           const SizedBox(height: 12),
           ClipRRect(
@@ -556,17 +551,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
               ),
               child: Row(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: isMe ? Colors.white : Colors.grey.withOpacity(0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      g['avatar'],
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                  ),
+                  Text(g['avatar'], style: const TextStyle(fontSize: 24)),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
@@ -1309,10 +1294,10 @@ class _QuickStat extends StatelessWidget {
           children: [
             Positioned(
               right: -12,
-              top: -8,
+              bottom: -12,
               child: Transform.rotate(
-                angle: 0.15,
-                child: Icon(icon, size: 65, color: color.withOpacity(0.12)),
+                angle: -0.2,
+                child: Icon(icon, size: 70, color: color.withOpacity(0.12)),
               ),
             ),
             Row(
