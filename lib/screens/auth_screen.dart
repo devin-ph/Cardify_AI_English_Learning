@@ -540,48 +540,6 @@ class _JourneyHeader extends StatelessWidget {
   }
 }
 
-class _BrandBlock extends StatelessWidget {
-  final String tagline;
-
-  const _BrandBlock({required this.tagline});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 84,
-          height: 84,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              colors: [Color(0xFF6A38F5), Color(0xFF9A84F4)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x4D6A38F5),
-                blurRadius: 24,
-                offset: Offset(0, 14),
-              ),
-            ],
-          ),
-          child: const Icon(
-            Icons.auto_awesome_rounded,
-            color: Colors.white,
-            size: 34,
-          ),
-        ),
-        const SizedBox(height: 10),
-        const Text('Cardify', style: _AuthStyles.logo),
-        const SizedBox(height: 4),
-        Text(tagline, style: _AuthStyles.tagline),
-      ],
-    );
-  }
-}
-
 class _AuthCard extends StatelessWidget {
   final Widget child;
 
@@ -836,12 +794,6 @@ class _AuthStyles {
     fontWeight: FontWeight.w800,
   );
 
-  static const TextStyle h1 = TextStyle(
-    color: Color(0xFF19212D),
-    fontSize: 25,
-    fontWeight: FontWeight.w800,
-  );
-
   static const TextStyle subtitle = TextStyle(
     color: Color(0xFF738091),
     fontSize: 16,
@@ -892,18 +844,6 @@ class _AuthStyles {
     fontSize: 12,
     fontWeight: FontWeight.w800,
     letterSpacing: 1.2,
-  );
-
-  static const TextStyle logo = TextStyle(
-    color: Color(0xFF18202D),
-    fontSize: 28,
-    fontWeight: FontWeight.w900,
-  );
-
-  static const TextStyle tagline = TextStyle(
-    color: Color(0xFF738091),
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
   );
 
   static const TextStyle bottomText = TextStyle(

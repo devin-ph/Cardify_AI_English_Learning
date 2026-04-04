@@ -160,6 +160,20 @@ class SavedCardsRepository {
     return _knownWordsForTopic(topic).length;
   }
 
+  int imageCountForTopic(String topic) {
+    return _cards.where((card) {
+      if (card.topic != topic) {
+        return false;
+      }
+
+      final hasImageBytes =
+          card.imageBytes != null && card.imageBytes!.isNotEmpty;
+      final hasImageUrl =
+          card.imageUrl != null && card.imageUrl!.trim().isNotEmpty;
+      return hasImageBytes || hasImageUrl;
+    }).length;
+  }
+
   int savedCountForTopic(String topic) {
     return _cards.where((card) => card.topic == topic).length;
   }
