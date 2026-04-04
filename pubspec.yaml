@@ -80,7 +80,7 @@ flutter:
   assets:
     - assets/onboarding/
 
-    - .env
+    - assets/.env
     - assets/data/
 
   # An image asset can refer to one or more resolution-specific "variants", see
