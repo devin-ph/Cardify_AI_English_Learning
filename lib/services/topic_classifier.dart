@@ -12,23 +12,31 @@ class TopicClassifier {
   ];
 
   static String normalizeTopic(String topic) {
-    if (topic.contains('điện tử') || topic.contains('Ä‘iá»‡n tá»'))
+    if (topic.contains('điện tử') || topic.contains('Ä‘iá»‡n tá»')) {
       return 'Electronics';
-    if (topic.contains('nội thất') || topic.contains('ná»™i tháº¥t'))
+    }
+    if (topic.contains('nội thất') || topic.contains('ná»™i tháº¥t')) {
       return 'Furniture';
-    if (topic.contains('Động vật') || topic.contains('Äá»™ng váºt'))
+    }
+    if (topic.contains('Động vật') || topic.contains('Äá»™ng váºt')) {
       return 'Animals';
-    if (topic.contains('Thiên nhiên') || topic.contains('ThiÃªn nhiÃªn'))
+    }
+    if (topic.contains('Thiên nhiên') || topic.contains('ThiÃªn nhiÃªn')) {
       return 'Nature';
-    if (topic.contains('Công nghệ') || topic.contains('CÃ´ng nghá»‡'))
+    }
+    if (topic.contains('Công nghệ') || topic.contains('CÃ´ng nghá»‡')) {
       return 'Technology';
-    if (topic.contains('Học tập') || topic.contains('Há»c táºp'))
+    }
+    if (topic.contains('Học tập') || topic.contains('Há»c táºp')) {
       return 'Learning';
+    }
     if (topic.contains('Đồ ăn') || topic.contains('Äá»“ Äƒn')) return 'Food';
-    if (topic.contains('Phương tiện') || topic.contains('PhÆ°Æ¡ng tiá»‡n'))
+    if (topic.contains('Phương tiện') || topic.contains('PhÆ°Æ¡ng tiá»‡n')) {
       return 'Vehicles';
-    if (topic.contains('gia đình') || topic.contains('Household'))
+    }
+    if (topic.contains('gia đình') || topic.contains('Household')) {
       return 'Household Items';
+    }
     return topic;
   }
 

@@ -182,7 +182,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                               ? Image.network(
                                   selectedImageUrl!,
                                   fit: BoxFit.cover,
-                                  errorBuilder: (_, __, ___) => const Icon(
+                                  errorBuilder: (_, _, _) => const Icon(
                                     Icons.broken_image,
                                     color: Colors.blueGrey,
                                   ),
@@ -402,7 +402,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
       barrierDismissible: true,
       barrierLabel: 'Chi tiết từ',
       barrierColor: Colors.black45,
-      pageBuilder: (context, _, __) {
+      pageBuilder: (context, _, _) {
         return SafeArea(
           child: Center(
             child: ConstrainedBox(
@@ -775,7 +775,7 @@ class _CardDetailImage extends StatelessWidget {
           width: 230,
           height: 230,
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => Container(
+          errorBuilder: (_, _, _) => Container(
             width: 230,
             height: 230,
             alignment: Alignment.center,
@@ -795,7 +795,7 @@ class _CardDetailImage extends StatelessWidget {
         imageUrl!,
         height: 230,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => Container(
+        errorBuilder: (_, _, _) => Container(
           width: 230,
           height: 230,
           alignment: Alignment.center,
@@ -848,7 +848,7 @@ class _DictionaryCardGridItem extends StatelessWidget {
                   ? Image.network(
                       card.imageUrl!,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const Center(
+                      errorBuilder: (_, _, _) => const Center(
                         child: Icon(
                           Icons.broken_image,
                           size: 40,
