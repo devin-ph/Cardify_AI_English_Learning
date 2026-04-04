@@ -2246,27 +2246,7 @@ String _resolveFlashcardImage({
 }
 
 IconData _iconForTopic(String topic) {
-  switch (topic.trim()) {
-    case 'Đồ điện tử':
-      return Icons.electrical_services;
-    case 'Đồ nội thất':
-      return Icons.chair_alt;
-    case 'Động vật':
-    case 'Con vật':
-      return Icons.pets;
-    case 'Thiên nhiên':
-      return Icons.nature;
-    case 'Công nghệ':
-      return Icons.memory;
-    case 'Học tập':
-      return Icons.school;
-    case 'Đồ ăn':
-      return Icons.restaurant;
-    case 'Phương tiện':
-      return Icons.directions_car;
-    default:
-      return Icons.auto_stories_rounded;
-  }
+  return Icons.help_outline;
 }
 
 String _exampleForDisplay(String word, String example) {
