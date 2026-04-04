@@ -104,17 +104,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                         ),
                         const Spacer(),
-                        TextButton(
-                          onPressed: _finish,
-                          style: TextButton.styleFrom(
-                            foregroundColor: const Color(0xFF7457F0),
-                            textStyle: const TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 13.5,
-                            ),
-                          ),
-                          child: const Text('Bỏ qua'),
-                        ),
                       ],
                     ),
                   ),
@@ -145,6 +134,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             label: slide.primaryActionLabel,
                             onPressed: _goToNextPage,
                           ),
+                        ),
+                        const SizedBox(height: 18),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Đã có tài khoản? ',
+                              style: TextStyle(
+                                color: Color(0xFF6D6D6D),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: _finish,
+                              child: Text(
+                                'Đăng nhập',
+                                style: TextStyle(
+                                  color: Colors.deepPurple.shade400,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
