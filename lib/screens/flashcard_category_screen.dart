@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/saved_card.dart';
 import '../services/saved_cards_repository.dart';
+import '../services/topic_classifier.dart';
 
 class FlashcardScreen extends StatefulWidget {
   final String? selectedTopic;
@@ -34,6 +35,7 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
   final SavedCardsRepository _repository = SavedCardsRepository.instance;
   final ImagePicker _imagePicker = ImagePicker();
   Map<String, String> _datasetHintsByWord = <String, String>{};
+  List<Map<String, dynamic>> _datasetItems = [];
   late final PageController _pageController;
   static const int _targetCardsPerTopic = 50;
   static const List<String> _commonPairs = [
@@ -662,22 +664,23 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
         'assets/data/vocabulary_hints_vi.json',
       );
       final decoded = jsonDecode(raw);
-      if (decoded is! Map<String, dynamic>) {
-        return;
-      }
-
-      final items = decoded['items'];
-      if (items is! List) {
+      if (decoded is! List) {
         return;
       }
 
       final map = <String, String>{};
-      for (final item in items) {
+      final items = <Map<String, dynamic>>[];
+      for (final item in decoded) {
         if (item is! Map) {
           continue;
         }
-        final word = item['word']?.toString().trim().toLowerCase() ?? '';
-        final hint = item['hint_vi']?.toString().trim() ?? '';
+        items.add(Map<String, dynamic>.from(item));
+        // Fallback to meaning if word is missing
+        var word = item['word']?.toString().trim().toLowerCase() ?? '';
+        if (word.isEmpty) {
+          word = item['meaning']?.toString().trim().toLowerCase() ?? '';
+        }
+        final hint = item['hint']?.toString().trim() ?? '';
         if (word.isEmpty || hint.isEmpty) {
           continue;
         }
@@ -690,6 +693,7 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
 
       setState(() {
         _datasetHintsByWord = map;
+        _datasetItems = items;
       });
     } catch (_) {
       // Keep app usable even when dataset file is unavailable.
@@ -1028,6 +1032,7 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
     return confirmed ?? false;
   }
 
+  // ignore: unused_element
   Future<void> _openWordOptionsDialog({
     required Flashcard card,
     required String displayTopic,
@@ -1343,7 +1348,6 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
   Widget build(BuildContext context) {
     // Determine which topic to display
     final displayTopic = widget.selectedTopic ?? deckNames[selectedDeck];
-    final topicIndex = _sampleDeckIndexByTopic[displayTopic] ?? 0;
 
     if (_loadedPostponedTopic != displayTopic && !_loadingPostponedWords) {
       _loadPostponedWordsForTopic(displayTopic);
@@ -1398,10 +1402,26 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
                   )
                   .toList();
 
-              final sampleCards =
-                  topicIndex >= 0 && topicIndex < allFlashcards.length
-                  ? allFlashcards[topicIndex]
-                  : allFlashcards[0];
+              final sampleCards = _datasetItems
+                  .where((item) {
+                    final dbTopic = item['topic']?.toString() ?? '';
+                    final vnTopic = TopicClassifier.getVietnameseTopic(dbTopic);
+                    return vnTopic == displayTopic || dbTopic == displayTopic;
+                  })
+                  .map((item) {
+                    var w = item['word']?.toString().trim() ?? '';
+                    if (w.isEmpty) w = item['meaning']?.toString().trim() ?? '';
+                    return Flashcard(
+                      word: w,
+                      meaning: item['meaning']?.toString() ?? '',
+                      phonetic: item['phonetic']?.toString() ?? '',
+                      example: item['example']?.toString() ?? '',
+                      topic: displayTopic,
+                      imageBytes: null,
+                      image: 'assets/images/ephemeral.png',
+                    );
+                  })
+                  .toList();
               final mergedFlashcards = <Flashcard>[...flashcardsFromSaved];
               final existingWords = flashcardsFromSaved
                   .map((card) => card.word.trim().toLowerCase())
@@ -1434,7 +1454,7 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
                 }
               }
 
-              final trackedFlashcards = widget.showOnlyTrackedWords
+              var trackedFlashcards = widget.showOnlyTrackedWords
                   ? mergedFlashcards.where((card) {
                       final key = card.word.trim().toLowerCase();
                       final isKnown = _repository.isKnown(
@@ -1446,7 +1466,13 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
                           _postponedWordKeys.contains(key);
                       return isKnown || isStudying;
                     }).toList()
-                  : mergedFlashcards;
+                  : mergedFlashcards.toList();
+
+              trackedFlashcards.sort((a, b) {
+                if (a.isUnlocked && !b.isUnlocked) return -1;
+                if (!a.isUnlocked && b.isUnlocked) return 1;
+                return 0;
+              });
 
               final flashcards = _isPracticeMode
                   ? _orderedPracticeFlashcards(trackedFlashcards, displayTopic)
@@ -1919,13 +1945,10 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
                                                           }
 
                                                           setState(() {
-                                                            if (currentWordKey !=
-                                                                null) {
-                                                              _locallyKnownWordKeys
-                                                                  .add(
-                                                                    currentWordKey,
-                                                                  );
-                                                            }
+                                                            _locallyKnownWordKeys
+                                                                .add(
+                                                                  currentWordKey,
+                                                                );
                                                             _repository.markKnown(
                                                               currentWordKey,
                                                               topic:
@@ -2772,6 +2795,32 @@ String _exampleForDisplay(String word, String example) {
       : '';
 }
 
+String _wrapLongTokens(String input) {
+  final text = input.trim();
+  if (text.isEmpty) {
+    return input;
+  }
+
+  return text
+      .split(RegExp(r'\s+'))
+      .map((token) {
+        if (token.length <= 14) {
+          return token;
+        }
+
+        final buffer = StringBuffer();
+        for (var i = 0; i < token.length; i++) {
+          buffer.write(token[i]);
+          final shouldInsertBreak = (i + 1) % 8 == 0 && i != token.length - 1;
+          if (shouldInsertBreak) {
+            buffer.write('\u200B');
+          }
+        }
+        return buffer.toString();
+      })
+      .join(' ');
+}
+
 class Flashcard {
   final String image;
   final Uint8List? imageBytes;
@@ -2819,44 +2868,20 @@ class LockedFlashcardView extends StatelessWidget {
         width: width,
         height: height,
         padding: const EdgeInsets.all(28),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.blue.shade100, Colors.blue.shade200],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(24),
-              ),
-              alignment: Alignment.center,
-              child: const Icon(
-                Icons.question_mark,
-                size: 66,
-                color: Color(0xFF0A5DB6),
-              ),
-            ),
-            const SizedBox(height: 18),
-            Text(
-              flashcard.meaning,
-              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 14),
-            Text(
-              hintText,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-                fontStyle: FontStyle.italic,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+        alignment: Alignment.center,
+        child: Container(
+          width: 120,
+          height: 120,
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          alignment: Alignment.center,
+          child: const Icon(
+            Icons.lock_rounded,
+            size: 66,
+            color: Colors.black45,
+          ),
         ),
       ),
     );
@@ -2932,53 +2957,66 @@ class FlashcardFront extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        padding: EdgeInsets.all(28),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.blue.shade100, Colors.blue.shade200],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+        padding: const EdgeInsets.all(24),
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 112,
+                height: 112,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.blue.shade100, Colors.blue.shade200],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(24),
                 ),
-                borderRadius: BorderRadius.circular(24),
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
-                  child: _buildImage(),
+                clipBehavior: Clip.antiAlias,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(18),
+                    child: _buildImage(),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 18),
-            Text(
-              flashcard.word,
-              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              flashcard.phonetic.trim().isEmpty
-                  ? '/${flashcard.word.toLowerCase()}/'
-                  : flashcard.phonetic,
-              style: const TextStyle(fontSize: 20, color: Colors.blueGrey),
-              textAlign: TextAlign.center,
-            ),
-            const Spacer(),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: IconButton(
-                icon: const Icon(Icons.volume_up, color: Colors.blue, size: 36),
-                onPressed: onSpeak,
+              const SizedBox(height: 14),
+              Text(
+                _wrapLongTokens(flashcard.word),
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+                softWrap: true,
               ),
-            ),
-          ],
+              const SizedBox(height: 8),
+              Text(
+                flashcard.phonetic.trim().isEmpty
+                    ? _wrapLongTokens('/${flashcard.word.toLowerCase()}/')
+                    : _wrapLongTokens(flashcard.phonetic),
+                style: const TextStyle(fontSize: 18, color: Colors.blueGrey),
+                textAlign: TextAlign.center,
+                softWrap: true,
+              ),
+              const SizedBox(height: 4),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.volume_up,
+                    color: Colors.blue,
+                    size: 34,
+                  ),
+                  onPressed: onSpeak,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -3053,45 +3091,57 @@ class FlashcardBack extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        padding: EdgeInsets.all(28),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.blue.shade100, Colors.blue.shade200],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+        padding: const EdgeInsets.all(24),
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 112,
+                height: 112,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.blue.shade100, Colors.blue.shade200],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(24),
                 ),
-                borderRadius: BorderRadius.circular(24),
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
-                  child: _buildImage(),
+                clipBehavior: Clip.antiAlias,
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(18),
+                    child: _buildImage(),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 18),
-            Text(
-              flashcard.meaning,
-              style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            const Spacer(),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: IconButton(
-                icon: const Icon(Icons.volume_up, color: Colors.blue, size: 36),
-                onPressed: onSpeak,
+              const SizedBox(height: 14),
+              Text(
+                _wrapLongTokens(flashcard.meaning),
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+                softWrap: true,
               ),
-            ),
-          ],
+              const SizedBox(height: 4),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.volume_up,
+                    color: Colors.blue,
+                    size: 34,
+                  ),
+                  onPressed: onSpeak,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

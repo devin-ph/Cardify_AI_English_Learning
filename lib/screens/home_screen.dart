@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import '../services/topic_classifier.dart';
 import 'package:flutter/material.dart';
 
@@ -58,30 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
     },
   ];
 
-  static const List<Map<String, dynamic>> _mysteryObjectPool = [
-    {
-      'name': 'Đèn thần',
-      'clue': 'Từ về ánh sáng và bóng tối',
-      'icon': Icons.lightbulb_rounded,
-      'rarity': 'Hiếm',
-      'color': Color(0xFFFFB703),
-    },
-    {
-      'name': 'Treasure Chest',
-      'clue': 'Complete 2 scan quests to unlock',
-      'icon': Icons.inventory_2_rounded,
-      'rarity': 'Cực hiếm',
-      'color': Color(0xFFFB8500),
-    },
-    {
-      'name': 'Mini Fan',
-      'clue': 'Learn 5 weather words today',
-      'icon': Icons.toys_rounded,
-      'rarity': 'Common',
-      'color': Color(0xFF42B7FF),
-    },
-  ];
-
   static const List<Map<String, String>> _recentWords = [
     {
       'word': 'binoculars',
@@ -103,8 +80,55 @@ class _HomeScreenState extends State<HomeScreen> {
     },
   ];
 
-  List<Map<String, dynamic>> _pickMysteryCards() {
-    return _mysteryObjectPool.take(3).toList(growable: false);
+  static const List<Map<String, dynamic>> _unscannedHintsPool = [
+    {
+      'hint': 'Một thiết bị điện tử cầm tay dùng để nối mạng, gọi điện',
+      'topic': 'Electronics',
+    },
+    {
+      'hint': 'Đồ nội thất dùng để ngồi làm việc, thường có tựa lưng',
+      'topic': 'Furniture',
+    },
+    {
+      'hint': 'Loài động vật gần gũi với con người, thích bắt chuột',
+      'topic': 'Animals',
+    },
+    {'hint': 'Cây tỏa bóng mát, có nhiều lá xanh', 'topic': 'Nature'},
+    {'hint': 'Máy tính cá nhân có thể gập lại gọn gàng', 'topic': 'Technology'},
+    {
+      'hint': 'Nơi chứa đựng tri thức, gồm nhiều trang giấy',
+      'topic': 'Learning',
+    },
+    {
+      'hint': 'Loại trái cây màu vàng, thân dài, khỉ rất thích ăn',
+      'topic': 'Food',
+    },
+    {
+      'hint': 'Phương tiện di chuyển hai bánh, dùng sức người để đạp',
+      'topic': 'Vehicles',
+    },
+    {
+      'hint': 'Vật dụng dùng để uống nước hằng ngày',
+      'topic': 'Household Items',
+    },
+    {
+      'hint': 'Đồ vật che mưa, che nắng khi đi bộ ngoài trời',
+      'topic': 'Household Items',
+    },
+  ];
+
+  List<Map<String, dynamic>> _getDailyUnscannedHints(
+    List<String> scannedWords,
+  ) {
+    // Để cho phong phú, ta có thể hiện luôn ra mà không cần lọc, hoặc lọc nếu cần
+    // Nhưng vì ta chỉ hiện hint, người dùng chưa quét thì ta cứ lấy ngẫu nhiên 3 hint mỗi ngày.
+    final now = DateTime.now();
+    final seed = now.year * 10000 + now.month * 100 + now.day;
+    final random = math.Random(seed);
+
+    final shuffled = List<Map<String, dynamic>>.from(_unscannedHintsPool)
+      ..shuffle(random);
+    return shuffled.take(3).toList();
   }
 
   @override
@@ -406,86 +430,107 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 20),
                   _SectionPanel(
                     title: 'Từ Bí Ẩn',
-                    subtitle: 'Đoán từ tiếng Anh dựa trên gợi ý',
-                    actionLabel: 'Đoán ngay',
+                    subtitle: 'Quét để khám phá từ mới',
+                    actionLabel: 'Quét ngay',
                     onActionTap: widget.onOpenCameraQuest,
-                    child: Column(
-                      children: _pickMysteryCards().map((item) {
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.72),
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(
-                              color: Colors.grey.withOpacity(0.2),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 52,
-                                height: 52,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.withOpacity(0.15),
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
-                                child: const Icon(
-                                  Icons.question_mark_rounded,
-                                  size: 32,
-                                  color: Colors.blueGrey,
-                                ),
-                              ),
-                              const SizedBox(width: 14),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      item['name'] as String,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Text(
-                                      item['clue'] as String,
-                                      style: TextStyle(
-                                        color: Colors.blueGrey.shade600,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                        fontStyle: FontStyle.italic,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: (item['color'] as Color).withOpacity(
-                                    0.14,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Text(
-                                  item['rarity'] as String,
-                                  style: TextStyle(
-                                    color: item['color'] as Color,
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 11,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                    child: ValueListenableBuilder<List<SavedCard>>(
+                      valueListenable:
+                          SavedCardsRepository.instance.cardsNotifier,
+                      builder: (context, cards, _) {
+                        final scannedWords = cards
+                            .map((c) => c.word.toLowerCase())
+                            .toList();
+
+                        final dailyHints = _getDailyUnscannedHints(
+                          scannedWords,
                         );
-                      }).toList(),
+
+                        if (dailyHints.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+
+                        return Column(
+                          children: dailyHints.map((item) {
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.72),
+                                borderRadius: BorderRadius.circular(18),
+                                border: Border.all(
+                                  color: Colors.grey.withOpacity(0.2),
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 52,
+                                    height: 52,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.withOpacity(0.15),
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    child: const Icon(
+                                      Icons.camera_alt_rounded,
+                                      size: 32,
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 14),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          '???',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 6),
+                                        Text(
+                                          'Gợi ý: ${item['hint']}',
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: Colors.blueGrey.shade600,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 13,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(
+                                        0xFFFB8500,
+                                      ).withOpacity(0.14),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Text(
+                                      'Chưa Tìm',
+                                      style: TextStyle(
+                                        color: Color(0xFFFB8500),
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(height: 20),

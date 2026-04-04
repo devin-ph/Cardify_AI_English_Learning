@@ -577,6 +577,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     );
   }
 
+  // ignore: unused_element
   Future<void> _showAddWordSheet() async {
     if (!mounted) return;
     await showDialog<void>(
@@ -667,7 +668,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 0.70,
+                childAspectRatio: 0.58,
               ),
               itemCount: filteredCards.length,
               itemBuilder: (context, index) {
@@ -685,6 +686,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
   }
 }
 
+// ignore: unused_element
 class _CardThumbnail extends StatelessWidget {
   const _CardThumbnail({required this.imageUrl, required this.imageBytes});
 
@@ -869,9 +871,9 @@ class _DictionaryCardGridItem extends StatelessWidget {
             Expanded(
               flex: 5,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 6),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
@@ -890,25 +892,28 @@ class _DictionaryCardGridItem extends StatelessWidget {
                       '${card.word} : ${card.meaning}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 13,
+                        height: 1.15,
                       ),
                       textAlign: TextAlign.center,
                       maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                      overflow: TextOverflow.visible,
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       card.phonetic.isNotEmpty ? card.phonetic : '...',
                       style: const TextStyle(
                         color: Colors.black54,
-                        fontSize: 13,
+                        fontSize: 12,
                         fontStyle: FontStyle.italic,
+                        height: 1.0,
                       ),
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const Spacer(),
+                    const SizedBox(height: 2),
                     Align(
                       alignment: Alignment.center,
                       child: IconButton(
@@ -916,7 +921,7 @@ class _DictionaryCardGridItem extends StatelessWidget {
                         onPressed: _speakWord,
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
-                        iconSize: 24,
+                        iconSize: 22,
                       ),
                     ),
                   ],

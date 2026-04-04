@@ -235,12 +235,15 @@ class _AiVoiceChatDialogState extends State<AiVoiceChatDialog>
   Future<void> _stopListeningAndSend() async {
     if (!_speechReady || _mode != _VoiceMode.listening) return;
 
+    final sessionId = _activeSpeechSessionId;
     await _speech.stop();
-    final textToSend = _listeningText.trim();
 
-    if (textToSend.isNotEmpty) {
-      await _sendMessage(textToSend);
-    } else {
+    final submitted = await _submitRecognizedMessageIfNeeded(
+      _listeningText,
+      sessionId: sessionId,
+    );
+
+    if (!submitted && _listeningText.trim().isEmpty) {
       setState(() {
         _mode = _VoiceMode.idle;
       });
