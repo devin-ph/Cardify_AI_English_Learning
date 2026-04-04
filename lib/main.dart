@@ -24,8 +24,13 @@ Future<void> main() async {
     }
   }
 
-  final supabaseUrl = dotenv.maybeGet('SUPABASE_URL');
-  final supabaseAnonKey = dotenv.maybeGet('SUPABASE_ANON_KEY');
+  String? supabaseUrl;
+  String? supabaseAnonKey;
+  if (dotenv.isInitialized) {
+    supabaseUrl = dotenv.maybeGet('SUPABASE_URL');
+    supabaseAnonKey = dotenv.maybeGet('SUPABASE_ANON_KEY');
+  }
+
   if (supabaseUrl?.trim().isNotEmpty == true &&
       supabaseAnonKey?.trim().isNotEmpty == true) {
     await Supabase.initialize(

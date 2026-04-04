@@ -50,7 +50,9 @@ class _ImageCaptureScreenState extends State<ImageCaptureScreen>
   @override
   void initState() {
     super.initState();
-    _apiEndpoint = dotenv.maybeGet('HF_ANALYZE_ENDPOINT')?.trim() ?? '';
+    _apiEndpoint = dotenv.isInitialized
+        ? (dotenv.maybeGet('HF_ANALYZE_ENDPOINT')?.trim() ?? '')
+        : '';
     _networkService = NetworkService(_apiEndpoint);
     _scanController = AnimationController(
       vsync: this,

@@ -33,6 +33,8 @@ class SavedCardsRepository {
 
   SupabaseClient? get _clientOrNull {
     try {
+      if (!dotenv.isInitialized) return null;
+
       final configuredUrl = dotenv.maybeGet('SUPABASE_URL')?.trim() ?? '';
       final configuredKey = dotenv.maybeGet('SUPABASE_ANON_KEY')?.trim() ?? '';
       if (configuredUrl.isEmpty ||
@@ -59,6 +61,7 @@ class SavedCardsRepository {
 
   String _dotenvValue(String key, String fallback) {
     try {
+      if (!dotenv.isInitialized) return fallback;
       return dotenv.maybeGet(key) ?? fallback;
     } catch (_) {
       return fallback;
@@ -66,8 +69,12 @@ class SavedCardsRepository {
   }
 
   String _storageScope() {
-    final userId = Supabase.instance.client.auth.currentUser?.id;
-    return (userId == null || userId.isEmpty) ? 'anonymous' : userId;
+    try {
+      final userId = FirebaseAuth.instance.currentUser?.uid;
+      return (userId == null || userId.isEmpty) ? 'anonymous' : userId;
+    } catch (_) {
+      return 'anonymous';
+    }
   }
 
   List<SavedCard> get cards => List.unmodifiable(_cards);
@@ -347,7 +354,7 @@ class SavedCardsRepository {
           imageUrl = await _uploadImage(client, imageBytes, normalized);
         }
 
-        await client.from(_tableName).insert({
+        await client.from(_tableName).upsert({
           'user_id': FirebaseAuth.instance.currentUser?.uid,
           'word': result.word,
           'topic': result.topic,
@@ -428,7 +435,7 @@ class SavedCardsRepository {
 
     if (client != null) {
       try {
-        await client.from(_tableName).insert({
+        await client.from(_tableName).upsert({
           'user_id': FirebaseAuth.instance.currentUser?.uid,
           'word': card.word,
           'topic': card.topic,
@@ -497,7 +504,7 @@ class SavedCardsRepository {
     }
 
     if (client != null) {
-      final payload = {
+      final payload = { 'user_id': FirebaseAuth.instance.currentUser?.uid,
         'word': word.trim(),
         'topic': topic.trim().isEmpty ? 'Từ mới' : topic.trim(),
         'phonetic': phonetic.trim(),
@@ -513,18 +520,16 @@ class SavedCardsRepository {
         if (existingWord != null) {
           await client
               .from(_tableName)
-              .update(payload)
-              .ilike('word', normalized);
+              .update(payload).eq('user_id', FirebaseAuth.instance.currentUser?.uid ?? '').ilike('word', normalized);
         } else {
-          await client.from(_tableName).insert(payload);
+          await client.from(_tableName).upsert(payload);
         }
       } catch (_) {
         if (existingWord != null) {
           try {
             await client
                 .from(_tableName)
-                .update(payload)
-                .ilike('word', normalized);
+                .update(payload).eq('user_id', FirebaseAuth.instance.currentUser?.uid ?? '').ilike('word', normalized);
           } catch (_) {
             // Ignore remote issues and keep the local save.
           }
@@ -661,7 +666,7 @@ class SavedCardsRepository {
     if (client != null) {
       _remoteSubscription ??= client
           .from(_tableName)
-          .stream(primaryKey: ['word'])
+          .stream(primaryKey: ['user_id', 'word'])
           .order('saved_at', ascending: false)
           .listen((rows) {
             final uid = FirebaseAuth.instance.currentUser?.uid;
@@ -686,3 +691,7 @@ class SavedCardsRepository {
     return _cardsController.stream;
   }
 }
+
+
+
+
