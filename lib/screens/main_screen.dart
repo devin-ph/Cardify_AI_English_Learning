@@ -1,5 +1,6 @@
 import 'package:cardify_ai_english_learning_app/screens/deck_list_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/analysis_result.dart';
 import '../services/saved_cards_repository.dart';
@@ -25,11 +26,42 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   bool _isDictionarySearching = false;
   String _userName = 'Explorer';
+  int _streak = 0;
+  int _experience = 0;
+  int _level = 1;
+  int _nextLevelExperience = 1000;
   final SavedCardsRepository _cardsRepository = SavedCardsRepository.instance;
 
   @override
   void initState() {
     super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final user = Supabase.instance.client.auth.currentUser;
+      if (user == null) return;
+      final data = await Supabase.instance.client
+          .from('user_profiles')
+          .select()
+          .eq('id', user.id)
+          .maybeSingle();
+
+      if (data != null && mounted) {
+        setState(() {
+          _userName = data['username'] as String? ?? 'Explorer';
+          _streak = (data['streak'] as num?)?.toInt() ?? 0;
+          _experience = (data['xp'] as num?)?.toInt() ?? 0;
+          _level = (data['level'] as num?)?.toInt() ?? 1;
+          _nextLevelExperience =
+              (data['next_level_xp'] as num?)?.toInt() ?? 1000;
+        });
+      }
+    } catch (e) {
+      // Bỏ qua lỗi nếu chưa có table hoặc data
+      debugPrint('Lỗi load data: $e');
+    }
   }
 
   void _setScreenIndex(int index) {
@@ -237,15 +269,21 @@ class _MainScreenState extends State<MainScreen> {
         return ValueListenableBuilder<int>(
           valueListenable: XPService.instance.xpNotifier,
           builder: (context, xp, child) {
-            return HomeScreen(
-              userName: _userName,
-              streak: 12,
-              level: (xp ~/ 1000) + 1,
-              experience: xp,
-              nextLevelExperience: ((xp ~/ 1000) + 1) * 1000,
-              onOpenDecks: () => _onNavTap(3),
-              onOpenDictionary: () => _onNavTap(2),
-              onOpenCameraQuest: _onCameraTap,
+            return ValueListenableBuilder<int>(
+              valueListenable: XPService.instance.streakNotifier,
+              builder: (context, streak, child) {
+                return HomeScreen(
+                  userName: _userName,
+                  streak: streak,
+                  level: XPService.instance.levelNotifier.value,
+                  experience: xp,
+                  nextLevelExperience:
+                      XPService.instance.levelNotifier.value * 1000,
+                  onOpenDecks: () => _onNavTap(3),
+                  onOpenDictionary: () => _onNavTap(2),
+                  onOpenCameraQuest: _onCameraTap,
+                );
+              },
             );
           },
         );

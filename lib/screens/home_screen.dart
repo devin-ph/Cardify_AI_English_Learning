@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
 
+import '../models/saved_card.dart';
+import '../services/saved_cards_repository.dart';
+
 class HomeScreen extends StatefulWidget {
   final String userName;
   final int streak;
@@ -30,33 +33,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  static const List<Map<String, dynamic>> _dailyMissions = [
-    {
-      'title': 'Hoàn thành bài ôn tập',
-      'xp': '+100 XP',
-      'current': 3,
-      'total': 3,
-      'color': Color(0xFF06C0FF),
-      'icon': Icons.style_rounded,
-    },
-    {
-      'title': 'Quét 5 đồ vật mới',
-      'xp': '+50 XP',
-      'current': 2,
-      'total': 5,
-      'color': Color(0xFF7E6BFF),
-      'icon': Icons.camera_alt_rounded,
-    },
-    {
-      'title': 'Học 15 từ vựng mới',
-      'xp': '+150 XP',
-      'current': 10,
-      'total': 15,
-      'color': Color(0xFFFF7F45),
-      'icon': Icons.menu_book_rounded,
-    },
-  ];
-
   static const List<Map<String, dynamic>> _bannerThemes = [
     {
       'tag': 'TÍNH NĂNG MỚI',
@@ -97,66 +73,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       'colors': [Color(0xFFFF7A45), Color(0xFFFF5F6D), Color(0xFFFFB347)],
       'chipColor': Color(0xFFB93F49),
       'iconColor': Color(0xFFD54C3E),
-    },
-  ];
-
-  static const List<Map<String, dynamic>> _flashcardDecks = [
-    {
-      'name': 'Thế giới Động vật',
-      'progress': 0.72,
-      'learned': 18,
-      'total': 25,
-      'color': Color(0xFFFFA62A),
-      'icon': Icons.pets_rounded,
-    },
-    {
-      'name': 'Thế giới Nhà bếp',
-      'progress': 0.43,
-      'learned': 13,
-      'total': 30,
-      'color': Color(0xFF45C4FF),
-      'icon': Icons.kitchen_rounded,
-    },
-    {
-      'name': 'Sứ mệnh Vũ trụ',
-      'progress': 0.28,
-      'learned': 7,
-      'total': 25,
-      'color': Color(0xFF8E7CFF),
-      'icon': Icons.psychology_rounded,
-    },
-  ];
-
-  static const List<Map<String, String>> _recentWords = [
-    {
-      'word': 'binoculars',
-      'meaning': 'ống nhòm',
-      'source': 'Scanned',
-      'time': '2 phút trước',
-    },
-    {
-      'word': 'blanket',
-      'meaning': 'chăn',
-      'source': 'Flashcard',
-      'time': '14 phút trước',
-    },
-    {
-      'word': 'ladder',
-      'meaning': 'cái thang',
-      'source': 'Scanned',
-      'time': '1 giờ trước',
-    },
-    {
-      'word': 'teapot',
-      'meaning': 'ấm trà',
-      'source': 'Quest',
-      'time': '3 giờ trước',
-    },
-    {
-      'word': 'shelf',
-      'meaning': 'kệ',
-      'source': 'Flashcard',
-      'time': 'Hôm qua',
     },
   ];
 
@@ -206,10 +122,50 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  static const List<Map<String, dynamic>> _milestoneLeagues = [
+    {'name': 'Chưa xếp hạng', 'xpReq': 0, 'color': Color(0xFF9E9E9E)},
+    {'name': 'Đồng', 'xpReq': 200, 'color': Color(0xFFCD7F32)},
+    {'name': 'Bạc', 'xpReq': 1000, 'color': Color(0xFFC0C0C0)},
+    {'name': 'Vàng', 'xpReq': 3000, 'color': Color(0xFFFFD700)},
+    {'name': 'Kim Cương', 'xpReq': 6000, 'color': Color(0xFF00BFFF)},
+    {'name': 'Cao Thủ', 'xpReq': 10000, 'color': Color(0xFFFF00FF)},
+  ];
+
+  Map<String, dynamic> get _currentLeague {
+    Map<String, dynamic> current = _milestoneLeagues.first;
+    for (var league in _milestoneLeagues) {
+      if (widget.experience >= league['xpReq']) {
+        current = league;
+      } else {
+        break;
+      }
+    }
+    return current;
+  }
+
+  Map<String, dynamic>? get _nextLeague {
+    for (var league in _milestoneLeagues) {
+      if (widget.experience < league['xpReq']) {
+        return league;
+      }
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final levelProgress = (widget.experience / widget.nextLevelExperience)
-        .clamp(0.0, 1.0);
+    final currentL = _currentLeague;
+    final nextL = _nextLeague;
+
+    double progress = 1.0;
+    if (nextL != null) {
+      double xpInCurrentRank = (widget.experience - currentL['xpReq'])
+          .toDouble();
+      double xpNeededForNext = (nextL['xpReq'] - currentL['xpReq']).toDouble();
+      progress = (xpInCurrentRank / xpNeededForNext).clamp(0.0, 1.0);
+    }
+
+    final levelProgress = progress;
 
     return Container(
       decoration: const BoxDecoration(
@@ -530,6 +486,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildStatsRow(double levelProgress) {
+    final currentL = _currentLeague;
+    final nextL = _nextLeague;
+    final rankName = currentL['name'].toString().toUpperCase();
+    final xpDisplay = nextL != null
+        ? '${widget.experience}/${nextL['xpReq']} XP'
+        : 'Đã đạt Cao Thủ';
+
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -551,9 +514,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           Expanded(
             flex: 1,
             child: _StatCard(
-              title: 'CẤP ĐỘ ${widget.level}',
-              value: '${widget.experience}/${widget.nextLevelExperience} XP',
-              valueSize: 17,
+              title: 'CẤP BẬC',
+              value: '$rankName\n$xpDisplay',
+              valueSize: 15,
               icon: Icons.military_tech_rounded,
               backgroundColor: const Color(0xFFEAF1FF),
               iconColor: const Color(0xFF3269FF),
@@ -588,234 +551,388 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildDailyMissionsSection() {
-    return _FrostedPanel(
-      title: 'Nhiệm vụ hằng ngày',
-      subtitle: 'Hoàn thành để nhận thêm XP',
-      actionLabel: '',
-      onActionTap: null,
-      child: Column(
-        children: _dailyMissions.map((mission) {
-          final color = mission['color'] as Color;
-          final current = mission['current'] as int;
-          final total = mission['total'] as int;
-          final isCompleted = current >= total;
-          final displayColor = isCompleted ? const Color(0xFF6EE7B7) : color;
-          final progress = (current / total).clamp(0.0, 1.0);
+    return ValueListenableBuilder<List<SavedCard>>(
+      valueListenable: SavedCardsRepository.instance.cardsNotifier,
+      builder: (context, cards, _) {
+        final today = DateTime.now();
 
-          return _BounceTap(
-            onTap: () {},
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 10),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: isCompleted
-                    ? const Color(0xFFE8FFF5)
-                    : Colors.grey.shade50.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: isCompleted
-                      ? displayColor.withOpacity(0.5)
-                      : Colors.grey.shade200,
-                ),
+        final cardsToday = cards
+            .where(
+              (c) =>
+                  c.savedAt.year == today.year &&
+                  c.savedAt.month == today.month &&
+                  c.savedAt.day == today.day,
+            )
+            .toList();
+
+        final scannedToday = cardsToday
+            .where((c) => c.imageBytes != null)
+            .length;
+        final wordsToday = cardsToday.length;
+
+        final topicMap = <String, List<SavedCard>>{};
+        for (final card in cards) {
+          final topic = card.topic.trim().isNotEmpty ? card.topic : 'General';
+          topicMap.putIfAbsent(topic, () => []).add(card);
+        }
+        int fullyLearnedSets = topicMap.entries
+            .where(
+              (e) => e.value.every(
+                (c) =>
+                    SavedCardsRepository.instance.isKnown(c.id, topic: e.key),
               ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
+            )
+            .length;
+
+        final dailyMissions = [
+          {
+            'title': 'Hoàn thành bài ôn tập',
+            'xp': '+100 XP',
+            'current': fullyLearnedSets,
+            'total': 1,
+            'color': const Color(0xFF06C0FF),
+            'icon': Icons.style_rounded,
+          },
+          {
+            'title': 'Quét 5 đồ vật mới',
+            'xp': '+50 XP',
+            'current': scannedToday,
+            'total': 5,
+            'color': const Color(0xFF7E6BFF),
+            'icon': Icons.camera_alt_rounded,
+          },
+          {
+            'title': 'Học 15 từ vựng mới',
+            'xp': '+150 XP',
+            'current': wordsToday,
+            'total': 15,
+            'color': const Color(0xFFFF7F45),
+            'icon': Icons.menu_book_rounded,
+          },
+        ];
+
+        return _FrostedPanel(
+          title: 'Nhiệm vụ hằng ngày',
+          subtitle: 'Hoàn thành để nhận thêm XP',
+          actionLabel: '',
+          onActionTap: null,
+          child: Column(
+            children: dailyMissions.map((mission) {
+              final color = mission['color'] as Color;
+              final current = mission['current'] as int;
+              final total = mission['total'] as int;
+              final isCompleted = current >= total;
+              final displayColor = isCompleted
+                  ? const Color(0xFF6EE7B7)
+                  : color;
+              final progress = (current / total).clamp(0.0, 1.0);
+
+              return _BounceTap(
+                onTap: () {},
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: isCompleted
+                        ? const Color(0xFFE8FFF5)
+                        : Colors.grey.shade50.withOpacity(0.8),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
                       color: isCompleted
-                          ? const Color(0xFF10B981).withOpacity(0.15)
-                          : color.withOpacity(0.18),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Icon(
-                      isCompleted
-                          ? Icons.check_circle_rounded
-                          : mission['icon'] as IconData,
-                      color: isCompleted ? const Color(0xFF10B981) : color,
+                          ? displayColor.withOpacity(0.5)
+                          : Colors.grey.shade200,
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                          color: isCompleted
+                              ? const Color(0xFF10B981).withOpacity(0.15)
+                              : color.withOpacity(0.18),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(
+                          isCompleted
+                              ? Icons.check_circle_rounded
+                              : mission['icon'] as IconData,
+                          color: isCompleted ? const Color(0xFF10B981) : color,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              mission['title'] as String,
+                              style: TextStyle(
+                                color: isCompleted
+                                    ? const Color(0xFF104A33)
+                                    : const Color(0xFF2D3142),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15,
+                                decoration: isCompleted
+                                    ? TextDecoration.none
+                                    : null,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: LinearProgressIndicator(
+                                      minHeight: 7,
+                                      value: progress,
+                                      backgroundColor: isCompleted
+                                          ? displayColor.withOpacity(0.2)
+                                          : color.withOpacity(0.15),
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        displayColor,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                SizedBox(
+                                  width: 36,
+                                  child: Text(
+                                    '${current > total ? total : current}/$total',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w800,
+                                      color: displayColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      SizedBox(
+                        width: 60,
+                        child: Text(
+                          mission['xp'] as String,
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: isCompleted ? Colors.grey.shade500 : color,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildFlashcardProgressSection() {
+    return ValueListenableBuilder<List<SavedCard>>(
+      valueListenable: SavedCardsRepository.instance.cardsNotifier,
+      builder: (context, cards, _) {
+        if (cards.isEmpty) {
+          return _FrostedPanel(
+            title: 'Tiến trình Thẻ ghi nhớ',
+            subtitle: 'Theo dõi tiến trình các bộ thẻ đang học',
+            actionLabel: 'Mở bộ thẻ',
+            onActionTap: widget.onOpenDecks,
+            child: SizedBox(
+              height: 176,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.style_rounded,
+                        size: 40,
+                        color: Colors.blueGrey.shade300,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Bạn chưa có bộ thẻ nào.\n Hãy chụp ảnh hoặc lưu từ mới vào thẻ ghi nhớ!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.blueGrey.shade600,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
+        final topicMap = <String, List<SavedCard>>{};
+        for (final card in cards) {
+          final topic = card.topic.trim().isNotEmpty ? card.topic : 'General';
+          topicMap.putIfAbsent(topic, () => []).add(card);
+        }
+
+        final decks = topicMap.entries.toList().asMap().entries.map((entry) {
+          final idx = entry.key;
+          final topic = entry.value.key;
+          final topicCards = entry.value.value;
+
+          final total = topicCards.length;
+          final learned = topicCards
+              .where(
+                (card) => SavedCardsRepository.instance.isKnown(
+                  card.id,
+                  topic: topic,
+                ),
+              )
+              .length;
+
+          final progress = total > 0 ? learned / total : 0.0;
+          final colors = const [
+            Color(0xFFFFA62A),
+            Color(0xFF45C4FF),
+            Color(0xFF8E7CFF),
+            Color(0xFF06C0FF),
+            Color(0xFFFF7F45),
+          ];
+          final icons = const [
+            Icons.pets_rounded,
+            Icons.kitchen_rounded,
+            Icons.psychology_rounded,
+            Icons.camera_alt_rounded,
+            Icons.menu_book_rounded,
+          ];
+
+          return {
+            'name': topic,
+            'progress': progress,
+            'learned': learned,
+            'total': total,
+            'color': colors[idx % colors.length],
+            'icon': icons[idx % icons.length],
+          };
+        }).toList();
+
+        return _FrostedPanel(
+          title: 'Tiến trình Thẻ ghi nhớ',
+          subtitle: 'Theo dõi tiến trình các bộ thẻ đang học',
+          actionLabel: 'Mở bộ thẻ',
+          onActionTap: widget.onOpenDecks,
+          child: SizedBox(
+            height: 176,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              itemCount: decks.length,
+              separatorBuilder: (context, index) => const SizedBox(width: 12),
+              itemBuilder: (context, index) {
+                final deck = decks[index];
+                final progress = (deck['progress'] as double).clamp(0.0, 1.0);
+                return _BounceTap(
+                  onTap: widget.onOpenDecks ?? () {},
+                  child: Container(
+                    width: 210,
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white.withOpacity(0.8)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.06),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          mission['title'] as String,
-                          style: TextStyle(
-                            color: isCompleted
-                                ? const Color(0xFF104A33)
-                                : const Color(0xFF2D3142),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15,
-                            decoration: isCompleted
-                                ? TextDecoration.none
-                                : null,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
                         Row(
                           children: [
-                            Expanded(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: LinearProgressIndicator(
-                                  minHeight: 7,
-                                  value: progress,
-                                  backgroundColor: isCompleted
-                                      ? displayColor.withOpacity(0.2)
-                                      : color.withOpacity(0.15),
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    displayColor,
-                                  ),
+                            Container(
+                              width: 42,
+                              height: 42,
+                              decoration: BoxDecoration(
+                                color: (deck['color'] as Color).withOpacity(
+                                  0.14,
                                 ),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Icon(
+                                deck['icon'] as IconData,
+                                color: deck['color'] as Color,
                               ),
                             ),
-                            const SizedBox(width: 8),
-                            SizedBox(
-                              width: 36,
+                            const SizedBox(width: 10),
+                            Expanded(
                               child: Text(
-                                '${current > total ? total : current}/$total',
-                                textAlign: TextAlign.right,
-                                style: TextStyle(
-                                  fontSize: 11,
+                                deck['name'] as String,
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w800,
-                                  color: displayColor,
+                                  fontSize: 16,
                                 ),
                               ),
                             ),
                           ],
                         ),
+                        const Spacer(),
+                        Text(
+                          "Đã thuộc ${deck['learned']}/${deck['total']} thẻ",
+                          style: TextStyle(
+                            color: Colors.blueGrey.shade700,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: TweenAnimationBuilder<double>(
+                            tween: Tween<double>(begin: 0.0, end: progress),
+                            duration: Duration(milliseconds: 900 + index * 180),
+                            curve: Curves.easeOut,
+                            builder: (context, animatedProgress, child) {
+                              return LinearProgressIndicator(
+                                minHeight: 8,
+                                value: animatedProgress,
+                                backgroundColor: Colors.grey.shade200,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  deck['color'] as Color,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Hoàn thành ${(progress * 100).round()}%',
+                          style: TextStyle(
+                            color: (deck['color'] as Color).withOpacity(0.92),
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 60,
-                    child: Text(
-                      mission['xp'] as String,
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: isCompleted ? Colors.grey.shade500 : color,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget _buildFlashcardProgressSection() {
-    return _FrostedPanel(
-      title: 'Tiến trình Thẻ ghi nhớ',
-      subtitle: 'Theo dõi tiến trình các bộ thẻ đang học',
-      actionLabel: 'Mở bộ thẻ',
-      onActionTap: widget.onOpenDecks,
-      child: SizedBox(
-        height: 176,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
-          itemCount: _flashcardDecks.length,
-          separatorBuilder: (context, index) => const SizedBox(width: 12),
-          itemBuilder: (context, index) {
-            final deck = _flashcardDecks[index];
-            final progress = (deck['progress'] as double).clamp(0.0, 1.0);
-            return _BounceTap(
-              onTap: widget.onOpenDecks ?? () {},
-              child: Container(
-                width: 210,
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.white.withOpacity(0.8)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.06),
-                      blurRadius: 12,
-                      offset: const Offset(0, 6),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 42,
-                          height: 42,
-                          decoration: BoxDecoration(
-                            color: (deck['color'] as Color).withOpacity(0.14),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            deck['icon'] as IconData,
-                            color: deck['color'] as Color,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Text(
-                            deck['name'] as String,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Text(
-                      "Đã thuộc ${deck['learned']}/${deck['total']} thẻ",
-                      style: TextStyle(
-                        color: Colors.blueGrey.shade700,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: TweenAnimationBuilder<double>(
-                        tween: Tween<double>(begin: 0.0, end: progress),
-                        duration: Duration(milliseconds: 900 + index * 180),
-                        curve: Curves.easeOut,
-                        builder: (context, animatedProgress, child) {
-                          return LinearProgressIndicator(
-                            minHeight: 8,
-                            value: animatedProgress,
-                            backgroundColor: Colors.grey.shade200,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              deck['color'] as Color,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Hoàn thành ${(progress * 100).round()}%',
-                      style: TextStyle(
-                        color: (deck['color'] as Color).withOpacity(0.92),
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -906,72 +1023,107 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildRecentWordsSection() {
-    return _FrostedPanel(
-      title: 'Từ mới học / quét gần đây',
-      subtitle: 'Danh sách từ vựng bạn mới ghi nhớ gần đây',
-      actionLabel: 'Mở từ điển',
-      onActionTap: widget.onOpenDictionary,
-      child: SizedBox(
-        height: 80,
-        child: PageView.builder(
-          clipBehavior: Clip.none,
-          controller: PageController(viewportFraction: 0.85, initialPage: 1000),
-          itemBuilder: (context, index) {
-            final word = _recentWords[index % _recentWords.length];
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 5),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFE4EEFF)),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEAF2FF),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(
-                      Icons.bolt_rounded,
-                      color: Color(0xFF3276FF),
-                    ),
+    return ValueListenableBuilder<List<SavedCard>>(
+      valueListenable: SavedCardsRepository.instance.cardsNotifier,
+      builder: (context, cards, _) {
+        if (cards.isEmpty) {
+          return _FrostedPanel(
+            title: 'Từ mới lưu gần đây',
+            subtitle: 'Danh sách từ vựng bạn mới ghi nhớ gần đây',
+            actionLabel: 'Mở từ điển',
+            onActionTap: widget.onOpenDictionary,
+            child: SizedBox(
+              height: 80,
+              child: Center(
+                child: Text(
+                  'Chưa có từ vựng nào\nHãy học một vài từ để xem tại đây!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.blueGrey.shade600,
+                    fontWeight: FontWeight.w600,
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${word['word']} • ${word['meaning']}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 15,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '${word['source']} • ${word['time']}',
-                          style: TextStyle(
-                            color: Colors.blueGrey.shade700,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-            );
-          },
-        ),
-      ),
+            ),
+          );
+        }
+
+        final recentWords = cards.take(10).toList(); // get top 10
+
+        return _FrostedPanel(
+          title: 'Từ mới học / quét gần đây',
+          subtitle: 'Danh sách từ vựng bạn mới ghi nhớ gần đây',
+          actionLabel: 'Mở từ điển',
+          onActionTap: widget.onOpenDictionary,
+          child: SizedBox(
+            height: 80,
+            child: PageView.builder(
+              clipBehavior: Clip.none,
+              controller: PageController(
+                viewportFraction: 0.85,
+                initialPage: recentWords.length * 100,
+              ),
+              itemBuilder: (context, index) {
+                final card = recentWords[index % recentWords.length];
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: const Color(0xFFE4EEFF)),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFEAF2FF),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.bolt_rounded,
+                          color: Color(0xFF3276FF),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${card.word} • ${card.meaning}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 15,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              '${card.topic} • Mới học',
+                              style: TextStyle(
+                                color: Colors.blueGrey.shade700,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }
