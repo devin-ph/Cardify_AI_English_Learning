@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -76,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     },
   ];
 
+
   late final PageController _bannerController;
   late final AnimationController _pulseController;
   late final AnimationController _shimmerController;
@@ -120,6 +122,58 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     _shimmerController.dispose();
     _scrollOffsetNotifier.dispose();
     super.dispose();
+  }
+
+
+static const List<Map<String, dynamic>> _unscannedHintsPool = [
+    {
+      'hint': 'Một thiết bị điện tử cầm tay dùng để nối mạng, gọi điện',
+      'topic': 'Electronics',
+    },
+    {
+      'hint': 'Đồ nội thất dùng để ngồi làm việc, thường có tựa lưng',
+      'topic': 'Furniture',
+    },
+    {
+      'hint': 'Loài động vật gần gũi với con người, thích bắt chuột',
+      'topic': 'Animals',
+    },
+    {'hint': 'Cây tỏa bóng mát, có nhiều lá xanh', 'topic': 'Nature'},
+    {'hint': 'Máy tính cá nhân có thể gập lại gọn gàng', 'topic': 'Technology'},
+    {
+      'hint': 'Nơi chứa đựng tri thức, gồm nhiều trang giấy',
+      'topic': 'Learning',
+    },
+    {
+      'hint': 'Loại trái cây màu vàng, thân dài, khỉ rất thích ăn',
+      'topic': 'Food',
+    },
+    {
+      'hint': 'Phương tiện di chuyển hai bánh, dùng sức người để đạp',
+      'topic': 'Vehicles',
+    },
+    {
+      'hint': 'Vật dụng dùng để uống nước hằng ngày',
+      'topic': 'Household Items',
+    },
+    {
+      'hint': 'Đồ vật che mưa, che nắng khi đi bộ ngoài trời',
+      'topic': 'Household Items',
+    },
+  ];
+
+  List<Map<String, dynamic>> _getDailyUnscannedHints(
+    List<String> scannedWords,
+  ) {
+    // Để cho phong phú, ta có thể hiện luôn ra mà không cần lọc, hoặc lọc nếu cần
+    // Nhưng vì ta chỉ hiện hint, người dùng chưa quét thì ta cứ lấy ngẫu nhiên 3 hint mỗi ngày.
+    final now = DateTime.now();
+    final seed = now.year * 10000 + now.month * 100 + now.day;
+    final random = math.Random(seed);
+
+    final shuffled = List<Map<String, dynamic>>.from(_unscannedHintsPool)
+      ..shuffle(random);
+    return shuffled.take(3).toList();
   }
 
   static const List<Map<String, dynamic>> _milestoneLeagues = [
@@ -937,21 +991,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildMysterySuggestionsSection() {
-    final List<Map<String, dynamic>> mysteryWords = [
-      {
-        'clue': 'Một loại quả màu vàng, rất tốt cho sức khỏe?',
-        'color': Color(0xFFFF9500),
-      },
-      {
-        'clue': 'Phương tiện di chuyển phổ biến nhất ở Việt Nam?',
-        'color': Color(0xFF3276FF),
-      },
-    ];
+    final List<Map<String, dynamic>> mysteryWords = _getDailyUnscannedHints([]);
 
     return _FrostedPanel(
       title: 'Từ Bí Ẩn',
-      subtitle: 'Đoán từ tiếng Anh dựa trên gợi ý',
-      actionLabel: 'Đoán ngay',
+      subtitle: 'Quét để khám phá từ mới',
+      actionLabel: 'Quét ngay',
       onActionTap: widget.onOpenCameraQuest,
       child: Column(
         children: mysteryWords
@@ -1000,7 +1045,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                item['clue'] as String,
+                                item['hint'] as String,
                                 style: TextStyle(
                                   color: Colors.blueGrey.shade600,
                                   fontWeight: FontWeight.w600,

@@ -1,4 +1,4 @@
-﻿import base64
+import base64
 import json
 import os
 import re
@@ -63,7 +63,8 @@ GENERALIZATION_RULES: Dict[str, str] = {
 }
 
 VISION_PROMPT = """
-Bạn là trợ lý học từ vựng tiếng Anh. Nhận diện đối tượng chính trong ảnh và trả về DUY NHẤT một JSON hợp lệ gồm đúng các trường sau:
+Bạn là trợ lý học từ vựng tiếng Anh có khả năng thị giác máy tính tinh bén. 
+Vui lòng nhận diện RÕ RÀNG và CHÍNH XÁC NHẤT đối tượng chính trong ảnh, sau đó trả về DUY NHẤT một JSON hợp lệ gồm đúng các trường sau:
 {
   "topic": string,
   "word": string,
@@ -74,16 +75,21 @@ Bạn là trợ lý học từ vựng tiếng Anh. Nhận diện đối tượng
   "word_type": string
 }
 Quy tắc quan trọng:
-- "word" phải là tên loại/nhóm chung (ví dụ: laptop, smartphone, cat, fruit...). KHÔNG trả về tên thương hiệu, nhãn sản phẩm.
-- "topic" BẮT BUỘC phải là một trong 9 từ khóa tiếng Anh sau (chọn cái phù hợp nhất): Electronics, Furniture, Animals, Nature, Technology, Learning, Food, Vehicles, Household Items.
+- "word" phải là tên loại/nhóm chung phổ biến nhất (ví dụ: ảnh 1 chiếc macbook -> laptop, chó golden -> dog). KHÔNG trả về tên thương hiệu, tên riêng.
+- Phân loại RẤT CHÍNH XÁC trường "topic", BẮT BUỘC phải là một trong 9 từ khóa tiếng Anh sau: Electronics, Furniture, Animals, Nature, Technology, Learning, Food, Vehicles, Household Items.
 - Không thêm bất kỳ ký tự hay chú thích nào ngoài JSON hợp lệ.
 """.strip()
 
 CHAT_PROMPT = """
-Bạn là gia sư tiếng Anh cho người Việt.
-Nhiệm vụ của bạn là trò chuyện, thấu hiểu ngữ cảnh và phản hồi tự nhiên với người dùng trước khi cung cấp các từ vựng tiếng Anh liên quan.
-Chỉ hỗ trợ từ vựng thuộc 9 chủ đề sau: Đồ điện tử (Electronics), Đồ nội thất (Furniture), Động vật (Animals), Thiên nhiên (Nature), Công nghệ (Technology), Học tập (Learning), Đồ ăn (Food), Phương tiện (Vehicles), Đồ gia dụng (Household Items). Nếu người dùng hỏi từ vựng nằm ngoài các chủ đề này, hãy từ chối khéo léo và hướng họ về các chủ đề được hỗ trợ.
-Người dùng có thể hỏi đời thường (chào hỏi, tâm sự, hỏi thông tin) hoặc mô tả hành động/đồ vật để học từ vựng.
+Bạn là gia sư tiếng Anh vui tính cho người Việt.
+Nhiệm vụ của bạn là trò chuyện, thấu hiểu ngữ cảnh và phản hồi tự nhiên.
+
+ĐẶC BIỆT - CHẾ ĐỘ ĐỐ VUI & ÔN TẬP:
+- Dựa vào danh sách từ người dùng đã quét (được cung cấp), bạn có thể gợi chuyện ôn tập kiến thức chuyên sâu.
+- Bạn CÓ THỂ GỢI Ý 1 TỪ MỚI (chưa quét): Hãy đưa ra manh mối (hint) vui nhộn và đố người dùng đoán tên đồ vật/động vật đó.
+- Nếu người dùng trả lời đúng câu đố, hãy chúc mừng thật nhiệt tình và BẮT BUỘC NHẮC NHỞ: "Đừng quên chụp ảnh để quét và lưu vào bộ sưu tập khi bạn vô tình gặp nó ngoài đời nhé!"
+
+Chỉ hỗ trợ 9 chủ đề: Electronics, Furniture, Animals, Nature, Technology, Learning, Food, Vehicles, Household Items.
 Hãy trả về DUY NHẤT một JSON hợp lệ với đúng các trường:
 {
     "topic": string,
@@ -95,16 +101,11 @@ Hãy trả về DUY NHẤT một JSON hợp lệ với đúng các trường:
     "response": string
 }
 Yêu cầu:
-- Nếu là hội thoại đời thường, trả lời tự nhiên bằng tiếng Việt, intent_type="other".
-- Với hội thoại đời thường hoặc ngoài chủ đề: english_term="", phonetic="", vietnamese_meaning="", example_sentence="".
-- Nếu người dùng đang mô tả hành động, intent_type phải là "action".
-- Nếu người dùng đang mô tả đồ vật, intent_type phải là "object".
-- Nếu người dùng hỏi chủ đề ngoài danh sách cho phép, intent_type="other" và giải thích khéo léo trong "response", yêu cầu họ chọn chủ đề hợp lệ.
-- Nếu không rõ, đặt "other" và vẫn hướng dẫn thân thiện.
-- Nếu là action/object thuộc chủ đề hợp lệ, trong "response" hãy trò chuyện, thấu hiểu ngữ cảnh và dẫn dắt người dùng trước rồi mới nêu: "Từ tiếng Anh là ...".
-- Không đưa ký hiệu IPA trực tiếp vào "response" để phù hợp bộ đọc giọng nói; IPA chỉ để trong trường "phonetic".
-- "topic" BẮT BUỘC TRẢ VỀ TỪ KHÓA TIẾNG ANH CHUẨN từ: Electronics, Furniture, Animals, Nature, Technology, Learning, Food, Vehicles, Household Items. Nếu là hội thoại "other" ngoài danh sách thì trả về "".
-- Không thêm bất kỳ ký tự hay chú thích nào ngoài JSON hợp lệ.
+- Hỏi han, đố vui, chúc mừng -> intent_type="other". Câu đố hoặc lời chúc mừng nằm trọn trong "response".
+- Mô tả hành động -> intent_type="action". Mô tả đồ vật -> intent_type="object". Trò chuyện ngữ cảnh trước trong "response".
+- "topic" BẮT BUỘC TRẢ VỀ TỪ KHÓA TIẾNG ANH CHUẨN từ 9 chủ đề trên. Nếu là hội thoại "other" ngoài lề, trả về "".
+- Không đưa ký hiệu IPA trực tiếp vào "response", chỉ để trong trường "phonetic".
+- Cấm thêm văn bản nào ngoài JSON hợp lệ.
 """.strip()
 
 
@@ -116,6 +117,7 @@ class ChatMessage(BaseModel):
 class ChatRequest(BaseModel):
     message: str
     history: List[ChatMessage] = Field(default_factory=list)
+    learned_words: List[str] = Field(default_factory=list)
 
 
 class ChatResponseData(BaseModel):
@@ -179,7 +181,11 @@ def build_vision_messages(base64_image: str) -> List[Dict[str, Any]]:
 
 
 def build_chat_messages(request: ChatRequest) -> List[Dict[str, str]]:
-    messages: List[Dict[str, str]] = [{"role": "system", "content": CHAT_PROMPT}]
+    system_content = CHAT_PROMPT
+    if request.learned_words:
+        system_content += f"\n\n[THÔNG TIN THÔNG MINH] Danh sách từ vựng người dùng ĐÃ QUÉT/HỌC thành công: {', '.join(request.learned_words)}."
+
+    messages: List[Dict[str, str]] = [{"role": "system", "content": system_content}]
 
     # Lấy 6 tin nhắn gần nhất
     history_slice = request.history[-6:]

@@ -1,0 +1,273 @@
+topic,meaning,hint,masked_meaning,hint_vi
+Electronics,Tivi,,T**i,"Thiết bị điện tử có màn hình, dùng để xem các chương trình truyền hình và phim ảnh."
+Electronics,Máy giặt,,M*y g**t,Thiết bị gia dụng dùng để tự động làm sạch quần áo bằng nước và xà phòng.
+Electronics,Quạt,,Q**t,"Thiết bị có cánh quay bằng động cơ, tạo ra gió để làm mát."
+Electronics,Lò vi sóng,,** ** s**g,Thiết bị nhà bếp dùng sóng điện từ để hâm nóng hoặc nấu chín thức ăn nhanh chóng.
+Electronics,Điện thoại,,Đ**n t***i,"Thiết bị di động cầm tay dùng để liên lạc, lướt web và giải trí."
+Electronics,Máy ảnh,,M*y ả*h,Thiết bị dùng để thu nhận hình ảnh và lưu lại những khoảnh khắc.
+Electronics,Máy sấy tóc,,M*y s*y t*c,Thiết bị thổi ra luồng khí nóng để làm khô tóc nhanh chóng sau khi gội.
+Electronics,Máy hút bụi,,M*y h*t b*i,Thiết bị dùng lực hút để làm sạch bụi bẩn trên sàn nhà hoặc thảm.
+Electronics,Lò nướng,,** n***g,"Thiết bị nhà bếp có không gian kín dùng để nướng chín thức ăn như thịt, bánh."
+Electronics,Máy xay sinh tố,,M*y x*y s**h **,"Thiết bị có lưỡi dao xoay dùng để nghiền nát trái cây, thực phẩm thành dạng lỏng."
+Electronics,Nồi cơm điện,,N*i c*m đ**n,Thiết bị nhà bếp chuyên dụng để nấu chín gạo thành cơm một cách tự động.
+Electronics,Cục sạc,,C*c s*c,Phụ kiện dùng để cung cấp năng lượng điện cho pin của các thiết bị điện tử.
+Electronics,Sạc dự phòng,,S*c ** p***g,Viên pin di động cỡ lớn dùng để sạc điện thoại khi không có ổ cắm điện.
+Electronics,Điều khiển,,Đ**u k***n,"Thiết bị cầm tay có các nút bấm để thao tác tivi, điều hòa từ xa."
+Electronics,Kệ tivi,,** t**i,Đồ nội thất dài và thấp dùng để đặt tivi và các thiết bị giải trí đi kèm.
+Electronics,Hang động,,H**g đ**g,Khoảng trống tự nhiên rất sâu bên trong một ngọn núi hoặc dưới lòng đất.
+Electronics,Pin,,P*n,Bộ phận cung cấp và dự trữ năng lượng điện cho các thiết bị điện tử.
+Electronics,Dây cáp,,D*y c*p,Sợi dây bọc nhựa có lõi kim loại dùng để truyền tải điện hoặc tín hiệu.
+Electronics,Thiết bị,,T***t **,Một máy móc hoặc công cụ được chế tạo ra cho một mục đích nhất định.
+Electronics,Quả trứng,,Q*ả t***g,"Thực phẩm hình bầu dục do các loài gia cầm đẻ ra, bên trong có lòng đỏ và lòng trắng."
+Electronics,Tàu hỏa,,T*u h*a,"Phương tiện gồm một đầu máy kéo theo nhiều toa dài, chạy trên đường ray."
+Electronics,Máy bay,,M*y b*y,"Phương tiện khổng lồ có cánh, bay được trên không trung để chở người đi quãng đường xa."
+Electronics,Xe máy,,** m*y,"Phương tiện hai bánh gắn động cơ, phổ biến nhất trên đường phố Việt Nam."
+Electronics,Trực thăng,,T**c t***g,"Máy bay có cánh quạt lớn trên nóc, có khả năng cất cánh và hạ cánh thẳng đứng."
+Electronics,Tàu điện ngầm,,T*u đ**n n**m,Phương tiện tàu hỏa chạy trong các đường hầm được đào sâu dưới lòng đất thành phố.
+Electronics,Máy kéo,,M*y k*o,Phương tiện cơ giới bánh to thường dùng ở nông trại để cày ruộng.
+Electronics,Xe tay ga,,** t*y **,"Loại xe máy thiết kế sàn để chân rộng, người lái không cần đạp số."
+Electronics,Xe điện,,** đ**n,Phương tiện đi lại giống xe máy nhưng dùng pin hoặc bình ắc quy thay vì đổ xăng.
+Electronics,Máy ủi,,M*y **,Xe công trình có lưỡi thép lớn phía trước dùng để san bằng đất đá.
+Electronics,Máy xúc,,M*y x*c,Xe công trình có cánh tay dài và gàu múc để đào đất.
+Electronics,Chuột máy tính,,C***t m*y t**h,"Ngón tay nhấn trỏ, cầm vừa tay kéo lướt trên mặt bàn gỗ."
+Electronics,Tai nghe bluetooth,,T*i n**e b*******h,"Thiết bị nghe âm thanh không dây, phổ biến với điện thoại hoặc máy tính."
+Furniture,Tủ lạnh,,** l**h,Thiết bị làm lạnh dùng để bảo quản thức ăn và đồ uống tránh bị hỏng.
+Furniture,Bàn là,,B*n **,Thiết bị dùng nhiệt để làm phẳng quần áo bị nhăn.
+Furniture,Ghế,,G*ế,"Đồ nội thất có mặt phẳng và chân đỡ, dùng để ngồi."
+Furniture,Bàn,,B*n,"Đồ nội thất có mặt phẳng đặt trên các chân, dùng để làm việc, học tập hoặc ăn uống."
+Furniture,Giường,,G****g,"Đồ nội thất thường trải đệm, đặt trong phòng ngủ để con người nằm nghỉ ngơi."
+Furniture,Ghế sofa,,G*ế s**a,"Loại ghế dài có nệm dày êm ái, thường đặt ở phòng khách."
+Furniture,Tủ quần áo,,** q**n **,Đồ nội thất có nhiều ngăn và móc treo dùng để cất giữ trang phục.
+Furniture,Giá sách,,G*á s**h,Đồ nội thất có nhiều tầng bằng phẳng dùng để xếp gọn và trưng bày sách.
+Furniture,Bàn làm việc,,B*n l*m v**c,"Chiếc bàn chuyên dụng thường có ngăn kéo, dùng để ngồi xử lý công việc."
+Furniture,Tủ,,**,Đồ nội thất dạng hình hộp có cửa đóng mở để lưu trữ các đồ dùng trong nhà.
+Furniture,Ngăn kéo,,N**n k*o,Một phần của bàn hoặc tủ có thể kéo ra đẩy vào để cất đồ vật nhỏ.
+Furniture,Rèm cửa,,R*m c*a,Tấm vải treo ở cửa sổ để cản ánh sáng mặt trời và che chắn tầm nhìn.
+Furniture,Gối tựa,,G*i t*a,Loại gối vuông hoặc tròn thường đặt trên sofa để lót lưng hoặc trang trí.
+Furniture,Đệm,,Đ*m,"Tấm lót êm ái có kích thước lớn, trải trên giường để nằm cho thoải mái."
+Furniture,Ghế bành,,G*ế b**h,Loại ghế cá nhân êm ái có phần tựa lưng và hai bên để gác tay.
+Furniture,Ghế đẩu,,G*ế đ*u,"Loại ghế nhỏ, không có phần tựa lưng và chỗ gác tay."
+Furniture,Băng ghế,,B**g g*ế,"Loại ghế dài, cứng, đủ chỗ cho nhiều người cùng ngồi, thường thấy ở công viên."
+Furniture,Kệ để giày,,** ** g**y,Giá đỡ có nhiều tầng thường đặt ở cửa ra vào để xếp gọn giày dép.
+Furniture,Bàn ăn,,B*n **,Chiếc bàn lớn đặt trong phòng bếp hoặc phòng ăn để gia đình quây quần dùng bữa.
+Furniture,Bàn trang điểm,,B*n t***g đ**m,"Chiếc bàn có kèm theo gương, dùng làm nơi làm đẹp và để mỹ phẩm của phụ nữ."
+Furniture,Đồng hồ,,Đ**g **,Thiết bị treo tường hoặc để bàn dùng để hiển thị thời gian trong ngày.
+Furniture,Phòng học,,P***g h*c,"Căn phòng có bàn ghế và bảng đen, nơi diễn ra các tiết học."
+Furniture,Bàn học,,B*n h*c,Chiếc bàn thiết kế phù hợp cho học sinh ngồi ghi chép và làm bài.
+Furniture,Xe lăn,,** l*n,"Chiếc ghế có gắn bánh xe hai bên, dành cho người khuyết tật di chuyển."
+Furniture,Tủ đầu giường,,** đ*u g****g,Chiếc tủ nhỏ thường đặt cạnh giường ngủ dùng để đèn hoặc các vật dụng cá nhân.
+Furniture,Ghế xoay,,G*ế x**y,"Loại ghế có bánh xe và trục xoay, phổ biến trong văn phòng làm việc."
+Furniture,Gối ôm,,G*i **,"Đồ dùng nhỏ lót vải bông, thường ôm hoặc tựa khi ngồi trên ghế."
+Furniture,Bàn phím cơ,,B*n p**m **,"Loại bàn phím có công tắc riêng, gõ lách cách chuyên dòng vi tính."
+Furniture,Máy lọc không khí,,M*y l*c k***g k*í,"Thiết bị dùng để loại bỏ bụi bẩn và mùi hôi trong không khí, giúp không gian sống trong lành hơn."
+Furniture,Sạc không dây,,S*c k***g d*y,Truyền điện nạp pin nhưng không cắm cáp thẳng qua lưng máy trơn.
+Animals,Đồng hồ thông minh,,Đ**g ** t***g m**h,"Thiết bị đeo tay vừa xem giờ, vừa có thể nhận thông báo và theo dõi sức khỏe."
+Animals,Cây treo áo,,C*y t**o **,"Đồ vật dạng trụ cao có các nhánh đưa ra để móc mũ, áo khoác."
+Animals,Con mèo,,C*n m*o,"Loài thú cưng kêu meo meo, thích bắt chuột và leo trèo."
+Animals,Con chó,,C*n c*ó,"Loài vật nuôi trung thành, biết sủa và thường được dùng để trông nhà."
+Animals,Con chim,,C*n c**m,"Loài động vật có lông vũ, có đôi cánh để bay lượn trên bầu trời."
+Animals,Con cá,,C*n **,"Loài động vật sống dưới nước, bơi bằng vây và thở bằng mang."
+Animals,Con bò,,C*n **,"Loài gia súc lớn ăn cỏ, cung cấp sức kéo, sữa và thịt."
+Animals,Con gà,,C*n **,"Loài gia cầm phổ biến, gà trống biết gáy sáng còn gà mái biết đẻ trứng."
+Animals,Con ngựa,,C*n n**a,"Loài động vật chạy rất nhanh, thường được dùng để cưỡi hoặc kéo xe."
+Animals,Con cừu,,C*n c*u,"Loài động vật hiền lành có bộ lông dày màu trắng xốp, thường nuôi để lấy lông."
+Animals,Con dê,,C*n **,"Loài động vật có sừng, nhai lại, thường mọc râu ở cằm và kêu be be."
+Animals,Con thỏ,,C*n t*ỏ,"Loài động vật nhỏ có đôi tai dài, di chuyển bằng cách nhảy và rất thích ăn cà rốt."
+Animals,Con hổ,,C*n **,"Loài thú dữ họ mèo, lông màu vàng có vằn đen, được mệnh danh là chúa tể sơn lâm."
+Animals,Con sư tử,,C*n ** **,"Loài thú ăn thịt to lớn, con đực có bờm lông dày quanh cổ."
+Animals,Con voi,,C*n v*i,"Loài động vật trên cạn lớn nhất, có đôi tai to và chiếc vòi rất dài."
+Animals,Con khỉ,,C*n k*ỉ,"Loài động vật rất thông minh, giỏi leo trèo trên cây và thích ăn chuối."
+Animals,Con gấu,,C*n g*u,"Loài động vật hoang dã to lớn, có bộ lông dày, một số loài có tập tính ngủ đông."
+Animals,Con hươu,,C*n h**u,"Loài động vật ăn cỏ hiền lành, con đực thường có cặp sừng phân nhánh rất đẹp trên đầu."
+Animals,Con rắn,,C*n r*n,"Loài bò sát có thân hình thon dài, không có chân, di chuyển bằng cách trườn mình."
+Animals,Con cá sấu,,C*n ** s*u,"Loài bò sát lưỡng cư ăn thịt hung dữ, da sần sùi và hàm răng cực kỳ sắc nhọn."
+Animals,Con rùa,,C*n r*a,"Loài bò sát di chuyển rất chậm chạp, có một lớp mai cứng trên lưng để bảo vệ cơ thể."
+Animals,Con ếch,,C*n ế*h,"Loài động vật lưỡng cư có khả năng nhảy xa, sống ở ao hồ và kêu ộp ộp vào mùa mưa."
+Animals,Con nhện,,C*n n**n,"Loài động vật nhỏ có tám chân, thường chăng tơ để làm tổ và bẫy con mồi."
+Animals,Con ong,,C*n o*g,"Loài côn trùng có cánh, sống theo bầy đàn và chuyên đi hút mật hoa."
+Animals,Con bướm,,C*n b**m,"Loài côn trùng có đôi cánh rộng nhiều màu sắc sặc sỡ, bay dập dờn quanh các bông hoa."
+Animals,Con ruồi,,C*n r**i,"Loài côn trùng có cánh bay rất nhanh, thường bám vào đồ ăn gây mất vệ sinh."
+Animals,Cá heo,,** h*o,"Loài động vật có vú sống ở đại dương, rất thông minh và thân thiện với con người."
+Animals,Cá voi,,** v*i,"Loài động vật có vú sống dưới biển, có kích thước cơ thể khổng lồ và thường phun nước lên trời."
+Animals,Cái lá,,C*i **,"Bộ phận mọc trên cành cây, thường có màu xanh, có chức năng quang hợp."
+Animals,Rừng,,R**g,Khu vực tự nhiên rộng lớn trồng rất nhiều cây cối và là nơi sinh sống của động vật hoang dã.
+Nature,Đèn,,Đ*n,Thiết bị phát ra ánh sáng dùng để thắp sáng không gian khi trời tối.
+Nature,Bình nóng lạnh,,B**h n**g l**h,Thiết bị dùng để đun nước nóng phục vụ cho việc tắm rửa.
+Nature,Lọ hoa,,** h*a,"Đồ vật dùng để cắm những bông hoa vào bên trong, thường làm bằng gốm hoặc thủy tinh."
+Nature,Cây,,C*y,"Thực vật có thân, rễ và lá, cung cấp gỗ, bóng mát và khí oxy cho trái đất."
+Nature,Hoa,,H*a,"Bộ phận tỏa hương thơm và có màu sắc sặc sỡ của thực vật, dùng để trang trí."
+Nature,Cỏ,,**,"Loài thực vật nhỏ mọc sát mặt đất, thường tạo thành những thảm xanh rộng lớn."
+Nature,Ngọn núi,,N**n n*i,"Dạng địa hình nhô lên cao rất nhiều so với mặt đất xung quanh, đỉnh nhọn và dốc."
+Nature,Ngọn đồi,,N**n đ*i,Khu vực đất nhô lên cao nhưng thoải và thấp hơn so với ngọn núi.
+Nature,Dòng sông,,D**g s**g,"Dòng nước chảy tự nhiên, trải dài nối từ đất liền đổ ra biển."
+Nature,Đại dương,,Đ*i d***g,"Vùng nước mặn vô cùng rộng lớn, bao phủ phần lớn bề mặt của trái đất."
+Nature,Biển,,B**n,Vùng nước mặn rộng lớn nhưng nhỏ hơn và thường là một phần của đại dương.
+Nature,Mặt trăng,,M*t t***g,"Hành tinh chiếu sáng vào ban đêm, thay đổi hình dạng từ khuyết đến tròn."
+Nature,Ngôi sao,,N**i s*o,Những điểm sáng nhỏ lấp lánh trên bầu trời vào ban đêm.
+Nature,Cơn mưa,,C*n m*a,Hiện tượng nước rơi từ những đám mây đen trên bầu trời xuống mặt đất.
+Nature,Đất,,Đ*t,"Lớp bề mặt của trái đất, nơi thực vật cắm rễ và con người xây nhà."
+Nature,Nước,,N**c,"Chất lỏng trong suốt, không màu, không mùi, cần thiết cho sự sống."
+Nature,Lửa,,L*a,"Quá trình cháy tạo ra sức nóng và ánh sáng, có màu đỏ hoặc cam."
+Nature,Hòn đảo,,H*n đ*o,Một vùng đất liền bị bao quanh hoàn toàn bởi nước.
+Nature,Thác nước,,T**c n**c,Nơi dòng chảy của suối hoặc sông đổ mạnh từ trên vách đá cao xuống.
+Nature,Tìm kiếm,,T*m k**m,Hành động nhập từ khóa để tra cứu thông tin trên google.
+Nature,Quả táo,,Q*ả t*o,"Loại trái cây có vỏ màu đỏ hoặc xanh, giòn và ngọt."
+Nature,Quả chuối,,Q*ả c***i,"Loại hoa quả màu vàng, vỏ dễ bóc, thường mọc thành nải."
+Nature,Quả cam,,Q*ả c*m,"Loại trái cây múi màu vàng cam, vắt lấy nước uống rất nhiều vitamin C."
+Nature,Quả chanh,,Q*ả c***h,"Trái cây nhỏ vỏ xanh, vắt ra nước có vị rất chua."
+Nature,Quả nho,,Q*ả n*o,"Loài trái cây nhỏ dạng viên tròn, mọc thành chùm, thường dùng làm rượu vang."
+Nature,Dưa hấu,,D*a h*u,"Trái cây rất to, vỏ cứng màu xanh sọc đen, ruột đỏ chứa nhiều nước."
+Nature,Dâu tây,,D*u t*y,"Trái cây nhỏ màu đỏ hình trái tim, có nhiều hạt li ti bên ngoài vỏ."
+Nature,Quả xoài,,Q*ả x**i,"Trái cây nhiệt đới khi chín có màu vàng sậm, hạt to và dẹt."
+Nature,Cơm,,C*m,"Hạt gạo sau khi được nấu chín bằng nước sôi, là món ăn chính của người Việt."
+Nature,Món súp,,M*n s*p,Món ăn dạng lỏng được nấu từ nước hầm xương với rau củ và thịt.
+Technology,Máy tính xách tay,,M*y t**h x**h t*y,"Máy tính cá nhân nhỏ gọn, có thể gập lại và dễ dàng mang theo bên mình."
+Technology,Máy tính bảng,,M*y t**h b**g,"Thiết bị điện tử màn hình cảm ứng, lớn hơn điện thoại nhưng nhỏ hơn laptop."
+Technology,Máy in,,M*y **,Thiết bị dùng để xuất tài liệu từ máy tính ra giấy.
+Technology,Cục phát wifi,,C*c p**t w**i,"Thiết bị cung cấp mạng internet không dây cho các thiết bị như điện thoại, máy tính."
+Technology,Bàn phím,,B*n p**m,Thiết bị ngoại vi có các nút bấm chứa chữ và số dùng để nhập dữ liệu vào máy tính.
+Technology,Chuột,,C***t,"Thiết bị điều khiển con trỏ trên màn hình máy tính, có kích thước vừa lòng bàn tay."
+Technology,Màn hình,,M*n h**h,"Thiết bị hiển thị hình ảnh, văn bản và video từ máy tính."
+Technology,Máy chiếu,,M*y c***u,Thiết bị phóng to hình ảnh từ máy tính lên một bức tường hoặc màn vải lớn.
+Technology,Máy tính,,M*y t**h,"Thiết bị điện tử tinh vi dùng để lưu trữ dữ liệu, tính toán và chạy các phần mềm."
+Technology,Mạng internet,,M**g i******t,Hệ thống toàn cầu kết nối các máy tính với nhau để chia sẻ thông tin.
+Technology,Phần mềm,,P**n m*m,Các chương trình và ứng dụng được cài đặt để chạy bên trong thiết bị điện tử.
+Technology,Mạng lưới,,M**g l**i,Hệ thống bao gồm nhiều điểm hoặc thiết bị kết nối chặt chẽ với nhau.
+Technology,Cơ sở dữ liệu,,** ** ** l**u,Hệ thống được tổ chức để lưu trữ và quản lý lượng lớn thông tin trên máy tính.
+Technology,Máy chủ,,M*y c*ủ,Hệ thống máy tính cấu hình mạnh mẽ lưu trữ dữ liệu tập trung và cung cấp dịch vụ cho máy khác.
+Technology,Ứng dụng,,Ứ*g d**g,Chương trình phần mềm được viết ra để thực hiện các chức năng cụ thể trên điện thoại hoặc máy tính.
+Technology,Trang web,,T***g w*b,Tập hợp các trang thông tin trên internet được truy cập thông qua một địa chỉ tên miền.
+Technology,Mật khẩu,,M*t k**u,Chuỗi ký tự bí mật dùng để xác thực và bảo vệ tài khoản cá nhân.
+Technology,Thư điện tử,,T*ư đ**n **,Hình thức gửi thư và thông điệp qua mạng internet (thường gọi là Email).
+Technology,Tệp tin,,T*p t*n,"Một khối dữ liệu số được đặt tên và lưu trữ trên máy tính như tài liệu, ảnh, video."
+Technology,Thư mục,,T*ư m*c,Nơi được tạo ra để chứa và phân loại các tệp tin bên trong máy tính.
+Technology,Vi-rút máy tính,,V****t m*y t**h,Đoạn mã độc hại lây nhiễm vào hệ thống để phá hoại hoặc ăn cắp dữ liệu.
+Technology,Bluetooth,,B*******h,Chuẩn kết nối không dây tầm ngắn để truyền dữ liệu giữa các thiết bị di động.
+Technology,Tin tặc,,T*n t*c,Kẻ xâm nhập trái phép vào hệ thống máy tính của người khác để trục lợi.
+Technology,Thuật toán,,T***t t**n,Tập hợp các bước logic để giải quyết một bài toán trong lập trình.
+Technology,Lập trình,,L*p t***h,Hành động viết các dòng mã lệnh để tạo ra phần mềm.
+Technology,Lập trình viên,,L*p t***h v**n,Người làm nghề viết code và phát triển các phần mềm máy tính.
+Technology,Kỹ thuật số,,** t***t **,Định dạng thông tin được mã hóa thành các số 0 và 1 trên máy tính.
+Technology,Tải xuống,,T*i x***g,Hành động lấy dữ liệu từ trên mạng internet lưu về máy tính của mình.
+Technology,Tải lên,,T*i l*n,Hành động đưa dữ liệu từ máy tính cá nhân của mình lên mạng internet.
+Technology,Cập nhật,,C*p n**t,Việc nâng cấp phần mềm lên phiên bản mới nhất để có thêm tính năng.
+Learning,Quyển sách,,Q***n s**h,"Tập hợp nhiều trang giấy in chữ, được đóng lại thành tập để đọc."
+Learning,Bút chì,,B*t c*ì,"Dụng cụ viết có lõi bằng than chì, nét chữ có thể xóa được."
+Learning,Cục tẩy,,C*c t*y,Vật dụng bằng cao su dùng để chà sạch những nét mực của bút chì.
+Learning,Tờ giấy,,** g**y,"Vật liệu mỏng làm từ bột gỗ, dùng để in ấn hoặc viết chữ lên."
+Learning,Giáo viên,,G**o v**n,Người đứng trên bục giảng để truyền đạt kiến thức cho học sinh.
+Learning,Học sinh,,H*c s**h,Người cắp sách đến trường để học tập và rèn luyện.
+Learning,Bài học,,B*i h*c,Nội dung kiến thức được thầy cô truyền đạt trong một tiết giảng.
+Learning,Bài tập,,B*i t*p,Nhiệm vụ thầy cô giao cho học sinh về nhà làm để ôn lại kiến thức.
+Learning,Bài thi,,B*i t*i,Bài kiểm tra quan trọng đánh giá năng lực học sinh cuối kỳ.
+Learning,Kiểm tra,,K**m t*a,Quá trình đánh giá mức độ hiểu bài của học sinh qua một bài test.
+Learning,Điểm số,,Đ**m **,Con số dùng để đánh giá kết quả học tập của học sinh sau mỗi bài thi.
+Learning,Môn học,,M*n h*c,Từng lĩnh vực kiến thức riêng biệt được giảng dạy trong trường.
+Learning,Lịch sử,,L**h **,Môn học tìm hiểu về những sự kiện đã xảy ra trong quá khứ.
+Learning,Thư viện,,T*ư v**n,Nơi yên tĩnh lưu trữ rất nhiều sách để mọi người đến mượn và đọc.
+Learning,Cặp sách,,C*p s**h,Chiếc túi đeo trên vai dùng để đựng sách vở và dụng cụ học tập.
+Learning,Kiến thức,,K**n t**c,Những sự hiểu biết được tích lũy qua quá trình học tập và trải nghiệm.
+Learning,Quyển vở,,Q***n **,Đồ dùng bằng nhiều tờ giấy gộp lại dùng để ghi chép bài học trên lớp.
+Learning,Bút bi,,B*t **,Dụng cụ viết thông dụng có một viên bi nhỏ ở đầu ngòi giúp mực lăn ra đều.
+Learning,Máy chơi game,,M*y c**i g**e,Món đồ điện kết nối vô lăng bấm tay hoặc tivi chơi điện tử.
+Learning,Cái hồ,,C*i **,"Một vùng trũng rộng lớn chứa nhiều nước, được bao quanh bởi đất liền."
+Learning,Bãi biển,,B*i b**n,"Dải cát dài ven bờ biển, nơi mọi người thường đến vui chơi và tắm dạo."
+Learning,Bầu trời,,B*u t**i,"Khoảng không gian bao la phía trên đầu chúng ta, nơi có mây, mặt trời và các vì sao."
+Learning,Đám mây,,Đ*m m*y,"Khối hơi nước ngưng tụ trôi lơ lửng trên bầu trời, có màu trắng hoặc xám."
+Learning,Mặt trời,,M*t t**i,Ngôi sao khổng lồ tỏa nhiệt và ánh sáng rực rỡ vào ban ngày.
+Learning,Tuyết,,T***t,Những tinh thể băng màu trắng rơi từ trên trời xuống vào mùa đông lạnh giá.
+Learning,Cơn gió,,C*n g*ó,"Sự chuyển động của không khí trong tự nhiên, có thể thổi bay lá cây."
+Learning,Cơn bão,,C*n b*o,"Hiện tượng thời tiết khắc nghiệt kèm theo gió rất mạnh, mưa to và sấm chớp."
+Learning,Hòn đá,,H*n **,"Một khối chất rắn tự nhiên tạo nên lớp vỏ trái đất, rất cứng."
+Learning,Cát,,C*t,"Những hạt đá nhỏ xíu vỡ ra, thường thấy rất nhiều ở bãi biển hoặc sa mạc."
+Learning,Thung lũng,,T***g l**g,Vùng đất thấp nằm xen kẽ ở giữa các ngọn núi hoặc ngọn đồi.
+Food,Bơ,,**,"Chất béo đặc màu vàng nhạt được đánh bông từ sữa, dùng để ăn bánh mì."
+Food,Rượu vang,,R**u v**g,Thức uống có cồn sang trọng được lên men từ những quả nho chín.
+Food,Bánh ngọt,,B**h n**t,"Loại bánh làm từ bột, đường và trứng, thường xuất hiện trong sinh nhật."
+Food,Đĩa cơm tấm,,Đ*a c*m t*m,"Món ăn mộc mạc đặc trưng, gồm cơm nấu từ hạt gạo xay vỡ mâm kèm sườn nướng."
+Food,Phần cứng,,P**n c**g,"Các bộ phận vật lý cấu tạo nên thiết bị, có thể chạm và cầm nắm được."
+Food,Màn hình,,M*n h**h,Bề mặt của thiết bị dùng để chiếu và hiển thị các điểm ảnh.
+Food,Không dây,,K***g d*y,Công nghệ truyền tải tín hiệu qua sóng vô tuyến thay vì dùng cáp kết nối vật lý.
+Food,Cái bút,,C*i b*t,Dụng cụ dùng mực để viết hoặc ký tên lên giấy.
+Food,Cái thước,,C*i t***c,"Dụng cụ có vạch chia centimet, dùng để đo độ dài hoặc kẻ đường thẳng."
+Food,Vở ghi chép,,** g*i c**p,Tập giấy trắng có dòng kẻ được đóng gáy để học sinh viết bài vào.
+Food,Trường học,,T****g h*c,Nơi tổ chức việc giảng dạy và giáo dục cho các học sinh.
+Food,Toán học,,T**n h*c,"Môn học liên quan đến các con số, hình học và phép tính."
+Food,Khoa học,,K**a h*c,Môn học nghiên cứu về các hiện tượng tự nhiên và vật lý.
+Food,Từ điển,,** đ**n,"Cuốn sách dùng để tra cứu nghĩa, cách phát âm của các từ vựng."
+Food,Cái bảng,,C*i b**g,Bề mặt phẳng màu đen hoặc xanh treo trên tường để giáo viên viết chữ lên.
+Food,Phấn viết,,P**n v**t,Vật liệu dạng thỏi màu trắng dùng để viết chữ lên bảng đen.
+Food,Đại học,,Đ*i h*c,Cơ sở giáo dục bậc cao đào tạo chuyên sâu về một ngành nghề.
+Food,Bánh mì,,B**h **,"Thực phẩm nướng làm từ bột mì, vỏ giòn, dùng ăn sáng rất phổ biến."
+Food,Thịt,,T**t,Phần cơ bắp của động vật được dùng làm thực phẩm.
+Food,Cá,,**,Thực phẩm được chế biến từ động vật sống ở dưới nước.
+Food,Thịt gà,,T**t **,Loại thịt trắng phổ biến lấy từ các con gia cầm biết gáy hoặc đẻ trứng.
+Food,Thịt lợn,,T**t l*n,"Thịt của loài vật kêu ụt ịt, là món thịt phổ biến nhất trong bữa ăn hàng ngày."
+Food,Thịt bò,,T**t **,Loại thịt đỏ có nhiều dinh dưỡng lấy từ loài vật nhai lại và có sừng.
+Food,Sữa tươi,,S*a t**i,Chất lỏng màu trắng giàu canxi được vắt từ bò hoặc dê.
+Food,Phô mai,,P*ô m*i,"Thực phẩm lên men từ sữa động vật, có vị béo ngậy."
+Food,Muối,,M**i,"Gia vị dạng hạt nhỏ màu trắng có vị mặn, chiết xuất từ nước biển."
+Food,Nước,,N**c,Chất lỏng tự nhiên quan trọng nhất cần uống mỗi ngày để duy trì sự sống.
+Food,Trà,,T*à,Thức uống được pha bằng cách ngâm lá sấy khô vào nước nóng.
+Food,Bia,,B*a,"Thức uống có cồn lên men từ lúa mạch, có bọt trắng khi rót ra cốc."
+Food,Xe buýt,,** b**t,"Phương tiện giao thông công cộng cỡ lớn, chạy theo tuyến cố định chở nhiều hành khách."
+Vehicles,Xe đạp,,** đ*p,"Phương tiện hai bánh, người lái phải dùng sức đạp để xe tiến về phía trước."
+Vehicles,Xe tải,,** t*i,Loại xe lớn chuyên dụng để vận chuyển hàng hóa nặng.
+Vehicles,Xe taxi,,** t**i,Loại xe ô tô có đồng hồ tính tiền để hành khách thuê đi lại.
+Vehicles,Xe cứu thương,,** c*u t****g,"Loại xe hú còi ưu tiên, chuyên chở bệnh nhân cấp cứu đến bệnh viện."
+Vehicles,Xe cảnh sát,,** c**h s*t,"Loại xe đặc chủng có đèn nháy trên nóc, được lực lượng chức năng dùng đi tuần tra."
+Vehicles,Tàu ngầm,,T*u n**m,Phương tiện lặn và di chuyển được sâu dưới đáy đại dương.
+Vehicles,Du thuyền,,** t****n,Loại tàu thủy thiết kế cực kỳ sang trọng để giới thượng lưu nghỉ dưỡng.
+Vehicles,Ván trượt,,V*n t***t,Tấm ván phẳng có gắn 4 bánh xe nhỏ để người chơi đứng lên trượt di chuyển.
+Vehicles,Giày patin,,G**y p***n,Loại giày thể thao đặc biệt có gắn hàng bánh xe dưới đế để trượt.
+Vehicles,Loa kéo,,L*a k*o,"Thiết bị âm thanh cỡ lớn có bánh xe và tay cầm, rất được yêu thích để hát dạo."
+Vehicles,Cái thuyền,,C*i t****n,"Phương tiện nhỏ chở người di chuyển trên sông, thường chèo bằng tay."
+Vehicles,Tàu thủy,,T*u t**y,Phương tiện khổng lồ chạy bằng động cơ dùng để chở người và hàng hóa qua lại trên đại dương.
+Vehicles,Xe cứu hỏa,,** c*u h*a,Loại xe màu đỏ có trang bị vòi rồng chuyên dùng để dập tắt các đám cháy.
+Vehicles,Tàu vũ trụ,,T*u ** t*ụ,Phương tiện chuyên chở các phi hành gia lên khám phá các hành tinh khác.
+Vehicles,Con cún,,C*n c*n,"Cách gọi thân mật của loài chó nhỏ, rất đáng yêu và thích quấn quýt bên chủ."
+Vehicles,Con heo,,C*n h*o,"Tên gọi khác của loài lợn, con vật mập mạp quen thuộc ở nông thôn."
+Vehicles,Chim cảnh,,C**m c**h,"Lồng loài hót hay có lông vũ lộng lẫy, nuôi trong nhà làm thú vui."
+Vehicles,Cá vàng,,** v**g,"Sinh vật nhỏ có đuôi bơi mượt mà, rực rỡ màu sắc sống trong bể mâm kính."
+Vehicles,Đám mây trắng,,Đ*m m*y t***g,"Nhóm hơi nước ngưng tụ trên bầu trời, trông giống hệt hình bông gòn."
+Vehicles,Hộp bút,,H*p b*t,"Vật dụng nhỏ dùng để đựng bút, thước, tẩy và các dụng cụ học tập khác."
+Vehicles,Thước kẻ,,T***c **,"Dụng cụ có các vạch chia khoảng cách, dùng để đo chiều dài hoặc kẻ đường thẳng."
+Vehicles,Bát phở,,B*t p*ở,"Món ăn truyền thống nổi tiếng của Việt Nam, gồm bánh trắng mềm và nước dùng từ xương."
+Vehicles,Bánh mì kẹp,,B**h ** k*p,"Món ăn nhanh phổ biến, là một ổ bánh mì được xẻ đôi, nhồi nhân thịt, chả, pate."
+Vehicles,Cốc chè,,C*c c*è,"Món đồ uống giải khát ngọt ngào, phổ biến vào mùa hè, gồm nhiều loại đậu và trân châu."
+Vehicles,Cái chổi,,C*i c**i,"Vật dụng quen thuộc làm từ rơm, đót hoặc nhựa, dùng để quét sạch rác rưởi trên sàn nhà."
+Vehicles,Đồ hót rác,,** h*t r*c,"Dụng cụ nhỏ cầm tay thường đi kèm với chổi, dùng để thu gom rác đem đổ."
+Vehicles,Cây lau nhà,,C*y l*u n*à,"Dụng cụ có cán dài và đầu bằng vải hoặc sợi, dùng để thấm nước làm sạch nền nhà."
+Vehicles,Cái xô,,C*i **,"Đồ chứa hình trụ, có quai xách vòng, thường dùng xách nước dọn dẹp."
+Vehicles,Con dao,,C*n d*o,"Dụng cụ nhà bếp có lưỡi sắc bén, cán vừa vặn thường xén làm thịt đồ."
+Vehicles,Cái thớt,,C*i t**t,Miếng bằng gỗ dày chịu dao khập kênh chặt lát lên củ quả thái nhỏ.
+Household Items,Điều hòa,,Đ**u h*a,"Thiết bị giúp thay đổi nhiệt độ trong phòng, thường dùng để làm mát vào mùa hè."
+Household Items,Tai nghe,,T*i n**e,Thiết bị đeo vào tai để nghe âm thanh mà không làm phiền người xung quanh.
+Household Items,Loa,,L*a,Thiết bị dùng để phát âm thanh ra bên ngoài cho nhiều người cùng nghe.
+Household Items,Gương,,G***g,"Vật dụng bằng kính có khả năng phản chiếu hình ảnh, dùng để soi."
+Household Items,Thảm,,T**m,Tấm vải dày trải trên sàn nhà để giữ ấm chân và trang trí.
+Household Items,Gối,,G*i,"Vật dụng êm ái thường bọc vải, chứa bông bên trong để kê đầu khi ngủ."
+Household Items,Chăn,,C**n,Tấm vải rộng và dày dùng để đắp lên người giữ ấm khi ngủ.
+Household Items,Bức tranh,,B*c t***h,"Tác phẩm nghệ thuật được vẽ hoặc in, thường đóng khung treo trên tường để trang trí."
+Household Items,Đèn chùm,,Đ*n c**m,"Thiết bị chiếu sáng có nhiều bóng, thiết kế cầu kỳ và treo chính giữa trần nhà."
+Household Items,Con lợn,,C*n l*n,"Loài gia súc có thân hình mập mạp, mũi to, thường kêu ụt ịt."
+Household Items,Con vịt,,C*n v*t,"Loài gia cầm có mỏ bẹt, chân có màng, bơi giỏi và kêu cạp cạp."
+Household Items,Con kiến,,C*n k**n,"Loài côn trùng rất nhỏ, sống thành đàn có tính kỷ luật cao và vô cùng chăm chỉ."
+Household Items,Con muỗi,,C*n m**i,Loài côn trùng hay bay vo ve vào ban đêm và hút máu người.
+Household Items,Tên người dùng,,T*n n***i d**g,Biệt danh dùng để định danh tài khoản khi đăng nhập vào một hệ thống.
+Household Items,Đồng phục,,Đ**g p**c,Trang phục giống nhau được quy định mặc khi đến trường.
+Household Items,Giáo dục,,G**o d*c,"Quá trình đào tạo, rèn luyện đạo đức và trí tuệ cho con người."
+Household Items,Mì,,**,"Món ăn dạng sợi dài, thường làm từ bột gạo hoặc bột mì."
+Household Items,Hạt tiêu,,H*t t**u,"Gia vị hạt nhỏ màu đen xay nhuyễn, dùng để tạo mùi thơm và vị cay nồng."
+Household Items,Cà phê,,** p*ê,"Thức uống màu đen chiết xuất từ hạt rang, chứa caffeine giúp tỉnh táo."
+Household Items,Tai nghe chống ồn,,T*i n**e c***g **,Chụp lên tai và ngắt tiếng xì xào xung quanh cho âm thanh tinh khiết.
+Household Items,Đường,,Đ***g,"Gia vị dạng hạt nhỏ chiết xuất từ cây mía, mang lại vị ngọt."
+Household Items,Ô tô,,* **,"Phương tiện giao thông bốn bánh chạy bằng động cơ, có buồng kín chở được nhiều người."
+Household Items,Xe tải nhỏ,,** t*i n*ỏ,Loại xe ô tô có không gian khoang sau rộng rãi (van) để chở một lượng hàng hóa vừa phải.
+Household Items,Phà,,P*à,Phương tiện tàu thuyền chuyên dụng chở khách và xe cộ qua một khúc sông rộng.
+Household Items,Tàu đệm,,T*u đ*m,"Phương tiện di chuyển lướt trên lớp đệm không khí, đi được cả trên cạn lẫn mặt nước."
+Household Items,Tên lửa,,T*n l*a,Phương tiện vận tốc cực lớn được phóng lên để bay ra ngoài không gian.
+Household Items,Chiếu cói,,C***u c*i,"Đồ dệt từ thân thực vật thành tấm, rải dưới đất ngủ cho mát mẻ."
+Household Items,Ngọn cỏ,,N**n **,"Phần trên cùng của cây xanh non mềm, vươn lên mọc mặt đất ánh sáng."
+Household Items,Giọt sương,,G**t s***g,Tinh thể lỏng đọng trên chiếc lá mịn lúc sớm mai khi trời yên ả.
+Household Items,Bát bún,,B*t b*n,"Món ăn làm từ sợi bột gạo tròn mềm mát, thường chan nước dùng hoặc trộn mắm chua ngọt."

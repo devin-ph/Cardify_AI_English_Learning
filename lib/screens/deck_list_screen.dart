@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +23,9 @@ class _DeckListScreenState extends State<DeckListScreen> {
   final SavedCardsRepository _repository = SavedCardsRepository.instance;
   final SpeechToText _speech = SpeechToText();
   final TextEditingController _searchController = TextEditingController();
+
+  Map<String, int> _hintsCountCache = {};
+
   final Map<
     String,
     ({int lastAccessAt, bool practiced, int practiceDurationSeconds})
@@ -152,6 +157,33 @@ class _DeckListScreenState extends State<DeckListScreen> {
     _repository.watchCards();
     _loadRecentAccessHistory();
     _initSpeech();
+    _loadHintCounts();
+  }
+
+  Future<void> _loadHintCounts() async {
+    try {
+      final raw = await rootBundle.loadString(
+        'assets/data/vocabulary_hints_vi.json',
+      );
+      final decoded = jsonDecode(raw);
+      if (decoded is! List) return;
+
+      final counts = <String, int>{};
+      for (final item in decoded) {
+        if (item is! Map) continue;
+        final meaning = item['meaning']?.toString() ?? '';
+        final topicOverride = item['topic']?.toString();
+        final actualTopic =
+            topicOverride ?? TopicClassifier.classifyWord(meaning, '');
+        counts[actualTopic] = (counts[actualTopic] ?? 0) + 1;
+      }
+
+      if (mounted) {
+        setState(() {
+          _hintsCountCache = counts;
+        });
+      }
+    } catch (_) {}
   }
 
   Future<void> _loadRecentAccessHistory() async {
@@ -349,9 +381,10 @@ class _DeckListScreenState extends State<DeckListScreen> {
     List<SavedCard> cards,
   ) {
     final imageAdded = _repository.imageCountForTopic(topic);
-    final savedCount = cards.where((card) => card.topic == topic).length;
-    final total = _defaultTotalCardsPerTopic + savedCount;
-    final progress = total == 0 ? 0.0 : imageAdded / total;
+    final totalInDataset =
+        _hintsCountCache[topic] ?? _defaultTotalCardsPerTopic;
+    final total = totalInDataset;
+    final progress = total == 0 ? 0.0 : (imageAdded / total).clamp(0.0, 1.0);
     return (imageAdded: imageAdded, total: total, progress: progress);
   }
 
@@ -591,142 +624,184 @@ class _DeckListScreenState extends State<DeckListScreen> {
     final isFavorite = deck['favorite'] as bool;
     final title = deck['title'] as String;
     final stats = _getDeckStats(title, cards);
+    final isLocked = stats.imageAdded == 0;
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 2,
       clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 92,
-                height: 92,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE8F0FE),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                alignment: Alignment.center,
-                child: Icon(
-                  deck['icon'],
-                  color: const Color(0xFF0A5DB6),
-                  size: 52,
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
+      child: Stack(
+        children: [
+          Opacity(
+            opacity: isLocked ? 0.5 : 1.0,
+            child: InkWell(
+              onTap: isLocked
+                  ? () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'Vui lòng chụp ít nhất 1 thẻ để mở khóa chủ đề này!',
+                          ),
+                        ),
+                      );
+                    }
+                  : onTap,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
+                    Container(
+                      width: 92,
+                      height: 92,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE8F0FE),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(
+                        deck['icon'],
+                        color: const Color(0xFF0A5DB6),
+                        size: 52,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                TopicClassifier.getVietnameseTopic(
-                                  deck['title'] as String,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      TopicClassifier.getVietnameseTopic(
+                                        deck['title'] as String,
+                                      ),
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      deck['desc'] as String,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                    if (showRecentMeta &&
+                                        recentMeta != null) ...[
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        'Truy cập: ${_formatRecentAccessTime(recentMeta.lastAccessAt)}',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        recentMeta.practiced
+                                            ? 'Trạng thái: Đã luyện tập ${_formatPracticeDuration(recentMeta.practiceDurationSeconds)}'
+                                            : 'Trạng thái: Chỉ mở option rồi thoát',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: recentMeta.practiced
+                                              ? const Color(0xFF1B8A3A)
+                                              : Colors.black54,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ],
                                 ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    deck['favorite'] = !isFavorite;
+                                  });
+                                },
+                                splashRadius: 22,
+                                icon: Icon(
+                                  isFavorite ? Icons.star : Icons.star_border,
+                                  color: isFavorite
+                                      ? const Color(0xFFF4B400)
+                                      : const Color(0xFF0A5DB6),
+                                ),
+                                tooltip: isFavorite
+                                    ? 'Bỏ khỏi yêu thích'
+                                    : 'Thêm vào yêu thích',
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  stats.imageAdded == 0
+                                      ? 'Có ${stats.total} thẻ mới chờ được quét'
+                                      : 'Còn ${stats.total - stats.imageAdded} thẻ chưa mở',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                '${(stats.progress * 100).toInt()}%',
                                 style: const TextStyle(
-                                  fontSize: 22,
+                                  fontSize: 16,
+                                  color: Color(0xFF0A5DB6),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 2),
-                              Text(
-                                deck['desc'] as String,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                              if (showRecentMeta && recentMeta != null) ...[
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Truy cập: ${_formatRecentAccessTime(recentMeta.lastAccessAt)}',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black54,
-                                  ),
-                                ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  recentMeta.practiced
-                                      ? 'Trạng thái: Đã luyện tập ${_formatPracticeDuration(recentMeta.practiceDurationSeconds)}'
-                                      : 'Trạng thái: Chỉ mở option rồi thoát',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: recentMeta.practiced
-                                        ? const Color(0xFF1B8A3A)
-                                        : Colors.black54,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
                             ],
                           ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              deck['favorite'] = !isFavorite;
-                            });
-                          },
-                          splashRadius: 22,
-                          icon: Icon(
-                            isFavorite ? Icons.star : Icons.star_border,
-                            color: isFavorite
-                                ? const Color(0xFFF4B400)
-                                : const Color(0xFF0A5DB6),
+                          const SizedBox(height: 8),
+                          LinearProgressIndicator(
+                            value: stats.progress,
+                            backgroundColor: const Color(0xFFE8F0FE),
+                            color: const Color(0xFF0A5DB6),
+                            minHeight: 8,
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          tooltip: isFavorite
-                              ? 'Bỏ khỏi yêu thích'
-                              : 'Thêm vào yêu thích',
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Text(
-                          '${stats.imageAdded}/${stats.total} thẻ đã mở khóa thành công',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const Spacer(),
-                        Text(
-                          '${(stats.progress * 100).toInt()}%',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xFF0A5DB6),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    LinearProgressIndicator(
-                      value: stats.progress,
-                      backgroundColor: const Color(0xFFE8F0FE),
-                      color: const Color(0xFF0A5DB6),
-                      minHeight: 8,
-                      borderRadius: BorderRadius.circular(8),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+          if (isLocked)
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.6),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.lock_rounded,
+                    size: 32,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

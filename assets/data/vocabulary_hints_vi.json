@@ -1,2513 +1,2994 @@
-﻿{
-    "version":  2,
-    "generated_at":  "2026-04-04T22:23:30",
-    "total_words":  313,
-    "language":  "vi",
-    "unique_hints":  313,
-    "items":  [
-                  {
-                      "word":  "chair",
-                      "meaning_vi":  "Ghế",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027G\u0027, có 3 chữ cái, dạng \u0027Ghế\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "ghe",
-                      "masked_meaning":  "Ghế"
-                  },
-                  {
-                      "word":  "table",
-                      "meaning_vi":  "Bàn",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027B\u0027, có 3 chữ cái, dạng \u0027Bàn\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "ban",
-                      "masked_meaning":  "Bàn"
-                  },
-                  {
-                      "word":  "bed",
-                      "meaning_vi":  "Giường",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027G\u0027, có 6 chữ cái, dạng \u0027G_ường\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "giuong",
-                      "masked_meaning":  "G_ường"
-                  },
-                  {
-                      "word":  "lamp",
-                      "meaning_vi":  "Đèn bàn",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027E\u0027, có 5 chữ cái, dạng \u0027Đèn bàn\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "đen ban",
-                      "masked_meaning":  "Đèn bàn"
-                  },
-                  {
-                      "word":  "sofa",
-                      "meaning_vi":  "Ghế sofa",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027G\u0027, có 7 chữ cái, dạng \u0027Ghế s_f_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "ghe sofa",
-                      "masked_meaning":  "Ghế s_f_"
-                  },
-                  {
-                      "word":  "cup",
-                      "meaning_vi":  "Cốc",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 3 chữ cái, dạng \u0027Cốc\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "coc",
-                      "masked_meaning":  "Cốc"
-                  },
-                  {
-                      "word":  "plate",
-                      "meaning_vi":  "Đĩa",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027I\u0027, có 2 chữ cái, dạng \u0027Đĩ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "đia",
-                      "masked_meaning":  "Đĩ_"
-                  },
-                  {
-                      "word":  "spoon",
-                      "meaning_vi":  "Muỗng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027M\u0027, có 5 chữ cái, dạng \u0027M_ỗng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "muong",
-                      "masked_meaning":  "M_ỗng"
-                  },
-                  {
-                      "word":  "fork",
-                      "meaning_vi":  "Nĩa",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027N\u0027, có 3 chữ cái, dạng \u0027Nĩ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "nia",
-                      "masked_meaning":  "Nĩ_"
-                  },
-                  {
-                      "word":  "bowl",
-                      "meaning_vi":  "Bát",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027B\u0027, có 3 chữ cái, dạng \u0027Bát\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "bat",
-                      "masked_meaning":  "Bát"
-                  },
-                  {
-                      "word":  "mirror",
-                      "meaning_vi":  "Gương",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027G\u0027, có 5 chữ cái, dạng \u0027Gương\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "guong",
-                      "masked_meaning":  "Gương"
-                  },
-                  {
-                      "word":  "pillow",
-                      "meaning_vi":  "Gối",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027G\u0027, có 3 chữ cái, dạng \u0027Gố_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "goi",
-                      "masked_meaning":  "Gố_"
-                  },
-                  {
-                      "word":  "blanket",
-                      "meaning_vi":  "Chăn",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 4 chữ cái, dạng \u0027Chăn\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "chan",
-                      "masked_meaning":  "Chăn"
-                  },
-                  {
-                      "word":  "door",
-                      "meaning_vi":  "Cửa",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 3 chữ cái, dạng \u0027Cử_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "cua",
-                      "masked_meaning":  "Cử_"
-                  },
-                  {
-                      "word":  "window",
-                      "meaning_vi":  "Cửa sổ",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 5 chữ cái, dạng \u0027Cử_ sổ\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "cua so",
-                      "masked_meaning":  "Cử_ sổ"
-                  },
-                  {
-                      "word":  "mountain",
-                      "meaning_vi":  "Núi",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027N\u0027, có 3 chữ cái, dạng \u0027Nú_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "nui",
-                      "masked_meaning":  "Nú_"
-                  },
-                  {
-                      "word":  "river",
-                      "meaning_vi":  "Sông",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027S\u0027, có 4 chữ cái, dạng \u0027Sông\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "song",
-                      "masked_meaning":  "Sông"
-                  },
-                  {
-                      "word":  "forest",
-                      "meaning_vi":  "Rừng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027R\u0027, có 4 chữ cái, dạng \u0027Rừng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "rung",
-                      "masked_meaning":  "Rừng"
-                  },
-                  {
-                      "word":  "ocean",
-                      "meaning_vi":  "Đại dương",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027A\u0027, có 7 chữ cái, dạng \u0027Đạ_ dương\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "đai duong",
-                      "masked_meaning":  "Đạ_ dương"
-                  },
-                  {
-                      "word":  "sky",
-                      "meaning_vi":  "Bầu trời",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027B\u0027, có 7 chữ cái, dạng \u0027Bầ_ trờ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "bau troi",
-                      "masked_meaning":  "Bầ_ trờ_"
-                  },
-                  {
-                      "word":  "cloud",
-                      "meaning_vi":  "Đám mây",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027A\u0027, có 5 chữ cái, dạng \u0027Đám mâ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "đam may",
-                      "masked_meaning":  "Đám mâ_"
-                  },
-                  {
-                      "word":  "rain",
-                      "meaning_vi":  "Mưa",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027M\u0027, có 3 chữ cái, dạng \u0027Mư_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "mua",
-                      "masked_meaning":  "Mư_"
-                  },
-                  {
-                      "word":  "sun",
-                      "meaning_vi":  "Mặt trời",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027M\u0027, có 7 chữ cái, dạng \u0027Mặt trờ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "mat troi",
-                      "masked_meaning":  "Mặt trờ_"
-                  },
-                  {
-                      "word":  "moon",
-                      "meaning_vi":  "Mặt trăng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027M\u0027, có 8 chữ cái, dạng \u0027Mặt trăng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "mat trang",
-                      "masked_meaning":  "Mặt trăng"
-                  },
-                  {
-                      "word":  "star",
-                      "meaning_vi":  "Ngôi sao",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027N\u0027, có 7 chữ cái, dạng \u0027Ngô_ s__\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "ngoi sao",
-                      "masked_meaning":  "Ngô_ s__"
-                  },
-                  {
-                      "word":  "lake",
-                      "meaning_vi":  "Hồ",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027H\u0027, có 2 chữ cái, dạng \u0027Hồ\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "ho",
-                      "masked_meaning":  "Hồ"
-                  },
-                  {
-                      "word":  "flower",
-                      "meaning_vi":  "Hoa",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027H\u0027, có 3 chữ cái, dạng \u0027H__\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "hoa",
-                      "masked_meaning":  "H__"
-                  },
-                  {
-                      "word":  "tree",
-                      "meaning_vi":  "Cây",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 3 chữ cái, dạng \u0027Câ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "cay",
-                      "masked_meaning":  "Câ_"
-                  },
-                  {
-                      "word":  "wind",
-                      "meaning_vi":  "Gió",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027G\u0027, có 3 chữ cái, dạng \u0027G_ó\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "gio",
-                      "masked_meaning":  "G_ó"
-                  },
-                  {
-                      "word":  "stone",
-                      "meaning_vi":  "Đá",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027A\u0027, có 1 chữ cái, dạng \u0027Đá\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "đa",
-                      "masked_meaning":  "Đá"
-                  },
-                  {
-                      "word":  "computer",
-                      "meaning_vi":  "Máy tính",
-                      "hint_vi":  "Gợi ý: thiết bị này dùng để làm việc và học tập.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "may tinh",
-                      "masked_meaning":  "Má_ tính"
-                  },
-                  {
-                      "word":  "laptop",
-                      "meaning_vi":  "Máy tính xách tay",
-                      "hint_vi":  "Gợi ý: đây là máy tính xách tay, có thể mang đi khắp nơi.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "may tinh xach tay",
-                      "masked_meaning":  "Má_ tính xách t__"
-                  },
-                  {
-                      "word":  "phone",
-                      "meaning_vi":  "Điện thoại",
-                      "hint_vi":  "Gợi ý: thiết bị này dùng để gọi điện và nhắn tin.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "đien thoai",
-                      "masked_meaning":  "Đ_ện th_ạ_"
-                  },
-                  {
-                      "word":  "tablet",
-                      "meaning_vi":  "Máy tính bảng",
-                      "hint_vi":  "Gợi ý: đây là máy tính bảng, màn hình cảm ứng lớn.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "may tinh bang",
-                      "masked_meaning":  "Má_ tính bảng"
-                  },
-                  {
-                      "word":  "keyboard",
-                      "meaning_vi":  "Bàn phím",
-                      "hint_vi":  "Gợi ý: đây là bộ phận có nhiều phím để gõ chữ.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "ban phim",
-                      "masked_meaning":  "Bàn phím"
-                  },
-                  {
-                      "word":  "mouse",
-                      "meaning_vi":  "Chuột máy tính",
-                      "hint_vi":  "Gợi ý: đây là thiết bị nhỏ để điều khiển con trỏ.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "chuot may tinh",
-                      "masked_meaning":  "Ch_ột má_ tính"
-                  },
-                  {
-                      "word":  "screen",
-                      "meaning_vi":  "Màn hình",
-                      "hint_vi":  "Gợi ý: đây là phần hiển thị hình ảnh của máy tính.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "man hinh",
-                      "masked_meaning":  "Màn hình"
-                  },
-                  {
-                      "word":  "printer",
-                      "meaning_vi":  "Máy in",
-                      "hint_vi":  "Gợi ý: đây là thiết bị dùng để in giấy.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "may in",
-                      "masked_meaning":  "Má_ _n"
-                  },
-                  {
-                      "word":  "camera",
-                      "meaning_vi":  "Máy ảnh",
-                      "hint_vi":  "Gợi ý: đây là thiết bị dùng để chụp ảnh.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "may anh",
-                      "masked_meaning":  "Má_ ảnh"
-                  },
-                  {
-                      "word":  "robot",
-                      "meaning_vi":  "Rô bốt",
-                      "hint_vi":  "Gợi ý: đây là máy móc tự động, có thể làm nhiều việc.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "ro bot",
-                      "masked_meaning":  "Rô bốt"
-                  },
-                  {
-                      "word":  "internet",
-                      "meaning_vi":  "Mạng internet",
-                      "hint_vi":  "Gợi ý: đây là mạng kết nối toàn cầu.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "mang internet",
-                      "masked_meaning":  "Mạng _nt_rn_t"
-                  },
-                  {
-                      "word":  "software",
-                      "meaning_vi":  "Phần mềm",
-                      "hint_vi":  "Gợi ý: đây là phần mềm chạy trên máy tính.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "phan mem",
-                      "masked_meaning":  "Phần mềm"
-                  },
-                  {
-                      "word":  "hardware",
-                      "meaning_vi":  "Phần cứng",
-                      "hint_vi":  "Gợi ý: đây là phần cứng, các bộ phận vật lý của máy.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "phan cung",
-                      "masked_meaning":  "Phần cứng"
-                  },
-                  {
-                      "word":  "server",
-                      "meaning_vi":  "Máy chủ",
-                      "hint_vi":  "Gợi ý: đây là máy chủ phục vụ dữ liệu hoặc dịch vụ.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "may chu",
-                      "masked_meaning":  "Má_ chủ"
-                  },
-                  {
-                      "word":  "application",
-                      "meaning_vi":  "Ứng dụng",
-                      "hint_vi":  "Gợi ý: đây là ứng dụng bạn cài để sử dụng trên thiết bị.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "ung dung",
-                      "masked_meaning":  "Ứng dụng"
-                  },
-                  {
-                      "word":  "apple",
-                      "meaning_vi":  "Quả táo",
-                      "hint_vi":  "Gợi ý: đây là loại quả giòn, thường có màu đỏ hoặc xanh.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "qua tao",
-                      "masked_meaning":  "Q_ả tá_"
-                  },
-                  {
-                      "word":  "banana",
-                      "meaning_vi":  "Quả chuối",
-                      "hint_vi":  "Gợi ý: đây là loại quả dài, vỏ vàng và ruột mềm.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "qua chuoi",
-                      "masked_meaning":  "Q_ả ch_ố_"
-                  },
-                  {
-                      "word":  "orange",
-                      "meaning_vi":  "Quả cam",
-                      "hint_vi":  "Gợi ý: đây là loại quả có múi, đồng thời cũng là tên một màu sắc tươi sáng.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "qua cam",
-                      "masked_meaning":  "Q_ả c_m"
-                  },
-                  {
-                      "word":  "bread",
-                      "meaning_vi":  "Bánh mì",
-                      "hint_vi":  "Gợi ý: đây là món ăn làm từ bột mì, hay dùng vào bữa sáng.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "banh mi",
-                      "masked_meaning":  "Bánh mì"
-                  },
-                  {
-                      "word":  "rice",
-                      "meaning_vi":  "Cơm",
-                      "hint_vi":  "Gợi ý: đây là món ăn chính của nhiều bữa cơm Việt.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "com",
-                      "masked_meaning":  "Cơm"
-                  },
-                  {
-                      "word":  "noodle",
-                      "meaning_vi":  "Mì",
-                      "hint_vi":  "Gợi ý: đây là món ăn dạng sợi, thường ăn với nước dùng.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "mi",
-                      "masked_meaning":  "Mì"
-                  },
-                  {
-                      "word":  "soup",
-                      "meaning_vi":  "Súp",
-                      "hint_vi":  "Gợi ý: đây là món nước nóng, thường ăn khi trời lạnh.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "sup",
-                      "masked_meaning":  "Súp"
-                  },
-                  {
-                      "word":  "meat",
-                      "meaning_vi":  "Thịt",
-                      "hint_vi":  "Gợi ý: đây là thực phẩm từ động vật, như thịt heo hoặc bò.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "thit",
-                      "masked_meaning":  "Thịt"
-                  },
-                  {
-                      "word":  "fish",
-                      "meaning_vi":  "Cá",
-                      "hint_vi":  "Gợi ý: đây là thực phẩm từ sông biển và cũng là tên một loài cá.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "ca",
-                      "masked_meaning":  "Cá"
-                  },
-                  {
-                      "word":  "egg",
-                      "meaning_vi":  "Trứng",
-                      "hint_vi":  "Gợi ý: đây là thực phẩm có vỏ, thường lấy từ gà vịt.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "trung",
-                      "masked_meaning":  "Trứng"
-                  },
-                  {
-                      "word":  "milk",
-                      "meaning_vi":  "Sữa",
-                      "hint_vi":  "Gợi ý: đây là đồ uống màu trắng, rất quen thuộc với trẻ em.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "sua",
-                      "masked_meaning":  "Sữ_"
-                  },
-                  {
-                      "word":  "cheese",
-                      "meaning_vi":  "Phô mai",
-                      "hint_vi":  "Gợi ý: đây là thực phẩm từ sữa, có vị béo và mặn nhẹ.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "pho mai",
-                      "masked_meaning":  "Phô m__"
-                  },
-                  {
-                      "word":  "sugar",
-                      "meaning_vi":  "Đường",
-                      "hint_vi":  "Gợi ý: đây là nguyên liệu tạo vị ngọt.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "đuong",
-                      "masked_meaning":  "Đường"
-                  },
-                  {
-                      "word":  "salt",
-                      "meaning_vi":  "Muối",
-                      "hint_vi":  "Gợi ý: đây là gia vị làm tăng vị mặn.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "muoi",
-                      "masked_meaning":  "M_ố_"
-                  },
-                  {
-                      "word":  "butter",
-                      "meaning_vi":  "Bơ",
-                      "hint_vi":  "Gợi ý: đây là nguyên liệu béo mềm, hay dùng với bánh mì.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "bo",
-                      "masked_meaning":  "Bơ"
-                  },
-                  {
-                      "word":  "cat",
-                      "meaning_vi":  "Mèo",
-                      "hint_vi":  "Gợi ý: con vật này kêu meo meo.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "meo",
-                      "masked_meaning":  "Mè_"
-                  },
-                  {
-                      "word":  "dog",
-                      "meaning_vi":  "Chó",
-                      "hint_vi":  "Gợi ý: con vật này hay sủa và giữ nhà.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "cho",
-                      "masked_meaning":  "Chó"
-                  },
-                  {
-                      "word":  "bird",
-                      "meaning_vi":  "Chim",
-                      "hint_vi":  "Gợi ý: con vật này có cánh và hót trên cây.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "chim",
-                      "masked_meaning":  "Ch_m"
-                  },
-                  {
-                      "word":  "rabbit",
-                      "meaning_vi":  "Thỏ",
-                      "hint_vi":  "Gợi ý: con vật này có tai dài và thích ăn cà rốt.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "tho",
-                      "masked_meaning":  "Thỏ"
-                  },
-                  {
-                      "word":  "tiger",
-                      "meaning_vi":  "Hổ",
-                      "hint_vi":  "Gợi ý: con vật này có vằn sọc đen trên bộ lông.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "ho",
-                      "masked_meaning":  "Hổ"
-                  },
-                  {
-                      "word":  "lion",
-                      "meaning_vi":  "Sư tử",
-                      "hint_vi":  "Gợi ý: con vật này được gọi là chúa tể rừng xanh.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "su tu",
-                      "masked_meaning":  "Sư tử"
-                  },
-                  {
-                      "word":  "elephant",
-                      "meaning_vi":  "Voi",
-                      "hint_vi":  "Gợi ý: con vật này rất to và có vòi dài.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "voi",
-                      "masked_meaning":  "V__"
-                  },
-                  {
-                      "word":  "monkey",
-                      "meaning_vi":  "Khỉ",
-                      "hint_vi":  "Gợi ý: con vật này leo trèo giỏi và thích ăn chuối.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "khi",
-                      "masked_meaning":  "Khỉ"
-                  },
-                  {
-                      "word":  "horse",
-                      "meaning_vi":  "Ngựa",
-                      "hint_vi":  "Gợi ý: con vật này chạy nhanh và thường được cưỡi.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "ngua",
-                      "masked_meaning":  "Ngự_"
-                  },
-                  {
-                      "word":  "cow",
-                      "meaning_vi":  "Bò",
-                      "hint_vi":  "Gợi ý: con vật này cho sữa và ăn cỏ trên đồng.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "bo",
-                      "masked_meaning":  "Bò"
-                  },
-                  {
-                      "word":  "pig",
-                      "meaning_vi":  "Heo",
-                      "hint_vi":  "Gợi ý: con vật này có mũi to, thường nuôi ở nông trại.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "heo",
-                      "masked_meaning":  "H__"
-                  },
-                  {
-                      "word":  "sheep",
-                      "meaning_vi":  "Cừu",
-                      "hint_vi":  "Gợi ý: con vật này có lông dày, lông dùng để dệt vải.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "cuu",
-                      "masked_meaning":  "Cừ_"
-                  },
-                  {
-                      "word":  "duck",
-                      "meaning_vi":  "Vịt",
-                      "hint_vi":  "Gợi ý: con vật này biết bơi và kêu cạp cạp.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "vit",
-                      "masked_meaning":  "Vịt"
-                  },
-                  {
-                      "word":  "chicken",
-                      "meaning_vi":  "Gà",
-                      "hint_vi":  "Gợi ý: con vật này gáy ò ó o vào buổi sáng.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "ga",
-                      "masked_meaning":  "Gà"
-                  },
-                  {
-                      "word":  "butterfly",
-                      "meaning_vi":  "Bướm",
-                      "hint_vi":  "Gợi ý: con vật này có đôi cánh đẹp và bay lượn quanh hoa.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "buom",
-                      "masked_meaning":  "Bướm"
-                  },
-                  {
-                      "word":  "car",
-                      "meaning_vi":  "Ô tô",
-                      "hint_vi":  "Gợi ý: phương tiện bốn bánh dùng để chở người trên đường.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "o to",
-                      "masked_meaning":  "Ô tô"
-                  },
-                  {
-                      "word":  "bus",
-                      "meaning_vi":  "Xe buýt",
-                      "hint_vi":  "Gợi ý: phương tiện công cộng chở nhiều người.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe buyt",
-                      "masked_meaning":  "X_ b_ýt"
-                  },
-                  {
-                      "word":  "train",
-                      "meaning_vi":  "Tàu hỏa",
-                      "hint_vi":  "Gợi ý: phương tiện này chạy trên đường ray.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "tau hoa",
-                      "masked_meaning":  "Tà_ hỏ_"
-                  },
-                  {
-                      "word":  "plane",
-                      "meaning_vi":  "Máy bay",
-                      "hint_vi":  "Gợi ý: phương tiện này bay trên bầu trời.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "may bay",
-                      "masked_meaning":  "Má_ b__"
-                  },
-                  {
-                      "word":  "bike",
-                      "meaning_vi":  "Xe đạp",
-                      "hint_vi":  "Gợi ý: phương tiện hai bánh, thường đạp bằng chân.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe đap",
-                      "masked_meaning":  "X_ đạp"
-                  },
-                  {
-                      "word":  "motorbike",
-                      "meaning_vi":  "Xe máy",
-                      "hint_vi":  "Gợi ý: phương tiện hai bánh chạy bằng động cơ.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe may",
-                      "masked_meaning":  "X_ má_"
-                  },
-                  {
-                      "word":  "truck",
-                      "meaning_vi":  "Xe tải",
-                      "hint_vi":  "Gợi ý: phương tiện chở hàng nặng và hàng cồng kềnh.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe tai",
-                      "masked_meaning":  "X_ tả_"
-                  },
-                  {
-                      "word":  "taxi",
-                      "meaning_vi":  "Xe taxi",
-                      "hint_vi":  "Gợi ý: xe chở khách có thể gọi đi ngay khi cần.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe taxi",
-                      "masked_meaning":  "X_ t_x_"
-                  },
-                  {
-                      "word":  "ship",
-                      "meaning_vi":  "Tàu thủy",
-                      "hint_vi":  "Gợi ý: phương tiện lớn đi trên biển hoặc sông rộng.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "tau thuy",
-                      "masked_meaning":  "Tà_ thủ_"
-                  },
-                  {
-                      "word":  "boat",
-                      "meaning_vi":  "Thuyền",
-                      "hint_vi":  "Gợi ý: phương tiện nhỏ hơn tàu, thường dùng để đi trên nước.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "thuyen",
-                      "masked_meaning":  "Th__ền"
-                  },
-                  {
-                      "word":  "helicopter",
-                      "meaning_vi":  "Trực thăng",
-                      "hint_vi":  "Gợi ý: phương tiện bay có cánh quạt trên đỉnh.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "truc thang",
-                      "masked_meaning":  "Trực thăng"
-                  },
-                  {
-                      "word":  "subway",
-                      "meaning_vi":  "Tàu điện ngầm",
-                      "hint_vi":  "Gợi ý: tàu chạy ngầm dưới lòng đất.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "tau đien ngam",
-                      "masked_meaning":  "Tà_ đ_ện ngầm"
-                  },
-                  {
-                      "word":  "scooter",
-                      "meaning_vi":  "Xe tay ga",
-                      "hint_vi":  "Gợi ý: xe nhỏ gọn, thường dùng đi quãng ngắn.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe tay ga",
-                      "masked_meaning":  "X_ t__ g_"
-                  },
-                  {
-                      "word":  "bicycle",
-                      "meaning_vi":  "Xe đạp",
-                      "hint_vi":  "Gợi ý: xe hai bánh phải đạp bằng chân.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe đap",
-                      "masked_meaning":  "X_ đạp"
-                  },
-                  {
-                      "word":  "ambulance",
-                      "meaning_vi":  "Xe cứu thương",
-                      "hint_vi":  "Gợi ý: xe khẩn cấp chở người bệnh đến bệnh viện.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe cuu thuong",
-                      "masked_meaning":  "X_ cứ_ thương"
-                  },
-                  {
-                      "word":  "house",
-                      "meaning_vi":  "Nhà",
-                      "hint_vi":  "Gợi ý: đây là nơi cả gia đình sinh sống.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "nha",
-                      "masked_meaning":  "Nhà"
-                  },
-                  {
-                      "word":  "room",
-                      "meaning_vi":  "Phòng",
-                      "hint_vi":  "Gợi ý: đây là một không gian nhỏ bên trong ngôi nhà.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "phong",
-                      "masked_meaning":  "Phòng"
-                  },
-                  {
-                      "word":  "kitchen",
-                      "meaning_vi":  "Nhà bếp",
-                      "hint_vi":  "Gợi ý: đây là nơi nấu ăn trong nhà.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "nha bep",
-                      "masked_meaning":  "Nhà bếp"
-                  },
-                  {
-                      "word":  "bathroom",
-                      "meaning_vi":  "Phòng tắm",
-                      "hint_vi":  "Gợi ý: đây là nơi tắm rửa và vệ sinh cá nhân.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "phong tam",
-                      "masked_meaning":  "Phòng tắm"
-                  },
-                  {
-                      "word":  "garden",
-                      "meaning_vi":  "Khu vườn",
-                      "hint_vi":  "Gợi ý: đây là khu vực trồng cây, hoa lá.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "khu vuon",
-                      "masked_meaning":  "Kh_ vườn"
-                  },
-                  {
-                      "word":  "street",
-                      "meaning_vi":  "Đường phố",
-                      "hint_vi":  "Gợi ý: đây là con đường có nhà cửa hai bên.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "đuong pho",
-                      "masked_meaning":  "Đường phố"
-                  },
-                  {
-                      "word":  "city",
-                      "meaning_vi":  "Thành phố",
-                      "hint_vi":  "Gợi ý: đây là nơi tập trung đông dân cư, nhiều tòa nhà.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "thanh pho",
-                      "masked_meaning":  "Thành phố"
-                  },
-                  {
-                      "word":  "village",
-                      "meaning_vi":  "Ngôi làng",
-                      "hint_vi":  "Gợi ý: đây là khu vực làng quê yên bình.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "ngoi lang",
-                      "masked_meaning":  "Ngô_ làng"
-                  },
-                  {
-                      "word":  "school",
-                      "meaning_vi":  "Trường học",
-                      "hint_vi":  "Gợi ý: đây là nơi học sinh đến học mỗi ngày.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "truong hoc",
-                      "masked_meaning":  "Trường học"
-                  },
-                  {
-                      "word":  "hospital",
-                      "meaning_vi":  "Bệnh viện",
-                      "hint_vi":  "Gợi ý: đây là nơi bác sĩ khám và chữa bệnh.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "benh vien",
-                      "masked_meaning":  "Bệnh v_ện"
-                  },
-                  {
-                      "word":  "office",
-                      "meaning_vi":  "Văn phòng",
-                      "hint_vi":  "Gợi ý: đây là nơi làm việc của nhân viên, công ty.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "van phong",
-                      "masked_meaning":  "Văn phòng"
-                  },
-                  {
-                      "word":  "market",
-                      "meaning_vi":  "Chợ",
-                      "hint_vi":  "Gợi ý: đây là nơi mua bán hàng hóa hằng ngày.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "cho",
-                      "masked_meaning":  "Chợ"
-                  },
-                  {
-                      "word":  "park",
-                      "meaning_vi":  "Công viên",
-                      "hint_vi":  "Gợi ý: đây là nơi có cây xanh để dạo chơi, nghỉ ngơi.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "cong vien",
-                      "masked_meaning":  "Công v_ên"
-                  },
-                  {
-                      "word":  "bridge",
-                      "meaning_vi":  "Cây cầu",
-                      "hint_vi":  "Gợi ý: đây là công trình nối hai bên qua sông hoặc đường.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "cay cau",
-                      "masked_meaning":  "Câ_ cầ_"
-                  },
-                  {
-                      "word":  "library",
-                      "meaning_vi":  "Thư viện",
-                      "hint_vi":  "Gợi ý: đây là nơi có nhiều sách để đọc và mượn.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "thu vien",
-                      "masked_meaning":  "Thư v_ện"
-                  },
-                  {
-                      "word":  "large",
-                      "meaning_vi":  "Lớn",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027L\u0027, có 3 chữ cái, dạng \u0027Lớn\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "lon",
-                      "masked_meaning":  "Lớn"
-                  },
-                  {
-                      "word":  "small",
-                      "meaning_vi":  "Nhỏ",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027N\u0027, có 3 chữ cái, dạng \u0027Nhỏ\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "nho",
-                      "masked_meaning":  "Nhỏ"
-                  },
-                  {
-                      "word":  "big",
-                      "meaning_vi":  "To",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027T\u0027, có 2 chữ cái, dạng \u0027T_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "to",
-                      "masked_meaning":  "T_"
-                  },
-                  {
-                      "word":  "near",
-                      "meaning_vi":  "Gần",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027G\u0027, có 3 chữ cái, dạng \u0027Gần\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "gan",
-                      "masked_meaning":  "Gần"
-                  },
-                  {
-                      "word":  "far",
-                      "meaning_vi":  "Xa",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027X\u0027, có 2 chữ cái, dạng \u0027X_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "xa",
-                      "masked_meaning":  "X_"
-                  },
-                  {
-                      "word":  "inside",
-                      "meaning_vi":  "Bên trong",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027B\u0027, có 8 chữ cái, dạng \u0027Bên tr_ng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "ben trong",
-                      "masked_meaning":  "Bên tr_ng"
-                  },
-                  {
-                      "word":  "outside",
-                      "meaning_vi":  "Bên ngoài",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027B\u0027, có 8 chữ cái, dạng \u0027Bên ng_à_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "ben ngoai",
-                      "masked_meaning":  "Bên ng_à_"
-                  },
-                  {
-                      "word":  "open",
-                      "meaning_vi":  "Mở",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027M\u0027, có 2 chữ cái, dạng \u0027Mở\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "mo",
-                      "masked_meaning":  "Mở"
-                  },
-                  {
-                      "word":  "close",
-                      "meaning_vi":  "Đóng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027O\u0027, có 3 chữ cái, dạng \u0027Đóng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "đong",
-                      "masked_meaning":  "Đóng"
-                  },
-                  {
-                      "word":  "start",
-                      "meaning_vi":  "Bắt đầu",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027B\u0027, có 5 chữ cái, dạng \u0027Bắt đầ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "bat đau",
-                      "masked_meaning":  "Bắt đầ_"
-                  },
-                  {
-                      "word":  "finish",
-                      "meaning_vi":  "Kết thúc",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027K\u0027, có 7 chữ cái, dạng \u0027Kết thúc\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "ket thuc",
-                      "masked_meaning":  "Kết thúc"
-                  },
-                  {
-                      "word":  "easy",
-                      "meaning_vi":  "Dễ",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027D\u0027, có 2 chữ cái, dạng \u0027Dễ\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "de",
-                      "masked_meaning":  "Dễ"
-                  },
-                  {
-                      "word":  "difficult",
-                      "meaning_vi":  "Khó",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027K\u0027, có 3 chữ cái, dạng \u0027Khó\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "kho",
-                      "masked_meaning":  "Khó"
-                  },
-                  {
-                      "word":  "fast",
-                      "meaning_vi":  "Nhanh",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027N\u0027, có 5 chữ cái, dạng \u0027Nh_nh\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "nhanh",
-                      "masked_meaning":  "Nh_nh"
-                  },
-                  {
-                      "word":  "slow",
-                      "meaning_vi":  "Chậm",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 4 chữ cái, dạng \u0027Chậm\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "cham",
-                      "masked_meaning":  "Chậm"
-                  },
-                  {
-                      "word":  "hot",
-                      "meaning_vi":  "Nóng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027N\u0027, có 4 chữ cái, dạng \u0027Nóng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "nong",
-                      "masked_meaning":  "Nóng"
-                  },
-                  {
-                      "word":  "cold",
-                      "meaning_vi":  "Lạnh",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027L\u0027, có 4 chữ cái, dạng \u0027Lạnh\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "lanh",
-                      "masked_meaning":  "Lạnh"
-                  },
-                  {
-                      "word":  "happy",
-                      "meaning_vi":  "Vui",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027V\u0027, có 3 chữ cái, dạng \u0027V__\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "vui",
-                      "masked_meaning":  "V__"
-                  },
-                  {
-                      "word":  "sad",
-                      "meaning_vi":  "Buồn",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027B\u0027, có 4 chữ cái, dạng \u0027B_ồn\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "buon",
-                      "masked_meaning":  "B_ồn"
-                  },
-                  {
-                      "word":  "strong",
-                      "meaning_vi":  "Mạnh",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027M\u0027, có 4 chữ cái, dạng \u0027Mạnh\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "manh",
-                      "masked_meaning":  "Mạnh"
-                  },
-                  {
-                      "word":  "weak",
-                      "meaning_vi":  "Yếu",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027Y\u0027, có 3 chữ cái, dạng \u0027_ế_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "yeu",
-                      "masked_meaning":  "_ế_"
-                  },
-                  {
-                      "word":  "clean",
-                      "meaning_vi":  "Sạch",
-                      "hint_vi":  "Gợi ý: đây là hành động dọn dẹp cho gọn gàng.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "sach",
-                      "masked_meaning":  "Sạch"
-                  },
-                  {
-                      "word":  "dirty",
-                      "meaning_vi":  "Bẩn",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027B\u0027, có 3 chữ cái, dạng \u0027Bẩn\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "ban",
-                      "masked_meaning":  "Bẩn"
-                  },
-                  {
-                      "word":  "safe",
-                      "meaning_vi":  "An toàn",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027A\u0027, có 6 chữ cái, dạng \u0027_n t_àn\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "an toan",
-                      "masked_meaning":  "_n t_àn"
-                  },
-                  {
-                      "word":  "dangerous",
-                      "meaning_vi":  "Nguy hiểm",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027N\u0027, có 8 chữ cái, dạng \u0027Ng__ h_ểm\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "nguy hiem",
-                      "masked_meaning":  "Ng__ h_ểm"
-                  },
-                  {
-                      "word":  "important",
-                      "meaning_vi":  "Quan trọng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027Q\u0027, có 9 chữ cái, dạng \u0027Q__n trọng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "quan trong",
-                      "masked_meaning":  "Q__n trọng"
-                  },
-                  {
-                      "word":  "special",
-                      "meaning_vi":  "Đặc biệt",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027A\u0027, có 6 chữ cái, dạng \u0027Đặc b_ệt\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "đac biet",
-                      "masked_meaning":  "Đặc b_ệt"
-                  },
-                  {
-                      "word":  "simple",
-                      "meaning_vi":  "Đơn giản",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027O\u0027, có 6 chữ cái, dạng \u0027Đơn g_ản\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "đon gian",
-                      "masked_meaning":  "Đơn g_ản"
-                  },
-                  {
-                      "word":  "complex",
-                      "meaning_vi":  "Phức tạp",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027P\u0027, có 7 chữ cái, dạng \u0027Phức tạp\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "phuc tap",
-                      "masked_meaning":  "Phức tạp"
-                  },
-                  {
-                      "word":  "early",
-                      "meaning_vi":  "Sớm",
-                      "hint_vi":  "Gợi ý: từ này diễn tả sự sớm hơn bình thường.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "som",
-                      "masked_meaning":  "Sớm"
-                  },
-                  {
-                      "word":  "late",
-                      "meaning_vi":  "Muộn",
-                      "hint_vi":  "Gợi ý: từ này diễn tả sự muộn hơn bình thường.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "muon",
-                      "masked_meaning":  "M_ộn"
-                  },
-                  {
-                      "word":  "fresh",
-                      "meaning_vi":  "Tươi",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027T\u0027, có 4 chữ cái, dạng \u0027Tươ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "tuoi",
-                      "masked_meaning":  "Tươ_"
-                  },
-                  {
-                      "word":  "dry",
-                      "meaning_vi":  "Khô",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027K\u0027, có 3 chữ cái, dạng \u0027Khô\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "kho",
-                      "masked_meaning":  "Khô"
-                  },
-                  {
-                      "word":  "wet",
-                      "meaning_vi":  "Ướt",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027U\u0027, có 3 chữ cái, dạng \u0027Ướt\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "uot",
-                      "masked_meaning":  "Ướt"
-                  },
-                  {
-                      "word":  "quiet",
-                      "meaning_vi":  "Yên tĩnh",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027Y\u0027, có 7 chữ cái, dạng \u0027_ên tĩnh\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "yen tinh",
-                      "masked_meaning":  "_ên tĩnh"
-                  },
-                  {
-                      "word":  "noisy",
-                      "meaning_vi":  "Ồn ào",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027O\u0027, có 4 chữ cái, dạng \u0027Ồn à_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "on ao",
-                      "masked_meaning":  "Ồn à_"
-                  },
-                  {
-                      "word":  "modern",
-                      "meaning_vi":  "Hiện đại",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027H\u0027, có 6 chữ cái, dạng \u0027H_ện đạ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "hien đai",
-                      "masked_meaning":  "H_ện đạ_"
-                  },
-                  {
-                      "word":  "classic",
-                      "meaning_vi":  "Cổ điển",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 5 chữ cái, dạng \u0027Cổ đ_ển\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "co đien",
-                      "masked_meaning":  "Cổ đ_ển"
-                  },
-                  {
-                      "word":  "public",
-                      "meaning_vi":  "Công cộng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 8 chữ cái, dạng \u0027Công cộng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "cong cong",
-                      "masked_meaning":  "Công cộng"
-                  },
-                  {
-                      "word":  "private",
-                      "meaning_vi":  "Riêng tư",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027R\u0027, có 7 chữ cái, dạng \u0027R_êng tư\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "rieng tu",
-                      "masked_meaning":  "R_êng tư"
-                  },
-                  {
-                      "word":  "available",
-                      "meaning_vi":  "Có sẵn",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 5 chữ cái, dạng \u0027Có sẵn\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "co san",
-                      "masked_meaning":  "Có sẵn"
-                  },
-                  {
-                      "word":  "missing",
-                      "meaning_vi":  "Thiếu",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027T\u0027, có 5 chữ cái, dạng \u0027Th_ế_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "thieu",
-                      "masked_meaning":  "Th_ế_"
-                  },
-                  {
-                      "word":  "correct",
-                      "meaning_vi":  "Đúng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027U\u0027, có 3 chữ cái, dạng \u0027Đúng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "đung",
-                      "masked_meaning":  "Đúng"
-                  },
-                  {
-                      "word":  "wrong",
-                      "meaning_vi":  "Sai",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027S\u0027, có 3 chữ cái, dạng \u0027S__\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "sai",
-                      "masked_meaning":  "S__"
-                  },
-                  {
-                      "word":  "helpful",
-                      "meaning_vi":  "Hữu ích",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027H\u0027, có 6 chữ cái, dạng \u0027Hữ_ ích\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "huu ich",
-                      "masked_meaning":  "Hữ_ ích"
-                  },
-                  {
-                      "word":  "useful",
-                      "meaning_vi":  "Có ích",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 5 chữ cái, dạng \u0027Có ích\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "co ich",
-                      "masked_meaning":  "Có ích"
-                  },
-                  {
-                      "word":  "popular",
-                      "meaning_vi":  "Phổ biến",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027P\u0027, có 7 chữ cái, dạng \u0027Phổ b_ến\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "pho bien",
-                      "masked_meaning":  "Phổ b_ến"
-                  },
-                  {
-                      "word":  "wardrobe",
-                      "meaning_vi":  "Tủ quần áo",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027T\u0027, có 8 chữ cái, dạng \u0027Tủ q_ần á_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "tu quan ao",
-                      "masked_meaning":  "Tủ q_ần á_"
-                  },
-                  {
-                      "word":  "drawer",
-                      "meaning_vi":  "Ngăn kéo",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027N\u0027, có 7 chữ cái, dạng \u0027Ngăn ké_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "ngan keo",
-                      "masked_meaning":  "Ngăn ké_"
-                  },
-                  {
-                      "word":  "kettle",
-                      "meaning_vi":  "Ấm đun nước",
-                      "hint_vi":  "Gợi ý: đây là ấm đun nước.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "am đun nuoc",
-                      "masked_meaning":  "Ấm đ_n nước"
-                  },
-                  {
-                      "word":  "microwave",
-                      "meaning_vi":  "Lò vi sóng",
-                      "hint_vi":  "Gợi ý: đây là lò vi sóng để hâm nóng thức ăn.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "lo vi song",
-                      "masked_meaning":  "Lò v_ sóng"
-                  },
-                  {
-                      "word":  "refrigerator",
-                      "meaning_vi":  "Tủ lạnh",
-                      "hint_vi":  "Gợi ý: đây là tủ lạnh để giữ thực phẩm mát.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "tu lanh",
-                      "masked_meaning":  "Tủ lạnh"
-                  },
-                  {
-                      "word":  "stove",
-                      "meaning_vi":  "Bếp",
-                      "hint_vi":  "Gợi ý: đây là bếp dùng để nấu ăn.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "bep",
-                      "masked_meaning":  "Bếp"
-                  },
-                  {
-                      "word":  "pan",
-                      "meaning_vi":  "Chảo",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 4 chữ cái, dạng \u0027Chả_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "chao",
-                      "masked_meaning":  "Chả_"
-                  },
-                  {
-                      "word":  "pot",
-                      "meaning_vi":  "Nồi",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027N\u0027, có 3 chữ cái, dạng \u0027Nồ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "noi",
-                      "masked_meaning":  "Nồ_"
-                  },
-                  {
-                      "word":  "towel",
-                      "meaning_vi":  "Khăn tắm",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027K\u0027, có 7 chữ cái, dạng \u0027Khăn tắm\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "khan tam",
-                      "masked_meaning":  "Khăn tắm"
-                  },
-                  {
-                      "word":  "toothbrush",
-                      "meaning_vi":  "Bàn chải đánh răng",
-                      "hint_vi":  "Gợi ý: đây là bàn chải dùng để đánh răng.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "ban chai đanh rang",
-                      "masked_meaning":  "Bàn chả_ đánh răng"
-                  },
-                  {
-                      "word":  "shampoo",
-                      "meaning_vi":  "Dầu gội",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027D\u0027, có 6 chữ cái, dạng \u0027Dầ_ gộ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "dau goi",
-                      "masked_meaning":  "Dầ_ gộ_"
-                  },
-                  {
-                      "word":  "soap",
-                      "meaning_vi":  "Xà phòng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027X\u0027, có 7 chữ cái, dạng \u0027Xà phòng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "xa phong",
-                      "masked_meaning":  "Xà phòng"
-                  },
-                  {
-                      "word":  "valley",
-                      "meaning_vi":  "Thung lũng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027T\u0027, có 9 chữ cái, dạng \u0027Th_ng lũng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "thung lung",
-                      "masked_meaning":  "Th_ng lũng"
-                  },
-                  {
-                      "word":  "desert",
-                      "meaning_vi":  "Sa mạc",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027S\u0027, có 5 chữ cái, dạng \u0027S_ mạc\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "sa mac",
-                      "masked_meaning":  "S_ mạc"
-                  },
-                  {
-                      "word":  "island",
-                      "meaning_vi":  "Hòn đảo",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027H\u0027, có 5 chữ cái, dạng \u0027Hòn đả_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "hon đao",
-                      "masked_meaning":  "Hòn đả_"
-                  },
-                  {
-                      "word":  "waterfall",
-                      "meaning_vi":  "Thác nước",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027T\u0027, có 8 chữ cái, dạng \u0027Thác nước\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "thac nuoc",
-                      "masked_meaning":  "Thác nước"
-                  },
-                  {
-                      "word":  "volcano",
-                      "meaning_vi":  "Núi lửa",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027N\u0027, có 6 chữ cái, dạng \u0027Nú_ lử_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "nui lua",
-                      "masked_meaning":  "Nú_ lử_"
-                  },
-                  {
-                      "word":  "thunder",
-                      "meaning_vi":  "Sấm",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027S\u0027, có 3 chữ cái, dạng \u0027Sấm\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "sam",
-                      "masked_meaning":  "Sấm"
-                  },
-                  {
-                      "word":  "lightning",
-                      "meaning_vi":  "Tia chớp",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027T\u0027, có 7 chữ cái, dạng \u0027T__ chớp\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "tia chop",
-                      "masked_meaning":  "T__ chớp"
-                  },
-                  {
-                      "word":  "rainbow",
-                      "meaning_vi":  "Cầu vồng",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 7 chữ cái, dạng \u0027Cầ_ vồng\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "cau vong",
-                      "masked_meaning":  "Cầ_ vồng"
-                  },
-                  {
-                      "word":  "leaf",
-                      "meaning_vi":  "Lá cây",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027L\u0027, có 5 chữ cái, dạng \u0027Lá câ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "la cay",
-                      "masked_meaning":  "Lá câ_"
-                  },
-                  {
-                      "word":  "branch",
-                      "meaning_vi":  "Cành cây",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 7 chữ cái, dạng \u0027Cành câ_\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "canh cay",
-                      "masked_meaning":  "Cành câ_"
-                  },
-                  {
-                      "word":  "soil",
-                      "meaning_vi":  "Đất",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027A\u0027, có 2 chữ cái, dạng \u0027Đất\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "đat",
-                      "masked_meaning":  "Đất"
-                  },
-                  {
-                      "word":  "sand",
-                      "meaning_vi":  "Cát",
-                      "hint_vi":  "Gợi ý: từ này bắt đầu bằng \u0027C\u0027, có 3 chữ cái, dạng \u0027Cát\u0027.",
-                      "hint_group":  "general",
-                      "normalized_meaning":  "cat",
-                      "masked_meaning":  "Cát"
-                  },
-                  {
-                      "word":  "code",
-                      "meaning_vi":  "Mã lập trình",
-                      "hint_vi":  "Gợi ý: đây là mã viết ra để máy tính hiểu.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "ma lap trinh",
-                      "masked_meaning":  "Mã lập trình"
-                  },
-                  {
-                      "word":  "program",
-                      "meaning_vi":  "Chương trình",
-                      "hint_vi":  "Gợi ý: đây là một chương trình được máy tính chạy.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "chuong trinh",
-                      "masked_meaning":  "Chương trình"
-                  },
-                  {
-                      "word":  "database",
-                      "meaning_vi":  "Cơ sở dữ liệu",
-                      "hint_vi":  "Gợi ý: đây là cơ sở dữ liệu lưu trữ thông tin.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "co so du lieu",
-                      "masked_meaning":  "Cơ sở dữ l_ệ_"
-                  },
-                  {
-                      "word":  "network",
-                      "meaning_vi":  "Mạng",
-                      "hint_vi":  "Gợi ý: đây là hệ thống kết nối nhiều thiết bị với nhau.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "mang",
-                      "masked_meaning":  "Mạng"
-                  },
-                  {
-                      "word":  "password",
-                      "meaning_vi":  "Mật khẩu",
-                      "hint_vi":  "Gợi ý: đây là mật khẩu để bảo vệ tài khoản.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "mat khau",
-                      "masked_meaning":  "Mật khẩ_"
-                  },
-                  {
-                      "word":  "security",
-                      "meaning_vi":  "Bảo mật",
-                      "hint_vi":  "Gợi ý: đây là sự bảo vệ khỏi rủi ro hoặc tấn công.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "bao mat",
-                      "masked_meaning":  "Bả_ mật"
-                  },
-                  {
-                      "word":  "update",
-                      "meaning_vi":  "Cập nhật",
-                      "hint_vi":  "Gợi ý: đây là hành động cập nhật lên phiên bản mới.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "cap nhat",
-                      "masked_meaning":  "Cập nhật"
-                  },
-                  {
-                      "word":  "download",
-                      "meaning_vi":  "Tải xuống",
-                      "hint_vi":  "Gợi ý: đây là hành động tải dữ liệu về máy.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "tai xuong",
-                      "masked_meaning":  "Tả_ x_ống"
-                  },
-                  {
-                      "word":  "upload",
-                      "meaning_vi":  "Tải lên",
-                      "hint_vi":  "Gợi ý: đây là hành động tải dữ liệu lên mạng.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "tai len",
-                      "masked_meaning":  "Tả_ lên"
-                  },
-                  {
-                      "word":  "device",
-                      "meaning_vi":  "Thiết bị",
-                      "hint_vi":  "Gợi ý: đây là thiết bị điện tử hoặc máy móc.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "thiet bi",
-                      "masked_meaning":  "Th_ết bị"
-                  },
-                  {
-                      "word":  "processor",
-                      "meaning_vi":  "Bộ xử lý",
-                      "hint_vi":  "Gợi ý: đây là bộ xử lý, phần “đầu não” của máy.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "bo xu ly",
-                      "masked_meaning":  "Bộ xử lý"
-                  },
-                  {
-                      "word":  "vegetable",
-                      "meaning_vi":  "Rau củ",
-                      "hint_vi":  "Gợi ý: đây là nhóm thực phẩm rau xanh và rau củ.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "rau cu",
-                      "masked_meaning":  "R__ củ"
-                  },
-                  {
-                      "word":  "fruit",
-                      "meaning_vi":  "Trái cây",
-                      "hint_vi":  "Gợi ý: đây là nhóm thực phẩm ngọt tự nhiên, thường mọng nước.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "trai cay",
-                      "masked_meaning":  "Trá_ câ_"
-                  },
-                  {
-                      "word":  "pork",
-                      "meaning_vi":  "Thịt heo",
-                      "hint_vi":  "Gợi ý: đây là thịt từ con heo.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "thit heo",
-                      "masked_meaning":  "Thịt h__"
-                  },
-                  {
-                      "word":  "beef",
-                      "meaning_vi":  "Thịt bò",
-                      "hint_vi":  "Gợi ý: đây là thịt từ con bò.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "thit bo",
-                      "masked_meaning":  "Thịt bò"
-                  },
-                  {
-                      "word":  "shrimp",
-                      "meaning_vi":  "Tôm",
-                      "hint_vi":  "Gợi ý: đây là loại hải sản nhỏ, có vỏ cứng.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "tom",
-                      "masked_meaning":  "Tôm"
-                  },
-                  {
-                      "word":  "crab",
-                      "meaning_vi":  "Cua",
-                      "hint_vi":  "Gợi ý: đây là loại hải sản có càng và vỏ cứng.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "cua",
-                      "masked_meaning":  "C__"
-                  },
-                  {
-                      "word":  "juice",
-                      "meaning_vi":  "Nước ép",
-                      "hint_vi":  "Gợi ý: đây là đồ uống ép từ trái cây.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "nuoc ep",
-                      "masked_meaning":  "Nước ép"
-                  },
-                  {
-                      "word":  "tea",
-                      "meaning_vi":  "Trà",
-                      "hint_vi":  "Gợi ý: đây là thức uống được pha từ lá trà.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "tra",
-                      "masked_meaning":  "Trà"
-                  },
-                  {
-                      "word":  "coffee",
-                      "meaning_vi":  "Cà phê",
-                      "hint_vi":  "Gợi ý: đây là thức uống thơm, thường có vị đắng nhẹ.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "ca phe",
-                      "masked_meaning":  "Cà phê"
-                  },
-                  {
-                      "word":  "honey",
-                      "meaning_vi":  "Mật ong",
-                      "hint_vi":  "Gợi ý: đây là chất ngọt do ong tạo ra.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "mat ong",
-                      "masked_meaning":  "Mật _ng"
-                  },
-                  {
-                      "word":  "pepper",
-                      "meaning_vi":  "Tiêu",
-                      "hint_vi":  "Gợi ý: đây là gia vị có vị cay nồng.",
-                      "hint_group":  "food",
-                      "normalized_meaning":  "tieu",
-                      "masked_meaning":  "T_ê_"
-                  },
-                  {
-                      "word":  "bear",
-                      "meaning_vi":  "Gấu",
-                      "hint_vi":  "Gợi ý: con vật này to lớn, mạnh mẽ và thích mật ong.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "gau",
-                      "masked_meaning":  "Gấ_"
-                  },
-                  {
-                      "word":  "wolf",
-                      "meaning_vi":  "Sói",
-                      "hint_vi":  "Gợi ý: con vật này sống theo bầy và hay tru vào đêm.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "soi",
-                      "masked_meaning":  "Só_"
-                  },
-                  {
-                      "word":  "fox",
-                      "meaning_vi":  "Cáo",
-                      "hint_vi":  "Gợi ý: con vật này nổi tiếng nhanh nhẹn và ranh mãnh.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "cao",
-                      "masked_meaning":  "Cá_"
-                  },
-                  {
-                      "word":  "deer",
-                      "meaning_vi":  "Hươu",
-                      "hint_vi":  "Gợi ý: con vật này có sừng nhánh, thường sống trong rừng.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "huou",
-                      "masked_meaning":  "Hươ_"
-                  },
-                  {
-                      "word":  "goat",
-                      "meaning_vi":  "Dê",
-                      "hint_vi":  "Gợi ý: con vật này leo núi giỏi và có bộ râu dưới cằm.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "de",
-                      "masked_meaning":  "Dê"
-                  },
-                  {
-                      "word":  "donkey",
-                      "meaning_vi":  "Lừa",
-                      "hint_vi":  "Gợi ý: con vật này nhìn giống ngựa, thường chở hàng ở vùng núi.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "lua",
-                      "masked_meaning":  "Lừ_"
-                  },
-                  {
-                      "word":  "eagle",
-                      "meaning_vi":  "Đại bàng",
-                      "hint_vi":  "Gợi ý: đây là loài chim lớn, mắt rất tinh và bay cao.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "đai bang",
-                      "masked_meaning":  "Đạ_ bàng"
-                  },
-                  {
-                      "word":  "parrot",
-                      "meaning_vi":  "Vẹt",
-                      "hint_vi":  "Gợi ý: loài chim này có mỏ cong, có thể nhại lại tiếng người.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "vet",
-                      "masked_meaning":  "Vẹt"
-                  },
-                  {
-                      "word":  "dolphin",
-                      "meaning_vi":  "Cá heo",
-                      "hint_vi":  "Gợi ý: động vật biển thông minh, thường biểu diễn nhào lộn.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "ca heo",
-                      "masked_meaning":  "Cá h__"
-                  },
-                  {
-                      "word":  "whale",
-                      "meaning_vi":  "Cá voi",
-                      "hint_vi":  "Gợi ý: động vật biển khổng lồ, kích thước rất lớn.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "ca voi",
-                      "masked_meaning":  "Cá v__"
-                  },
-                  {
-                      "word":  "shark",
-                      "meaning_vi":  "Cá mập",
-                      "hint_vi":  "Gợi ý: động vật biển này có răng sắc và bơi rất nhanh.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "ca map",
-                      "masked_meaning":  "Cá mập"
-                  },
-                  {
-                      "word":  "ant",
-                      "meaning_vi":  "Kiến",
-                      "hint_vi":  "Gợi ý: con vật nhỏ xíu, thường đi thành hàng dài trên mặt đất.",
-                      "hint_group":  "animal",
-                      "normalized_meaning":  "kien",
-                      "masked_meaning":  "K_ến"
-                  },
-                  {
-                      "word":  "van",
-                      "meaning_vi":  "Xe tải nhỏ",
-                      "hint_vi":  "Gợi ý: xe chở hàng hoặc chở người loại nhỏ.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe tai nho",
-                      "masked_meaning":  "X_ tả_ nhỏ"
-                  },
-                  {
-                      "word":  "tram",
-                      "meaning_vi":  "Xe điện",
-                      "hint_vi":  "Gợi ý: phương tiện chạy trên đường ray trong thành phố.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe đien",
-                      "masked_meaning":  "X_ đ_ện"
-                  },
-                  {
-                      "word":  "ferry",
-                      "meaning_vi":  "Phà",
-                      "hint_vi":  "Gợi ý: phương tiện chở người qua sông hoặc biển ngắn.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "pha",
-                      "masked_meaning":  "Phà"
-                  },
-                  {
-                      "word":  "canoe",
-                      "meaning_vi":  "Ca nô",
-                      "hint_vi":  "Gợi ý: thuyền nhỏ, nhẹ và thường được chèo tay.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "ca no",
-                      "masked_meaning":  "C_ nô"
-                  },
-                  {
-                      "word":  "yacht",
-                      "meaning_vi":  "Du thuyền",
-                      "hint_vi":  "Gợi ý: thuyền sang trọng để đi chơi hoặc du ngoạn.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "du thuyen",
-                      "masked_meaning":  "D_ th__ền"
-                  },
-                  {
-                      "word":  "skateboard",
-                      "meaning_vi":  "Ván trượt",
-                      "hint_vi":  "Gợi ý: ván trượt dùng để đứng và di chuyển trên mặt phẳng.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "van truot",
-                      "masked_meaning":  "Ván trượt"
-                  },
-                  {
-                      "word":  "rollerblade",
-                      "meaning_vi":  "Giày trượt",
-                      "hint_vi":  "Gợi ý: giày có bánh xe để trượt trên mặt đường.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "giay truot",
-                      "masked_meaning":  "G_à_ trượt"
-                  },
-                  {
-                      "word":  "wheelchair",
-                      "meaning_vi":  "Xe lăn",
-                      "hint_vi":  "Gợi ý: xe dành cho người khó đi lại.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe lan",
-                      "masked_meaning":  "X_ lăn"
-                  },
-                  {
-                      "word":  "cart",
-                      "meaning_vi":  "Xe đẩy",
-                      "hint_vi":  "Gợi ý: xe đẩy dùng để chở đồ hoặc hàng hóa.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "xe đay",
-                      "masked_meaning":  "X_ đẩ_"
-                  },
-                  {
-                      "word":  "rocket",
-                      "meaning_vi":  "Tên lửa",
-                      "hint_vi":  "Gợi ý: phương tiện bay lên không gian rất nhanh.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "ten lua",
-                      "masked_meaning":  "Tên lử_"
-                  },
-                  {
-                      "word":  "jet",
-                      "meaning_vi":  "Máy bay phản lực",
-                      "hint_vi":  "Gợi ý: máy bay phản lực bay tốc độ cao.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "may bay phan luc",
-                      "masked_meaning":  "Má_ b__ phản lực"
-                  },
-                  {
-                      "word":  "glider",
-                      "meaning_vi":  "Tàu lượn",
-                      "hint_vi":  "Gợi ý: phương tiện bay lượn nhờ gió, không có động cơ lớn.",
-                      "hint_group":  "vehicle",
-                      "normalized_meaning":  "tau luon",
-                      "masked_meaning":  "Tà_ lượn"
-                  },
-                  {
-                      "word":  "listen",
-                      "meaning_vi":  "Lắng nghe",
-                      "hint_vi":  "Gợi ý: đây là hành động lắng nghe bằng tai.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "lang nghe",
-                      "masked_meaning":  "Lắng ngh_"
-                  },
-                  {
-                      "word":  "speak",
-                      "meaning_vi":  "Nói",
-                      "hint_vi":  "Gợi ý: đây là hành động nói ra bằng miệng.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "noi",
-                      "masked_meaning":  "Nó_"
-                  },
-                  {
-                      "word":  "watch",
-                      "meaning_vi":  "Xem",
-                      "hint_vi":  "Gợi ý: đây là hành động nhìn theo dõi một thứ gì đó.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "xem",
-                      "masked_meaning":  "X_m"
-                  },
-                  {
-                      "word":  "think",
-                      "meaning_vi":  "Suy nghĩ",
-                      "hint_vi":  "Gợi ý: đây là hành động suy nghĩ trong đầu.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "suy nghi",
-                      "masked_meaning":  "S__ nghĩ"
-                  },
-                  {
-                      "word":  "build",
-                      "meaning_vi":  "Xây dựng",
-                      "hint_vi":  "Gợi ý: đây là hành động xây dựng hoặc tạo ra.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "xay dung",
-                      "masked_meaning":  "Xâ_ dựng"
-                  },
-                  {
-                      "word":  "fix",
-                      "meaning_vi":  "Sửa chữa",
-                      "hint_vi":  "Gợi ý: đây là hành động sửa chữa thứ bị hỏng.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "sua chua",
-                      "masked_meaning":  "Sử_ chữ_"
-                  },
-                  {
-                      "word":  "drive",
-                      "meaning_vi":  "Lái xe",
-                      "hint_vi":  "Gợi ý: đây là hành động lái xe.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "lai xe",
-                      "masked_meaning":  "Lá_ x_"
-                  },
-                  {
-                      "word":  "travel",
-                      "meaning_vi":  "Du lịch",
-                      "hint_vi":  "Gợi ý: đây là hành động đi đến nơi khác để khám phá.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "du lich",
-                      "masked_meaning":  "D_ lịch"
-                  },
-                  {
-                      "word":  "practice",
-                      "meaning_vi":  "Luyện tập",
-                      "hint_vi":  "Gợi ý: đây là hành động luyện tập nhiều lần để giỏi hơn.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "luyen tap",
-                      "masked_meaning":  "L__ện tập"
-                  },
-                  {
-                      "word":  "exercise",
-                      "meaning_vi":  "Tập thể dục",
-                      "hint_vi":  "Gợi ý: đây là hành động vận động để khỏe mạnh.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "tap the duc",
-                      "masked_meaning":  "Tập thể dục"
-                  },
-                  {
-                      "word":  "relax",
-                      "meaning_vi":  "Thư giãn",
-                      "hint_vi":  "Gợi ý: đây là hành động thư giãn, nghỉ ngơi.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "thu gian",
-                      "masked_meaning":  "Thư g_ãn"
-                  },
-                  {
-                      "word":  "celebrate",
-                      "meaning_vi":  "Ăn mừng",
-                      "hint_vi":  "Gợi ý: đây là hành động ăn mừng một dịp vui.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "an mung",
-                      "masked_meaning":  "Ăn mừng"
-                  },
-                  {
-                      "word":  "turquoise",
-                      "meaning_vi":  "Màu xanh ngọc",
-                      "hint_vi":  "Gợi ý: đây là màu xanh ngọc pha xanh lam.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau xanh ngoc",
-                      "masked_meaning":  "Mà_ x_nh ngọc"
-                  },
-                  {
-                      "word":  "crimson",
-                      "meaning_vi":  "Màu đỏ thẫm",
-                      "hint_vi":  "Gợi ý: đây là màu đỏ thẫm, đậm hơn đỏ thường.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau đo tham",
-                      "masked_meaning":  "Mà_ đỏ thẫm"
-                  },
-                  {
-                      "word":  "navy",
-                      "meaning_vi":  "Màu xanh hải quân",
-                      "hint_vi":  "Gợi ý: đây là màu xanh hải quân rất đậm.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau xanh hai quan",
-                      "masked_meaning":  "Mà_ x_nh hả_ q_ân"
-                  },
-                  {
-                      "word":  "olive",
-                      "meaning_vi":  "Màu ô liu",
-                      "hint_vi":  "Gợi ý: đây là màu xanh ô liu hơi ngả vàng.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau o liu",
-                      "masked_meaning":  "Mà_ ô l__"
-                  },
-                  {
-                      "word":  "lavender",
-                      "meaning_vi":  "Màu oải hương",
-                      "hint_vi":  "Gợi ý: đây là màu tím oải hương nhẹ nhàng.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau oai huong",
-                      "masked_meaning":  "Mà_ _ả_ hương"
-                  },
-                  {
-                      "word":  "maroon",
-                      "meaning_vi":  "Màu đỏ nâu",
-                      "hint_vi":  "Gợi ý: đây là màu nâu đỏ trầm.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau đo nau",
-                      "masked_meaning":  "Mà_ đỏ nâ_"
-                  },
-                  {
-                      "word":  "coral",
-                      "meaning_vi":  "Màu san hô",
-                      "hint_vi":  "Gợi ý: đây là màu san hô pha giữa hồng và cam.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau san ho",
-                      "masked_meaning":  "Mà_ s_n hô"
-                  },
-                  {
-                      "word":  "amber",
-                      "meaning_vi":  "Màu hổ phách",
-                      "hint_vi":  "Gợi ý: đây là màu hổ phách ấm áp.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau ho phach",
-                      "masked_meaning":  "Mà_ hổ phách"
-                  },
-                  {
-                      "word":  "ivory",
-                      "meaning_vi":  "Màu ngà",
-                      "hint_vi":  "Gợi ý: đây là màu ngà rất nhạt.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau nga",
-                      "masked_meaning":  "Mà_ ngà"
-                  },
-                  {
-                      "word":  "mint",
-                      "meaning_vi":  "Màu xanh bạc hà",
-                      "hint_vi":  "Gợi ý: đây là màu xanh bạc hà mát mắt.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau xanh bac ha",
-                      "masked_meaning":  "Mà_ x_nh bạc hà"
-                  },
-                  {
-                      "word":  "peach",
-                      "meaning_vi":  "Màu đào",
-                      "hint_vi":  "Gợi ý: đây là màu đào nhẹ và ấm.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau đao",
-                      "masked_meaning":  "Mà_ đà_"
-                  },
-                  {
-                      "word":  "teal",
-                      "meaning_vi":  "Màu xanh mòng két",
-                      "hint_vi":  "Gợi ý: đây là màu xanh mòng két pha xanh lam và xanh lục.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau xanh mong ket",
-                      "masked_meaning":  "Mà_ x_nh mòng két"
-                  },
-                  {
-                      "word":  "area",
-                      "meaning_vi":  "Khu vực",
-                      "hint_vi":  "Gợi ý: đây là một khu vực hoặc vùng cụ thể.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "khu vuc",
-                      "masked_meaning":  "Kh_ vực"
-                  },
-                  {
-                      "word":  "zone",
-                      "meaning_vi":  "Vùng",
-                      "hint_vi":  "Gợi ý: đây là một vùng được chia ra theo mục đích nào đó.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "vung",
-                      "masked_meaning":  "Vùng"
-                  },
-                  {
-                      "word":  "corner",
-                      "meaning_vi":  "Góc",
-                      "hint_vi":  "Gợi ý: đây là chỗ giao nhau của hai cạnh hoặc hai đường.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "goc",
-                      "masked_meaning":  "Góc"
-                  },
-                  {
-                      "word":  "center",
-                      "meaning_vi":  "Trung tâm",
-                      "hint_vi":  "Gợi ý: đây là vị trí ở giữa hoặc trung tâm.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "trung tam",
-                      "masked_meaning":  "Tr_ng tâm"
-                  },
-                  {
-                      "word":  "border",
-                      "meaning_vi":  "Biên giới",
-                      "hint_vi":  "Gợi ý: đây là đường ranh giới giữa hai khu vực.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "bien gioi",
-                      "masked_meaning":  "B_ên g_ớ_"
-                  },
-                  {
-                      "word":  "front",
-                      "meaning_vi":  "Phía trước",
-                      "hint_vi":  "Gợi ý: đây là phía ở trước.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "phia truoc",
-                      "masked_meaning":  "Phí_ trước"
-                  },
-                  {
-                      "word":  "back",
-                      "meaning_vi":  "Phía sau",
-                      "hint_vi":  "Gợi ý: đây là phía ở sau.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "phia sau",
-                      "masked_meaning":  "Phí_ s__"
-                  },
-                  {
-                      "word":  "left",
-                      "meaning_vi":  "Bên trái",
-                      "hint_vi":  "Gợi ý: đây là phía bên trái.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "ben trai",
-                      "masked_meaning":  "Bên trá_"
-                  },
-                  {
-                      "word":  "right",
-                      "meaning_vi":  "Bên phải",
-                      "hint_vi":  "Gợi ý: đây là phía bên phải.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "ben phai",
-                      "masked_meaning":  "Bên phả_"
-                  },
-                  {
-                      "word":  "above",
-                      "meaning_vi":  "Phía trên",
-                      "hint_vi":  "Gợi ý: đây là vị trí ở phía trên.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "phia tren",
-                      "masked_meaning":  "Phí_ trên"
-                  },
-                  {
-                      "word":  "below",
-                      "meaning_vi":  "Phía dưới",
-                      "hint_vi":  "Gợi ý: đây là vị trí ở phía dưới.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "phia duoi",
-                      "masked_meaning":  "Phí_ dướ_"
-                  },
-                  {
-                      "word":  "middle",
-                      "meaning_vi":  "Ở giữa",
-                      "hint_vi":  "Gợi ý: đây là vị trí ở giữa.",
-                      "hint_group":  "place",
-                      "normalized_meaning":  "o giua",
-                      "masked_meaning":  "Ở g_ữ_"
-                  },
-                  {
-                      "word":  "clock",
-                      "meaning_vi":  "Đồng hồ",
-                      "hint_vi":  "Gợi ý: đây là vật dùng để xem giờ.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "đong ho",
-                      "masked_meaning":  "Đồng hồ"
-                  },
-                  {
-                      "word":  "date",
-                      "meaning_vi":  "Ngày",
-                      "hint_vi":  "Gợi ý: đây là ngày tháng cụ thể trên lịch.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "ngay",
-                      "masked_meaning":  "Ngà_"
-                  },
-                  {
-                      "word":  "schedule",
-                      "meaning_vi":  "Lịch trình",
-                      "hint_vi":  "Gợi ý: đây là kế hoạch hoặc lịch trình làm việc.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "lich trinh",
-                      "masked_meaning":  "Lịch trình"
-                  },
-                  {
-                      "word":  "deadline",
-                      "meaning_vi":  "Hạn chót",
-                      "hint_vi":  "Gợi ý: đây là thời hạn phải hoàn thành công việc.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "han chot",
-                      "masked_meaning":  "Hạn chót"
-                  },
-                  {
-                      "word":  "moment",
-                      "meaning_vi":  "Khoảnh khắc",
-                      "hint_vi":  "Gợi ý: đây là một khoảnh khắc ngắn.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "khoanh khac",
-                      "masked_meaning":  "Kh_ảnh khắc"
-                  },
-                  {
-                      "word":  "period",
-                      "meaning_vi":  "Khoảng thời gian",
-                      "hint_vi":  "Gợi ý: đây là một khoảng thời gian.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "khoang thoi gian",
-                      "masked_meaning":  "Kh_ảng thờ_ g__n"
-                  },
-                  {
-                      "word":  "century",
-                      "meaning_vi":  "Thế kỷ",
-                      "hint_vi":  "Gợi ý: đây là một thế kỷ, gồm 100 năm.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "the ky",
-                      "masked_meaning":  "Thế kỷ"
-                  },
-                  {
-                      "word":  "decade",
-                      "meaning_vi":  "Thập kỷ",
-                      "hint_vi":  "Gợi ý: đây là một thập kỷ, gồm 10 năm.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "thap ky",
-                      "masked_meaning":  "Thập kỷ"
-                  },
-                  {
-                      "word":  "season",
-                      "meaning_vi":  "Mùa",
-                      "hint_vi":  "Gợi ý: đây là một mùa trong năm.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "mua",
-                      "masked_meaning":  "Mù_"
-                  },
-                  {
-                      "word":  "spring",
-                      "meaning_vi":  "Mùa xuân",
-                      "hint_vi":  "Gợi ý: đây là mùa xuân.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "mua xuan",
-                      "masked_meaning":  "Mù_ x_ân"
-                  },
-                  {
-                      "word":  "summer",
-                      "meaning_vi":  "Mùa hè",
-                      "hint_vi":  "Gợi ý: đây là mùa hè.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "mua he",
-                      "masked_meaning":  "Mù_ hè"
-                  },
-                  {
-                      "word":  "winter",
-                      "meaning_vi":  "Mùa đông",
-                      "hint_vi":  "Gợi ý: đây là mùa đông.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "mua đong",
-                      "masked_meaning":  "Mù_ đông"
-                  },
-                  {
-                      "word":  "run",
-                      "meaning_vi":  "Chạy",
-                      "hint_vi":  "Gợi ý: đây là hành động di chuyển rất nhanh bằng chân.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "chay",
-                      "masked_meaning":  "Chạ_"
-                  },
-                  {
-                      "word":  "walk",
-                      "meaning_vi":  "Đi bộ",
-                      "hint_vi":  "Gợi ý: đây là hành động đi bộ chậm rãi.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "đi bo",
-                      "masked_meaning":  "Đ_ bộ"
-                  },
-                  {
-                      "word":  "jump",
-                      "meaning_vi":  "Nhảy",
-                      "hint_vi":  "Gợi ý: đây là hành động bật người lên khỏi mặt đất.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "nhay",
-                      "masked_meaning":  "Nhả_"
-                  },
-                  {
-                      "word":  "swim",
-                      "meaning_vi":  "Bơi",
-                      "hint_vi":  "Gợi ý: đây là hành động di chuyển trong nước.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "boi",
-                      "masked_meaning":  "Bơ_"
-                  },
-                  {
-                      "word":  "dance",
-                      "meaning_vi":  "Nhảy múa",
-                      "hint_vi":  "Gợi ý: đây là hành động nhảy múa theo nhịp.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "nhay mua",
-                      "masked_meaning":  "Nhả_ mú_"
-                  },
-                  {
-                      "word":  "sing",
-                      "meaning_vi":  "Hát",
-                      "hint_vi":  "Gợi ý: đây là hành động cất giọng thành bài hát.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "hat",
-                      "masked_meaning":  "Hát"
-                  },
-                  {
-                      "word":  "read",
-                      "meaning_vi":  "Đọc",
-                      "hint_vi":  "Gợi ý: đây là hành động xem và hiểu chữ viết.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "đoc",
-                      "masked_meaning":  "Đọc"
-                  },
-                  {
-                      "word":  "write",
-                      "meaning_vi":  "Viết",
-                      "hint_vi":  "Gợi ý: đây là hành động dùng bút hoặc bàn phím để tạo chữ.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "viet",
-                      "masked_meaning":  "V_ết"
-                  },
-                  {
-                      "word":  "cook",
-                      "meaning_vi":  "Nấu ăn",
-                      "hint_vi":  "Gợi ý: đây là hành động nấu thức ăn.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "nau an",
-                      "masked_meaning":  "Nấ_ ăn"
-                  },
-                  {
-                      "word":  "study",
-                      "meaning_vi":  "Học",
-                      "hint_vi":  "Gợi ý: đây là hành động học tập, ôn bài.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "hoc",
-                      "masked_meaning":  "Học"
-                  },
-                  {
-                      "word":  "work",
-                      "meaning_vi":  "Làm việc",
-                      "hint_vi":  "Gợi ý: đây là hành động làm việc để tạo ra kết quả.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "lam viec",
-                      "masked_meaning":  "Làm v_ệc"
-                  },
-                  {
-                      "word":  "sleep",
-                      "meaning_vi":  "Ngủ",
-                      "hint_vi":  "Gợi ý: đây là trạng thái nghỉ ngơi vào ban đêm.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "ngu",
-                      "masked_meaning":  "Ngủ"
-                  },
-                  {
-                      "word":  "wake",
-                      "meaning_vi":  "Thức dậy",
-                      "hint_vi":  "Gợi ý: đây là hành động thức dậy sau khi ngủ.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "thuc day",
-                      "masked_meaning":  "Thức dậ_"
-                  },
-                  {
-                      "word":  "play",
-                      "meaning_vi":  "Chơi",
-                      "hint_vi":  "Gợi ý: đây là hành động vui chơi hoặc giải trí.",
-                      "hint_group":  "action",
-                      "normalized_meaning":  "choi",
-                      "masked_meaning":  "Chơ_"
-                  },
-                  {
-                      "word":  "blue",
-                      "meaning_vi":  "Màu xanh dương",
-                      "hint_vi":  "Gợi ý: đây là màu của bầu trời trong xanh.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau xanh duong",
-                      "masked_meaning":  "Mà_ x_nh dương"
-                  },
-                  {
-                      "word":  "red",
-                      "meaning_vi":  "Màu đỏ",
-                      "hint_vi":  "Gợi ý: đây là màu của quả dâu chín hoặc đèn báo dừng.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau đo",
-                      "masked_meaning":  "Mà_ đỏ"
-                  },
-                  {
-                      "word":  "green",
-                      "meaning_vi":  "Màu xanh lá",
-                      "hint_vi":  "Gợi ý: đây là màu của lá cây và cỏ non.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau xanh la",
-                      "masked_meaning":  "Mà_ x_nh lá"
-                  },
-                  {
-                      "word":  "yellow",
-                      "meaning_vi":  "Màu vàng",
-                      "hint_vi":  "Gợi ý: đây là màu của ánh nắng và nhiều bông hoa.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau vang",
-                      "masked_meaning":  "Mà_ vàng"
-                  },
-                  {
-                      "word":  "black",
-                      "meaning_vi":  "Màu đen",
-                      "hint_vi":  "Gợi ý: đây là màu rất tối, giống bóng đêm.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau đen",
-                      "masked_meaning":  "Mà_ đ_n"
-                  },
-                  {
-                      "word":  "white",
-                      "meaning_vi":  "Màu trắng",
-                      "hint_vi":  "Gợi ý: đây là màu của mây trắng và tuyết.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau trang",
-                      "masked_meaning":  "Mà_ trắng"
-                  },
-                  {
-                      "word":  "purple",
-                      "meaning_vi":  "Màu tím",
-                      "hint_vi":  "Gợi ý: đây là màu tím đậm, thường tạo cảm giác sang.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau tim",
-                      "masked_meaning":  "Mà_ tím"
-                  },
-                  {
-                      "word":  "pink",
-                      "meaning_vi":  "Màu hồng",
-                      "hint_vi":  "Gợi ý: đây là màu hồng dịu, hay gặp ở hoa và kẹo.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau hong",
-                      "masked_meaning":  "Mà_ hồng"
-                  },
-                  {
-                      "word":  "brown",
-                      "meaning_vi":  "Màu nâu",
-                      "hint_vi":  "Gợi ý: đây là màu nâu của đất và gỗ.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau nau",
-                      "masked_meaning":  "Mà_ nâ_"
-                  },
-                  {
-                      "word":  "gray",
-                      "meaning_vi":  "Màu xám",
-                      "hint_vi":  "Gợi ý: đây là màu xám của mây mù hoặc kim loại.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau xam",
-                      "masked_meaning":  "Mà_ xám"
-                  },
-                  {
-                      "word":  "gold",
-                      "meaning_vi":  "Màu vàng kim",
-                      "hint_vi":  "Gợi ý: đây là màu vàng kim, thường gắn với sự quý giá.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau vang kim",
-                      "masked_meaning":  "Mà_ vàng k_m"
-                  },
-                  {
-                      "word":  "silver",
-                      "meaning_vi":  "Màu bạc",
-                      "hint_vi":  "Gợi ý: đây là màu bạc sáng như kim loại.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau bac",
-                      "masked_meaning":  "Mà_ bạc"
-                  },
-                  {
-                      "word":  "violet",
-                      "meaning_vi":  "Màu tím nhạt",
-                      "hint_vi":  "Gợi ý: đây là màu tím nhạt, gần với màu hoa oải hương.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau tim nhat",
-                      "masked_meaning":  "Mà_ tím nhạt"
-                  },
-                  {
-                      "word":  "beige",
-                      "meaning_vi":  "Màu be",
-                      "hint_vi":  "Gợi ý: đây là màu be nhẹ, rất dịu mắt.",
-                      "hint_group":  "color",
-                      "normalized_meaning":  "mau be",
-                      "masked_meaning":  "Mà_ b_"
-                  },
-                  {
-                      "word":  "hour",
-                      "meaning_vi":  "Giờ",
-                      "hint_vi":  "Gợi ý: đây là đơn vị đo thời gian, dài hơn phút.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "gio",
-                      "masked_meaning":  "G_ờ"
-                  },
-                  {
-                      "word":  "minute",
-                      "meaning_vi":  "Phút",
-                      "hint_vi":  "Gợi ý: đây là đơn vị thời gian, ngắn hơn giờ.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "phut",
-                      "masked_meaning":  "Phút"
-                  },
-                  {
-                      "word":  "second",
-                      "meaning_vi":  "Giây",
-                      "hint_vi":  "Gợi ý: đây là đơn vị thời gian rất ngắn.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "giay",
-                      "masked_meaning":  "G_â_"
-                  },
-                  {
-                      "word":  "day",
-                      "meaning_vi":  "Ngày",
-                      "hint_vi":  "Gợi ý: đây là một ngày trong tuần hoặc 24 giờ.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "ngay",
-                      "masked_meaning":  "Ngà_"
-                  },
-                  {
-                      "word":  "week",
-                      "meaning_vi":  "Tuần",
-                      "hint_vi":  "Gợi ý: đây là khoảng thời gian gồm 7 ngày.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "tuan",
-                      "masked_meaning":  "T_ần"
-                  },
-                  {
-                      "word":  "month",
-                      "meaning_vi":  "Tháng",
-                      "hint_vi":  "Gợi ý: đây là khoảng thời gian trong năm, có 12 phần.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "thang",
-                      "masked_meaning":  "Tháng"
-                  },
-                  {
-                      "word":  "year",
-                      "meaning_vi":  "Năm",
-                      "hint_vi":  "Gợi ý: đây là khoảng thời gian gồm 12 tháng.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "nam",
-                      "masked_meaning":  "Năm"
-                  },
-                  {
-                      "word":  "morning",
-                      "meaning_vi":  "Buổi sáng",
-                      "hint_vi":  "Gợi ý: đây là thời điểm bắt đầu của một ngày.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "buoi sang",
-                      "masked_meaning":  "B_ổ_ sáng"
-                  },
-                  {
-                      "word":  "afternoon",
-                      "meaning_vi":  "Buổi chiều",
-                      "hint_vi":  "Gợi ý: đây là khoảng thời gian sau buổi trưa.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "buoi chieu",
-                      "masked_meaning":  "B_ổ_ ch_ề_"
-                  },
-                  {
-                      "word":  "evening",
-                      "meaning_vi":  "Buổi tối",
-                      "hint_vi":  "Gợi ý: đây là thời điểm khi trời đã xế chiều.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "buoi toi",
-                      "masked_meaning":  "B_ổ_ tố_"
-                  },
-                  {
-                      "word":  "night",
-                      "meaning_vi":  "Ban đêm",
-                      "hint_vi":  "Gợi ý: đây là thời gian khi trời tối.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "ban đem",
-                      "masked_meaning":  "B_n đêm"
-                  },
-                  {
-                      "word":  "today",
-                      "meaning_vi":  "Hôm nay",
-                      "hint_vi":  "Gợi ý: đây là ngày hiện tại.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "hom nay",
-                      "masked_meaning":  "Hôm n__"
-                  },
-                  {
-                      "word":  "yesterday",
-                      "meaning_vi":  "Hôm qua",
-                      "hint_vi":  "Gợi ý: đây là ngày trước hôm nay.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "hom qua",
-                      "masked_meaning":  "Hôm q__"
-                  },
-                  {
-                      "word":  "tomorrow",
-                      "meaning_vi":  "Ngày mai",
-                      "hint_vi":  "Gợi ý: đây là ngày sau hôm nay.",
-                      "hint_group":  "time",
-                      "normalized_meaning":  "ngay mai",
-                      "masked_meaning":  "Ngà_ m__"
-                  },
-                  {
-                      "word":  "calendar",
-                      "meaning_vi":  "Lịch",
-                      "hint_vi":  "Gợi ý: đây là lịch dùng để xem ngày tháng.",
-                      "hint_group":  "device",
-                      "normalized_meaning":  "lich",
-                      "masked_meaning":  "Lịch"
-                  }
-              ]
-}
+[
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tivi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị điện tử có màn hình, dùng để xem các chương trình truyền hình và phim ảnh."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy giặt",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị gia dụng dùng để tự động làm sạch quần áo bằng nước và xà phòng."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Quạt",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị có cánh quay bằng động cơ, tạo ra gió để làm mát."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Lò vi sóng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị nhà bếp dùng sóng điện từ để hâm nóng hoặc nấu chín thức ăn nhanh chóng."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Điện thoại",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị di động cầm tay dùng để liên lạc, lướt web và giải trí."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy ảnh",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị dùng để thu nhận hình ảnh và lưu lại những khoảnh khắc."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy sấy tóc",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị thổi ra luồng khí nóng để làm khô tóc nhanh chóng sau khi gội."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy hút bụi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị dùng lực hút để làm sạch bụi bẩn trên sàn nhà hoặc thảm."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Lò nướng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị nhà bếp có không gian kín dùng để nướng chín thức ăn như thịt, bánh."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy xay sinh tố",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị có lưỡi dao xoay dùng để nghiền nát trái cây, thực phẩm thành dạng lỏng."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Nồi cơm điện",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị nhà bếp chuyên dụng để nấu chín gạo thành cơm một cách tự động."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cục sạc",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phụ kiện dùng để cung cấp năng lượng điện cho pin của các thiết bị điện tử."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Sạc dự phòng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Viên pin di động cỡ lớn dùng để sạc điện thoại khi không có ổ cắm điện."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Điều khiển",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị cầm tay có các nút bấm để thao tác tivi, điều hòa từ xa."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Kệ tivi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ nội thất dài và thấp dùng để đặt tivi và các thiết bị giải trí đi kèm."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Hang động",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Khoảng trống tự nhiên rất sâu bên trong một ngọn núi hoặc dưới lòng đất."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Pin",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Bộ phận cung cấp và dự trữ năng lượng điện cho các thiết bị điện tử."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Dây cáp",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Sợi dây bọc nhựa có lõi kim loại dùng để truyền tải điện hoặc tín hiệu."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thiết bị",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Một máy móc hoặc công cụ được chế tạo ra cho một mục đích nhất định."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Quả trứng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thực phẩm hình bầu dục do các loài gia cầm đẻ ra, bên trong có lòng đỏ và lòng trắng."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tàu hỏa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện gồm một đầu máy kéo theo nhiều toa dài, chạy trên đường ray."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy bay",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện khổng lồ có cánh, bay được trên không trung để chở người đi quãng đường xa."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe máy",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện hai bánh gắn động cơ, phổ biến nhất trên đường phố Việt Nam."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Trực thăng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Máy bay có cánh quạt lớn trên nóc, có khả năng cất cánh và hạ cánh thẳng đứng."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tàu điện ngầm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện tàu hỏa chạy trong các đường hầm được đào sâu dưới lòng đất thành phố."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy kéo",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện cơ giới bánh to thường dùng ở nông trại để cày ruộng."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe tay ga",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại xe máy thiết kế sàn để chân rộng, người lái không cần đạp số."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe điện",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện đi lại giống xe máy nhưng dùng pin hoặc bình ắc quy thay vì đổ xăng."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy ủi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Xe công trình có lưỡi thép lớn phía trước dùng để san bằng đất đá."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy xúc",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Xe công trình có cánh tay dài và gàu múc để đào đất."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Chuột máy tính",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Ngón tay nhấn trỏ, cầm vừa tay kéo lướt trên mặt bàn gỗ."
+  },
+  {
+    "topic": "Electronics",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tai nghe bluetooth",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị nghe âm thanh không dây, phổ biến với điện thoại hoặc máy tính."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tủ lạnh",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị làm lạnh dùng để bảo quản thức ăn và đồ uống tránh bị hỏng."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bàn là",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị dùng nhiệt để làm phẳng quần áo bị nhăn."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ghế",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ nội thất có mặt phẳng và chân đỡ, dùng để ngồi."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bàn",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ nội thất có mặt phẳng đặt trên các chân, dùng để làm việc, học tập hoặc ăn uống."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Giường",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ nội thất thường trải đệm, đặt trong phòng ngủ để con người nằm nghỉ ngơi."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ghế sofa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại ghế dài có nệm dày êm ái, thường đặt ở phòng khách."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tủ quần áo",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ nội thất có nhiều ngăn và móc treo dùng để cất giữ trang phục."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Giá sách",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ nội thất có nhiều tầng bằng phẳng dùng để xếp gọn và trưng bày sách."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bàn làm việc",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chiếc bàn chuyên dụng thường có ngăn kéo, dùng để ngồi xử lý công việc."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tủ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ nội thất dạng hình hộp có cửa đóng mở để lưu trữ các đồ dùng trong nhà."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ngăn kéo",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Một phần của bàn hoặc tủ có thể kéo ra đẩy vào để cất đồ vật nhỏ."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Rèm cửa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tấm vải treo ở cửa sổ để cản ánh sáng mặt trời và che chắn tầm nhìn."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Gối tựa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại gối vuông hoặc tròn thường đặt trên sofa để lót lưng hoặc trang trí."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đệm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tấm lót êm ái có kích thước lớn, trải trên giường để nằm cho thoải mái."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ghế bành",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại ghế cá nhân êm ái có phần tựa lưng và hai bên để gác tay."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ghế đẩu",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại ghế nhỏ, không có phần tựa lưng và chỗ gác tay."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Băng ghế",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại ghế dài, cứng, đủ chỗ cho nhiều người cùng ngồi, thường thấy ở công viên."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Kệ để giày",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Giá đỡ có nhiều tầng thường đặt ở cửa ra vào để xếp gọn giày dép."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bàn ăn",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chiếc bàn lớn đặt trong phòng bếp hoặc phòng ăn để gia đình quây quần dùng bữa."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bàn trang điểm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chiếc bàn có kèm theo gương, dùng làm nơi làm đẹp và để mỹ phẩm của phụ nữ."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đồng hồ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị treo tường hoặc để bàn dùng để hiển thị thời gian trong ngày."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Phòng học",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Căn phòng có bàn ghế và bảng đen, nơi diễn ra các tiết học."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bàn học",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chiếc bàn thiết kế phù hợp cho học sinh ngồi ghi chép và làm bài."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe lăn",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chiếc ghế có gắn bánh xe hai bên, dành cho người khuyết tật di chuyển."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tủ đầu giường",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chiếc tủ nhỏ thường đặt cạnh giường ngủ dùng để đèn hoặc các vật dụng cá nhân."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ghế xoay",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại ghế có bánh xe và trục xoay, phổ biến trong văn phòng làm việc."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Gối ôm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ dùng nhỏ lót vải bông, thường ôm hoặc tựa khi ngồi trên ghế."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bàn phím cơ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại bàn phím có công tắc riêng, gõ lách cách chuyên dòng vi tính."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy lọc không khí",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị dùng để loại bỏ bụi bẩn và mùi hôi trong không khí, giúp không gian sống trong lành hơn."
+  },
+  {
+    "topic": "Furniture",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Sạc không dây",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Truyền điện nạp pin nhưng không cắm cáp thẳng qua lưng máy trơn."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đồng hồ thông minh",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị đeo tay vừa xem giờ, vừa có thể nhận thông báo và theo dõi sức khỏe."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cây treo áo",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ vật dạng trụ cao có các nhánh đưa ra để móc mũ, áo khoác."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con mèo",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài thú cưng kêu meo meo, thích bắt chuột và leo trèo."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con chó",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài vật nuôi trung thành, biết sủa và thường được dùng để trông nhà."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con chim",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật có lông vũ, có đôi cánh để bay lượn trên bầu trời."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con cá",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật sống dưới nước, bơi bằng vây và thở bằng mang."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con bò",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài gia súc lớn ăn cỏ, cung cấp sức kéo, sữa và thịt."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con gà",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài gia cầm phổ biến, gà trống biết gáy sáng còn gà mái biết đẻ trứng."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con ngựa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật chạy rất nhanh, thường được dùng để cưỡi hoặc kéo xe."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con cừu",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật hiền lành có bộ lông dày màu trắng xốp, thường nuôi để lấy lông."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con dê",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật có sừng, nhai lại, thường mọc râu ở cằm và kêu be be."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con thỏ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật nhỏ có đôi tai dài, di chuyển bằng cách nhảy và rất thích ăn cà rốt."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con hổ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài thú dữ họ mèo, lông màu vàng có vằn đen, được mệnh danh là chúa tể sơn lâm."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con sư tử",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài thú ăn thịt to lớn, con đực có bờm lông dày quanh cổ."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con voi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật trên cạn lớn nhất, có đôi tai to và chiếc vòi rất dài."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con khỉ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật rất thông minh, giỏi leo trèo trên cây và thích ăn chuối."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con gấu",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật hoang dã to lớn, có bộ lông dày, một số loài có tập tính ngủ đông."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con hươu",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật ăn cỏ hiền lành, con đực thường có cặp sừng phân nhánh rất đẹp trên đầu."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con rắn",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài bò sát có thân hình thon dài, không có chân, di chuyển bằng cách trườn mình."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con cá sấu",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài bò sát lưỡng cư ăn thịt hung dữ, da sần sùi và hàm răng cực kỳ sắc nhọn."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con rùa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài bò sát di chuyển rất chậm chạp, có một lớp mai cứng trên lưng để bảo vệ cơ thể."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con ếch",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật lưỡng cư có khả năng nhảy xa, sống ở ao hồ và kêu ộp ộp vào mùa mưa."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con nhện",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật nhỏ có tám chân, thường chăng tơ để làm tổ và bẫy con mồi."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con ong",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài côn trùng có cánh, sống theo bầy đàn và chuyên đi hút mật hoa."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con bướm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài côn trùng có đôi cánh rộng nhiều màu sắc sặc sỡ, bay dập dờn quanh các bông hoa."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con ruồi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài côn trùng có cánh bay rất nhanh, thường bám vào đồ ăn gây mất vệ sinh."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cá heo",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật có vú sống ở đại dương, rất thông minh và thân thiện với con người."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cá voi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài động vật có vú sống dưới biển, có kích thước cơ thể khổng lồ và thường phun nước lên trời."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cái lá",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Bộ phận mọc trên cành cây, thường có màu xanh, có chức năng quang hợp."
+  },
+  {
+    "topic": "Animals",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Rừng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Khu vực tự nhiên rộng lớn trồng rất nhiều cây cối và là nơi sinh sống của động vật hoang dã."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đèn",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị phát ra ánh sáng dùng để thắp sáng không gian khi trời tối."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bình nóng lạnh",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị dùng để đun nước nóng phục vụ cho việc tắm rửa."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Lọ hoa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ vật dùng để cắm những bông hoa vào bên trong, thường làm bằng gốm hoặc thủy tinh."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cây",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thực vật có thân, rễ và lá, cung cấp gỗ, bóng mát và khí oxy cho trái đất."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Hoa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Bộ phận tỏa hương thơm và có màu sắc sặc sỡ của thực vật, dùng để trang trí."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cỏ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài thực vật nhỏ mọc sát mặt đất, thường tạo thành những thảm xanh rộng lớn."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ngọn núi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dạng địa hình nhô lên cao rất nhiều so với mặt đất xung quanh, đỉnh nhọn và dốc."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ngọn đồi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Khu vực đất nhô lên cao nhưng thoải và thấp hơn so với ngọn núi."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Dòng sông",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dòng nước chảy tự nhiên, trải dài nối từ đất liền đổ ra biển."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đại dương",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Vùng nước mặn vô cùng rộng lớn, bao phủ phần lớn bề mặt của trái đất."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Biển",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Vùng nước mặn rộng lớn nhưng nhỏ hơn và thường là một phần của đại dương."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Mặt trăng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hành tinh chiếu sáng vào ban đêm, thay đổi hình dạng từ khuyết đến tròn."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ngôi sao",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Những điểm sáng nhỏ lấp lánh trên bầu trời vào ban đêm."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cơn mưa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hiện tượng nước rơi từ những đám mây đen trên bầu trời xuống mặt đất."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đất",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Lớp bề mặt của trái đất, nơi thực vật cắm rễ và con người xây nhà."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Nước",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chất lỏng trong suốt, không màu, không mùi, cần thiết cho sự sống."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Lửa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Quá trình cháy tạo ra sức nóng và ánh sáng, có màu đỏ hoặc cam."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Hòn đảo",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Một vùng đất liền bị bao quanh hoàn toàn bởi nước."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thác nước",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Nơi dòng chảy của suối hoặc sông đổ mạnh từ trên vách đá cao xuống."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tìm kiếm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hành động nhập từ khóa để tra cứu thông tin trên google."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Quả táo",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại trái cây có vỏ màu đỏ hoặc xanh, giòn và ngọt."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Quả chuối",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại hoa quả màu vàng, vỏ dễ bóc, thường mọc thành nải."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Quả cam",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại trái cây múi màu vàng cam, vắt lấy nước uống rất nhiều vitamin C."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Quả chanh",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Trái cây nhỏ vỏ xanh, vắt ra nước có vị rất chua."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Quả nho",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài trái cây nhỏ dạng viên tròn, mọc thành chùm, thường dùng làm rượu vang."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Dưa hấu",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Trái cây rất to, vỏ cứng màu xanh sọc đen, ruột đỏ chứa nhiều nước."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Dâu tây",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Trái cây nhỏ màu đỏ hình trái tim, có nhiều hạt li ti bên ngoài vỏ."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Quả xoài",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Trái cây nhiệt đới khi chín có màu vàng sậm, hạt to và dẹt."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cơm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hạt gạo sau khi được nấu chín bằng nước sôi, là món ăn chính của người Việt."
+  },
+  {
+    "topic": "Nature",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Món súp",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Món ăn dạng lỏng được nấu từ nước hầm xương với rau củ và thịt."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy tính xách tay",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Máy tính cá nhân nhỏ gọn, có thể gập lại và dễ dàng mang theo bên mình."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy tính bảng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị điện tử màn hình cảm ứng, lớn hơn điện thoại nhưng nhỏ hơn laptop."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy in",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị dùng để xuất tài liệu từ máy tính ra giấy."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cục phát wifi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị cung cấp mạng internet không dây cho các thiết bị như điện thoại, máy tính."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bàn phím",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị ngoại vi có các nút bấm chứa chữ và số dùng để nhập dữ liệu vào máy tính."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Chuột",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị điều khiển con trỏ trên màn hình máy tính, có kích thước vừa lòng bàn tay."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Màn hình",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị hiển thị hình ảnh, văn bản và video từ máy tính."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy chiếu",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị phóng to hình ảnh từ máy tính lên một bức tường hoặc màn vải lớn."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy tính",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị điện tử tinh vi dùng để lưu trữ dữ liệu, tính toán và chạy các phần mềm."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Mạng internet",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hệ thống toàn cầu kết nối các máy tính với nhau để chia sẻ thông tin."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Phần mềm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Các chương trình và ứng dụng được cài đặt để chạy bên trong thiết bị điện tử."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Mạng lưới",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hệ thống bao gồm nhiều điểm hoặc thiết bị kết nối chặt chẽ với nhau."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cơ sở dữ liệu",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hệ thống được tổ chức để lưu trữ và quản lý lượng lớn thông tin trên máy tính."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy chủ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hệ thống máy tính cấu hình mạnh mẽ lưu trữ dữ liệu tập trung và cung cấp dịch vụ cho máy khác."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ứng dụng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chương trình phần mềm được viết ra để thực hiện các chức năng cụ thể trên điện thoại hoặc máy tính."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Trang web",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tập hợp các trang thông tin trên internet được truy cập thông qua một địa chỉ tên miền."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Mật khẩu",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chuỗi ký tự bí mật dùng để xác thực và bảo vệ tài khoản cá nhân."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thư điện tử",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hình thức gửi thư và thông điệp qua mạng internet (thường gọi là Email)."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tệp tin",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Một khối dữ liệu số được đặt tên và lưu trữ trên máy tính như tài liệu, ảnh, video."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thư mục",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Nơi được tạo ra để chứa và phân loại các tệp tin bên trong máy tính."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Vi-rút máy tính",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đoạn mã độc hại lây nhiễm vào hệ thống để phá hoại hoặc ăn cắp dữ liệu."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bluetooth",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chuẩn kết nối không dây tầm ngắn để truyền dữ liệu giữa các thiết bị di động."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tin tặc",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Kẻ xâm nhập trái phép vào hệ thống máy tính của người khác để trục lợi."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thuật toán",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tập hợp các bước logic để giải quyết một bài toán trong lập trình."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Lập trình",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hành động viết các dòng mã lệnh để tạo ra phần mềm."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Lập trình viên",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Người làm nghề viết code và phát triển các phần mềm máy tính."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Kỹ thuật số",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Định dạng thông tin được mã hóa thành các số 0 và 1 trên máy tính."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tải xuống",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hành động lấy dữ liệu từ trên mạng internet lưu về máy tính của mình."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tải lên",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hành động đưa dữ liệu từ máy tính cá nhân của mình lên mạng internet."
+  },
+  {
+    "topic": "Technology",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cập nhật",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Việc nâng cấp phần mềm lên phiên bản mới nhất để có thêm tính năng."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Quyển sách",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tập hợp nhiều trang giấy in chữ, được đóng lại thành tập để đọc."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bút chì",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dụng cụ viết có lõi bằng than chì, nét chữ có thể xóa được."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cục tẩy",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Vật dụng bằng cao su dùng để chà sạch những nét mực của bút chì."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tờ giấy",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Vật liệu mỏng làm từ bột gỗ, dùng để in ấn hoặc viết chữ lên."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Giáo viên",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Người đứng trên bục giảng để truyền đạt kiến thức cho học sinh."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Học sinh",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Người cắp sách đến trường để học tập và rèn luyện."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bài học",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Nội dung kiến thức được thầy cô truyền đạt trong một tiết giảng."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bài tập",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Nhiệm vụ thầy cô giao cho học sinh về nhà làm để ôn lại kiến thức."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bài thi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Bài kiểm tra quan trọng đánh giá năng lực học sinh cuối kỳ."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Kiểm tra",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Quá trình đánh giá mức độ hiểu bài của học sinh qua một bài test."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Điểm số",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Con số dùng để đánh giá kết quả học tập của học sinh sau mỗi bài thi."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Môn học",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Từng lĩnh vực kiến thức riêng biệt được giảng dạy trong trường."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Lịch sử",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Môn học tìm hiểu về những sự kiện đã xảy ra trong quá khứ."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thư viện",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Nơi yên tĩnh lưu trữ rất nhiều sách để mọi người đến mượn và đọc."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cặp sách",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chiếc túi đeo trên vai dùng để đựng sách vở và dụng cụ học tập."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Kiến thức",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Những sự hiểu biết được tích lũy qua quá trình học tập và trải nghiệm."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Quyển vở",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ dùng bằng nhiều tờ giấy gộp lại dùng để ghi chép bài học trên lớp."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bút bi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dụng cụ viết thông dụng có một viên bi nhỏ ở đầu ngòi giúp mực lăn ra đều."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Máy chơi game",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Món đồ điện kết nối vô lăng bấm tay hoặc tivi chơi điện tử."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cái hồ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Một vùng trũng rộng lớn chứa nhiều nước, được bao quanh bởi đất liền."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bãi biển",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dải cát dài ven bờ biển, nơi mọi người thường đến vui chơi và tắm dạo."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bầu trời",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Khoảng không gian bao la phía trên đầu chúng ta, nơi có mây, mặt trời và các vì sao."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đám mây",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Khối hơi nước ngưng tụ trôi lơ lửng trên bầu trời, có màu trắng hoặc xám."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Mặt trời",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Ngôi sao khổng lồ tỏa nhiệt và ánh sáng rực rỡ vào ban ngày."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tuyết",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Những tinh thể băng màu trắng rơi từ trên trời xuống vào mùa đông lạnh giá."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cơn gió",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Sự chuyển động của không khí trong tự nhiên, có thể thổi bay lá cây."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cơn bão",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Hiện tượng thời tiết khắc nghiệt kèm theo gió rất mạnh, mưa to và sấm chớp."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Hòn đá",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Một khối chất rắn tự nhiên tạo nên lớp vỏ trái đất, rất cứng."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cát",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Những hạt đá nhỏ xíu vỡ ra, thường thấy rất nhiều ở bãi biển hoặc sa mạc."
+  },
+  {
+    "topic": "Learning",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thung lũng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Vùng đất thấp nằm xen kẽ ở giữa các ngọn núi hoặc ngọn đồi."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bơ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chất béo đặc màu vàng nhạt được đánh bông từ sữa, dùng để ăn bánh mì."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Rượu vang",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thức uống có cồn sang trọng được lên men từ những quả nho chín."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bánh ngọt",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại bánh làm từ bột, đường và trứng, thường xuất hiện trong sinh nhật."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đĩa cơm tấm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Món ăn mộc mạc đặc trưng, gồm cơm nấu từ hạt gạo xay vỡ mâm kèm sườn nướng."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Phần cứng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Các bộ phận vật lý cấu tạo nên thiết bị, có thể chạm và cầm nắm được."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Màn hình",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Bề mặt của thiết bị dùng để chiếu và hiển thị các điểm ảnh."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Không dây",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Công nghệ truyền tải tín hiệu qua sóng vô tuyến thay vì dùng cáp kết nối vật lý."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cái bút",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dụng cụ dùng mực để viết hoặc ký tên lên giấy."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cái thước",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dụng cụ có vạch chia centimet, dùng để đo độ dài hoặc kẻ đường thẳng."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Vở ghi chép",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tập giấy trắng có dòng kẻ được đóng gáy để học sinh viết bài vào."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Trường học",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Nơi tổ chức việc giảng dạy và giáo dục cho các học sinh."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Toán học",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Môn học liên quan đến các con số, hình học và phép tính."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Khoa học",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Môn học nghiên cứu về các hiện tượng tự nhiên và vật lý."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Từ điển",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Cuốn sách dùng để tra cứu nghĩa, cách phát âm của các từ vựng."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cái bảng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Bề mặt phẳng màu đen hoặc xanh treo trên tường để giáo viên viết chữ lên."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Phấn viết",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Vật liệu dạng thỏi màu trắng dùng để viết chữ lên bảng đen."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đại học",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Cơ sở giáo dục bậc cao đào tạo chuyên sâu về một ngành nghề."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bánh mì",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thực phẩm nướng làm từ bột mì, vỏ giòn, dùng ăn sáng rất phổ biến."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thịt",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phần cơ bắp của động vật được dùng làm thực phẩm."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cá",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thực phẩm được chế biến từ động vật sống ở dưới nước."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thịt gà",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại thịt trắng phổ biến lấy từ các con gia cầm biết gáy hoặc đẻ trứng."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thịt lợn",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thịt của loài vật kêu ụt ịt, là món thịt phổ biến nhất trong bữa ăn hàng ngày."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thịt bò",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại thịt đỏ có nhiều dinh dưỡng lấy từ loài vật nhai lại và có sừng."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Sữa tươi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chất lỏng màu trắng giàu canxi được vắt từ bò hoặc dê."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Phô mai",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thực phẩm lên men từ sữa động vật, có vị béo ngậy."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Muối",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Gia vị dạng hạt nhỏ màu trắng có vị mặn, chiết xuất từ nước biển."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Nước",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chất lỏng tự nhiên quan trọng nhất cần uống mỗi ngày để duy trì sự sống."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Trà",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thức uống được pha bằng cách ngâm lá sấy khô vào nước nóng."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bia",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thức uống có cồn lên men từ lúa mạch, có bọt trắng khi rót ra cốc."
+  },
+  {
+    "topic": "Food",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe buýt",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện giao thông công cộng cỡ lớn, chạy theo tuyến cố định chở nhiều hành khách."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe đạp",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện hai bánh, người lái phải dùng sức đạp để xe tiến về phía trước."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe tải",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại xe lớn chuyên dụng để vận chuyển hàng hóa nặng."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe taxi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại xe ô tô có đồng hồ tính tiền để hành khách thuê đi lại."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe cứu thương",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại xe hú còi ưu tiên, chuyên chở bệnh nhân cấp cứu đến bệnh viện."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe cảnh sát",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại xe đặc chủng có đèn nháy trên nóc, được lực lượng chức năng dùng đi tuần tra."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tàu ngầm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện lặn và di chuyển được sâu dưới đáy đại dương."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Du thuyền",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại tàu thủy thiết kế cực kỳ sang trọng để giới thượng lưu nghỉ dưỡng."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ván trượt",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tấm ván phẳng có gắn 4 bánh xe nhỏ để người chơi đứng lên trượt di chuyển."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Giày patin",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại giày thể thao đặc biệt có gắn hàng bánh xe dưới đế để trượt."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Loa kéo",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị âm thanh cỡ lớn có bánh xe và tay cầm, rất được yêu thích để hát dạo."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cái thuyền",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện nhỏ chở người di chuyển trên sông, thường chèo bằng tay."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tàu thủy",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện khổng lồ chạy bằng động cơ dùng để chở người và hàng hóa qua lại trên đại dương."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe cứu hỏa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại xe màu đỏ có trang bị vòi rồng chuyên dùng để dập tắt các đám cháy."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tàu vũ trụ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện chuyên chở các phi hành gia lên khám phá các hành tinh khác."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con cún",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Cách gọi thân mật của loài chó nhỏ, rất đáng yêu và thích quấn quýt bên chủ."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con heo",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tên gọi khác của loài lợn, con vật mập mạp quen thuộc ở nông thôn."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Chim cảnh",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Lồng loài hót hay có lông vũ lộng lẫy, nuôi trong nhà làm thú vui."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cá vàng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Sinh vật nhỏ có đuôi bơi mượt mà, rực rỡ màu sắc sống trong bể mâm kính."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đám mây trắng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Nhóm hơi nước ngưng tụ trên bầu trời, trông giống hệt hình bông gòn."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Hộp bút",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Vật dụng nhỏ dùng để đựng bút, thước, tẩy và các dụng cụ học tập khác."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thước kẻ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dụng cụ có các vạch chia khoảng cách, dùng để đo chiều dài hoặc kẻ đường thẳng."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bát phở",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Món ăn truyền thống nổi tiếng của Việt Nam, gồm bánh trắng mềm và nước dùng từ xương."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bánh mì kẹp",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Món ăn nhanh phổ biến, là một ổ bánh mì được xẻ đôi, nhồi nhân thịt, chả, pate."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cốc chè",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Món đồ uống giải khát ngọt ngào, phổ biến vào mùa hè, gồm nhiều loại đậu và trân châu."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cái chổi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Vật dụng quen thuộc làm từ rơm, đót hoặc nhựa, dùng để quét sạch rác rưởi trên sàn nhà."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đồ hót rác",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dụng cụ nhỏ cầm tay thường đi kèm với chổi, dùng để thu gom rác đem đổ."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cây lau nhà",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dụng cụ có cán dài và đầu bằng vải hoặc sợi, dùng để thấm nước làm sạch nền nhà."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cái xô",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ chứa hình trụ, có quai xách vòng, thường dùng xách nước dọn dẹp."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con dao",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Dụng cụ nhà bếp có lưỡi sắc bén, cán vừa vặn thường xén làm thịt đồ."
+  },
+  {
+    "topic": "Vehicles",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cái thớt",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Miếng bằng gỗ dày chịu dao khập kênh chặt lát lên củ quả thái nhỏ."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Điều hòa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị giúp thay đổi nhiệt độ trong phòng, thường dùng để làm mát vào mùa hè."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tai nghe",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị đeo vào tai để nghe âm thanh mà không làm phiền người xung quanh."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Loa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị dùng để phát âm thanh ra bên ngoài cho nhiều người cùng nghe."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Gương",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Vật dụng bằng kính có khả năng phản chiếu hình ảnh, dùng để soi."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Thảm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tấm vải dày trải trên sàn nhà để giữ ấm chân và trang trí."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Gối",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Vật dụng êm ái thường bọc vải, chứa bông bên trong để kê đầu khi ngủ."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Chăn",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tấm vải rộng và dày dùng để đắp lên người giữ ấm khi ngủ."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bức tranh",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tác phẩm nghệ thuật được vẽ hoặc in, thường đóng khung treo trên tường để trang trí."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đèn chùm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thiết bị chiếu sáng có nhiều bóng, thiết kế cầu kỳ và treo chính giữa trần nhà."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con lợn",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài gia súc có thân hình mập mạp, mũi to, thường kêu ụt ịt."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con vịt",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài gia cầm có mỏ bẹt, chân có màng, bơi giỏi và kêu cạp cạp."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con kiến",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài côn trùng rất nhỏ, sống thành đàn có tính kỷ luật cao và vô cùng chăm chỉ."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Con muỗi",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loài côn trùng hay bay vo ve vào ban đêm và hút máu người."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tên người dùng",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Biệt danh dùng để định danh tài khoản khi đăng nhập vào một hệ thống."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đồng phục",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Trang phục giống nhau được quy định mặc khi đến trường."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Giáo dục",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Quá trình đào tạo, rèn luyện đạo đức và trí tuệ cho con người."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Mì",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Món ăn dạng sợi dài, thường làm từ bột gạo hoặc bột mì."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Hạt tiêu",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Gia vị hạt nhỏ màu đen xay nhuyễn, dùng để tạo mùi thơm và vị cay nồng."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Cà phê",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Thức uống màu đen chiết xuất từ hạt rang, chứa caffeine giúp tỉnh táo."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tai nghe chống ồn",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Chụp lên tai và ngắt tiếng xì xào xung quanh cho âm thanh tinh khiết."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Đường",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Gia vị dạng hạt nhỏ chiết xuất từ cây mía, mang lại vị ngọt."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ô tô",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện giao thông bốn bánh chạy bằng động cơ, có buồng kín chở được nhiều người."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Xe tải nhỏ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Loại xe ô tô có không gian khoang sau rộng rãi (van) để chở một lượng hàng hóa vừa phải."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Phà",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện tàu thuyền chuyên dụng chở khách và xe cộ qua một khúc sông rộng."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tàu đệm",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện di chuyển lướt trên lớp đệm không khí, đi được cả trên cạn lẫn mặt nước."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Tên lửa",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phương tiện vận tốc cực lớn được phóng lên để bay ra ngoài không gian."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Chiếu cói",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Đồ dệt từ thân thực vật thành tấm, rải dưới đất ngủ cho mát mẻ."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Ngọn cỏ",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Phần trên cùng của cây xanh non mềm, vươn lên mọc mặt đất ánh sáng."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Giọt sương",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Tinh thể lỏng đọng trên chiếc lá mịn lúc sớm mai khi trời yên ả."
+  },
+  {
+    "topic": "Household Items",
+    "phonetic": null,
+    "word_type": null,
+    "meaning": "Bát bún",
+    "example": null,
+    "image_url": null,
+    "saved_at": null,
+    "user_id": null,
+    "hint": "Món ăn làm từ sợi bột gạo tròn mềm mát, thường chan nước dùng hoặc trộn mắm chua ngọt."
+  }
+]
