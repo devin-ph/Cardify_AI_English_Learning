@@ -841,27 +841,6 @@ class _AchievementCard extends StatelessWidget {
   }
 }
 
-class _DiagonalHatchPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final linePaint = Paint()
-      ..color = Colors.white
-      ..strokeWidth = 2;
-
-    const spacing = 10.0;
-    for (var i = -size.height; i < size.width; i += spacing) {
-      canvas.drawLine(
-        Offset(i, 0),
-        Offset(i + size.height, size.height),
-        linePaint,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
 class _OnboardingSlideData {
   final String stepLabel;
   final String title;

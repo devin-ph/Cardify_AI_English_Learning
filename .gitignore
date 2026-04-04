@@ -54,7 +54,6 @@ ios/Pods/
 
 # Generated files
 # Generated files (Cực kỳ quan trọng để tránh conflict nhóm)
-**/pubspec.lock
 **/generated_plugin_registrant.*
 **/generated_plugins.*
 **/GeneratedPluginRegistrant.*
