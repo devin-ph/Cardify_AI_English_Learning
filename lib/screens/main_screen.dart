@@ -27,6 +27,11 @@ class _MainScreenState extends State<MainScreen> {
   String _userName = 'Explorer';
   final SavedCardsRepository _cardsRepository = SavedCardsRepository.instance;
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void _setScreenIndex(int index) {
     if (_currentIndex == index) {
       return;
