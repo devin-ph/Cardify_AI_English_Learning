@@ -14,9 +14,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await XPService.instance.init();
   try {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: 'assets/.env');
   } catch (_) {
-    // Continue without a bundled .env file.
+    try {
+      await dotenv.load(fileName: '.env');
+    } catch (_) {
+      // Continue without a bundled .env file.
+    }
   }
 
   final supabaseUrl = dotenv.maybeGet('SUPABASE_URL');
@@ -28,7 +32,6 @@ Future<void> main() async {
       anonKey: supabaseAnonKey!.trim(),
     );
   }
-
   runApp(const MyApp());
 }
 

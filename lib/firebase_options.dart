@@ -64,6 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '840856064919',
     projectId: 'cardify-9dfed',
     storageBucket: 'cardify-9dfed.firebasestorage.app',
+    androidClientId: '840856064919-pct2ctrv3rfd5em7umaqc90beent9qi6.apps.googleusercontent.com',
     iosClientId: '840856064919-ts62ighjdhhvskcl7h2mmmovsebp8oci.apps.googleusercontent.com',
     iosBundleId: 'com.example.appBtl',
   );
@@ -74,17 +75,18 @@ class DefaultFirebaseOptions {
     messagingSenderId: '840856064919',
     projectId: 'cardify-9dfed',
     storageBucket: 'cardify-9dfed.firebasestorage.app',
+    androidClientId: '840856064919-pct2ctrv3rfd5em7umaqc90beent9qi6.apps.googleusercontent.com',
     iosClientId: '840856064919-ts62ighjdhhvskcl7h2mmmovsebp8oci.apps.googleusercontent.com',
     iosBundleId: 'com.example.appBtl',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyDcl7i44yBD_Yan9A9H3tOkj3qVSI0wo0A',
-    appId: '1:840856064919:web:dde43caf9d835c34f6aad2',
+    appId: '1:840856064919:web:385c54b71265106af6aad2',
     messagingSenderId: '840856064919',
     projectId: 'cardify-9dfed',
     authDomain: 'cardify-9dfed.firebaseapp.com',
     storageBucket: 'cardify-9dfed.firebasestorage.app',
-    measurementId: 'G-HRHCKS8T0V',
+    measurementId: 'G-NE439P1B7N',
   );
 }

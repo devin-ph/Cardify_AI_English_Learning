@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'edit_profile_screen.dart';
+import 'auth_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String name;
@@ -39,11 +42,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _logout() {
-    Navigator.of(context).pop();
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('')));
+  Future<void> _logout() async {
+    try {
+      // FirebaseAuth drives AuthGate, so this sign-out is required.
+      await firebase_auth.FirebaseAuth.instance.signOut();
+      // Keep Supabase session cleanup as best-effort.
+      await Supabase.instance.client.auth.signOut();
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Đã đăng xuất.')));
+      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const CardifyLoginScreen()),
+        (route) => false,
+      );
+    } catch (_) {
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Đăng xuất thất bại, vui lòng thử lại.'),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+    }
   }
 
   Future<void> _editProfile() async {

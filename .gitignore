@@ -2,12 +2,58 @@
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+.packages
+.pub/
+build/
+
+# IntelliJ / Android Studio related
+*.iml
+*.ipr
+*.iws
+.idea/
+.gradle/
+**/android/.gradle/
+**/android/captures/
+**/android/local.properties
+**/android/generated_plugin_registrant.java
+
+# VS Code related
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
 .pub-cache/
 .pub/
 build/
 
+# Key & Env (Bảo mật)
+.env
+*.jks
+*.keystore
+*.google_services.json
+
+# Symbolication & Obfuscation
+app.*.symbols
+app.*.map.json
+
+# Android Artifacts
+/android/app/debug
+/android/app/profile
+/android/app/release
+# Flutter generated files
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/.last_build_id
+
+# iOS
+ios/Pods/
+
+# Generated files
 # Generated files (Cực kỳ quan trọng để tránh conflict nhóm)
-**/pubspec.lock
 **/generated_plugin_registrant.*
 **/generated_plugins.*
 **/GeneratedPluginRegistrant.*
@@ -29,8 +75,23 @@ local.properties
 .DS_Store
 Thumbs.db
 *.log
+*.tmp
+*.swp
 
-# Bảo mật
+# Coverage
+coverage/
+reports/
+
+# Env
 .env
-*.jks
-*.keystore
+*./**generated_plugin_registrant.cc
+*./**generated_plugin_registrant.h
+*./**generated_plugins.cmake
+*./**GeneratedPluginRegistrant.swift
+# Misc
+*.class
+migrate_working_dir/
+**/ephemeral/
+# Linux generated (Flutter)
+linux/flutter/generated_*
+windows/flutter/generated_*

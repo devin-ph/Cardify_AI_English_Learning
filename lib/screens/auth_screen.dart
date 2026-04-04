@@ -215,7 +215,7 @@ class _CardifyLoginScreenState extends State<CardifyLoginScreen> {
 
                       onActionTap: _resetPassword,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 24),
                     _AuthInput(
                       controller: _passwordController,
                       hint: '••••••••••',
@@ -232,18 +232,18 @@ class _CardifyLoginScreenState extends State<CardifyLoginScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 54),
                     _PrimaryButton(
                       label: _isSubmitting ? 'Đăng nhập...' : 'Đăng nhập',
                       onTap: _isSubmitting ? null : _login,
                     ),
                     const SizedBox(height: 24),
                     const _OrDivider(text: 'HOẶC ĐĂNG NHẬP VỚI'),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 33),
                     _SocialButton(
                       onTap: _isSubmitting ? null : _signInWithGoogle,
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 35),
 
                     Center(
                       child: Row(
@@ -439,6 +439,12 @@ class _CardifyRegisterScreenState extends State<CardifyRegisterScreen> {
                       onTap: _isSubmitting ? null : _register,
                     ),
                     SizedBox(height: 24),
+                    _OrDivider(text: 'HOẶC ĐĂNG KÝ VỚI'),
+                    SizedBox(height: 33),
+                    _SocialButton(
+                      onTap: _isSubmitting ? null : _registerWithGoogle,
+                    ),
+                    const SizedBox(height: 33),
                     Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -529,48 +535,6 @@ class _JourneyHeader extends StatelessWidget {
           'Học ngôn ngữ theo cách của riêng bạn',
           style: _AuthStyles.subtitle,
         ),
-      ],
-    );
-  }
-}
-
-class _BrandBlock extends StatelessWidget {
-  final String tagline;
-
-  const _BrandBlock({required this.tagline});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 84,
-          height: 84,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              colors: [Color(0xFF6A38F5), Color(0xFF9A84F4)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0x4D6A38F5),
-                blurRadius: 24,
-                offset: Offset(0, 14),
-              ),
-            ],
-          ),
-          child: const Icon(
-            Icons.auto_awesome_rounded,
-            color: Colors.white,
-            size: 34,
-          ),
-        ),
-        const SizedBox(height: 10),
-        const Text('Cardify', style: _AuthStyles.logo),
-        const SizedBox(height: 4),
-        Text(tagline, style: _AuthStyles.tagline),
       ],
     );
   }
@@ -681,10 +645,7 @@ class _PrimaryButton extends StatelessWidget {
       opacity: onTap == null ? 0.6 : 1,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final availableWidth = constraints.maxWidth.isFinite
-              ? constraints.maxWidth
-              : (MediaQuery.sizeOf(context).width - 44);
-          final buttonWidth = (availableWidth * 0.50).clamp(160.0, 250.0);
+          final buttonWidth = (constraints.maxWidth * 0.76).clamp(230.0, 320.0);
 
           return Center(
             child: SizedBox(
@@ -754,10 +715,7 @@ class _SocialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final availableWidth = constraints.maxWidth.isFinite
-            ? constraints.maxWidth
-            : (MediaQuery.sizeOf(context).width - 44);
-        final buttonWidth = (availableWidth * 0.28).clamp(110.0, 180.0);
+        final buttonWidth = (constraints.maxWidth * 0.44).clamp(120.0, 180.0);
 
         return Center(
           child: SizedBox(
@@ -836,12 +794,6 @@ class _AuthStyles {
     fontWeight: FontWeight.w800,
   );
 
-  static const TextStyle h1 = TextStyle(
-    color: Color(0xFF19212D),
-    fontSize: 25,
-    fontWeight: FontWeight.w800,
-  );
-
   static const TextStyle subtitle = TextStyle(
     color: Color(0xFF738091),
     fontSize: 16,
@@ -892,18 +844,6 @@ class _AuthStyles {
     fontSize: 12,
     fontWeight: FontWeight.w800,
     letterSpacing: 1.2,
-  );
-
-  static const TextStyle logo = TextStyle(
-    color: Color(0xFF18202D),
-    fontSize: 28,
-    fontWeight: FontWeight.w900,
-  );
-
-  static const TextStyle tagline = TextStyle(
-    color: Color(0xFF738091),
-    fontSize: 14,
-    fontWeight: FontWeight.w600,
   );
 
   static const TextStyle bottomText = TextStyle(
