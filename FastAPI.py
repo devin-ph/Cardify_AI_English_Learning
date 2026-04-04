@@ -1,4 +1,4 @@
-import base64
+﻿import base64
 import json
 import os
 import re
@@ -75,14 +75,14 @@ Bạn là trợ lý học từ vựng tiếng Anh. Nhận diện đối tượng
 }
 Quy tắc quan trọng:
 - "word" phải là tên loại/nhóm chung (ví dụ: laptop, smartphone, cat, fruit...). KHÔNG trả về tên thương hiệu, nhãn sản phẩm.
-- "topic" mô tả chủ đề của từ (Food, Technology, Animal, ...).
+- "topic" BẮT BUỘC phải là một trong 9 từ khóa tiếng Anh sau (chọn cái phù hợp nhất): Electronics, Furniture, Animals, Nature, Technology, Learning, Food, Vehicles, Household Items.
 - Không thêm bất kỳ ký tự hay chú thích nào ngoài JSON hợp lệ.
 """.strip()
 
 CHAT_PROMPT = """
 Bạn là gia sư tiếng Anh cho người Việt.
 Nhiệm vụ của bạn là trò chuyện, thấu hiểu ngữ cảnh và phản hồi tự nhiên với người dùng trước khi cung cấp các từ vựng tiếng Anh liên quan.
-Chỉ hỗ trợ từ vựng thuộc các chủ đề sau: Đồ điện tử, Đồ nội thất, Động vật, Thiên nhiên, Công nghệ, Học tập, Đồ ăn, Phương tiện. Nếu người dùng hỏi từ vựng nằm ngoài các chủ đề này, hãy từ chối khéo léo và hướng họ về các chủ đề được hỗ trợ.
+Chỉ hỗ trợ từ vựng thuộc 9 chủ đề sau: Đồ điện tử (Electronics), Đồ nội thất (Furniture), Động vật (Animals), Thiên nhiên (Nature), Công nghệ (Technology), Học tập (Learning), Đồ ăn (Food), Phương tiện (Vehicles), Đồ gia dụng (Household Items). Nếu người dùng hỏi từ vựng nằm ngoài các chủ đề này, hãy từ chối khéo léo và hướng họ về các chủ đề được hỗ trợ.
 Người dùng có thể hỏi đời thường (chào hỏi, tâm sự, hỏi thông tin) hoặc mô tả hành động/đồ vật để học từ vựng.
 Hãy trả về DUY NHẤT một JSON hợp lệ với đúng các trường:
 {
@@ -103,7 +103,7 @@ Yêu cầu:
 - Nếu không rõ, đặt "other" và vẫn hướng dẫn thân thiện.
 - Nếu là action/object thuộc chủ đề hợp lệ, trong "response" hãy trò chuyện, thấu hiểu ngữ cảnh và dẫn dắt người dùng trước rồi mới nêu: "Từ tiếng Anh là ...".
 - Không đưa ký hiệu IPA trực tiếp vào "response" để phù hợp bộ đọc giọng nói; IPA chỉ để trong trường "phonetic".
-- "topic" phải là một trong các chủ đề: Đồ điện tử, Đồ nội thất, Động vật, Thiên nhiên, Công nghệ, học tập, food, phương tiện (hoặc để trống/thích hợp nếu "other").
+- "topic" BẮT BUỘC TRẢ VỀ TỪ KHÓA TIẾNG ANH CHUẨN từ: Electronics, Furniture, Animals, Nature, Technology, Learning, Food, Vehicles, Household Items. Nếu là hội thoại "other" ngoài danh sách thì trả về "".
 - Không thêm bất kỳ ký tự hay chú thích nào ngoài JSON hợp lệ.
 """.strip()
 
@@ -181,11 +181,27 @@ def build_vision_messages(base64_image: str) -> List[Dict[str, Any]]:
 def build_chat_messages(request: ChatRequest) -> List[Dict[str, str]]:
     messages: List[Dict[str, str]] = [{"role": "system", "content": CHAT_PROMPT}]
 
-    for item in request.history[-6:]:
-        role = "assistant" if item.role == "assistant" else "user"
-        messages.append({"role": role, "content": item.content})
+    # Lấy 6 tin nhắn gần nhất
+    history_slice = request.history[-6:]
+    
+    # Llama/Groq yêu cầu nghiêm ngặt: tin nhắn đầu tiên sau 'system' KHÔNG được là 'assistant'
+    while history_slice and history_slice[0].role != "user":
+        history_slice.pop(0)
 
-    messages.append({"role": "user", "content": request.message})
+    for item in history_slice:
+        role = "assistant" if item.role == "assistant" else "user"
+        # Bỏ qua nếu 2 tin nhắn liên tiếp trùng role (Llama sẽ báo lỗi 400 Bad Request nếu không luân phiên)
+        if len(messages) > 1 and messages[-1]["role"] == role:
+            messages[-1]["content"] += f"\n{item.content}"
+        else:
+            messages.append({"role": role, "content": item.content})
+
+    # Thêm tin nhắn hiện tại của người dùng (tránh trùng role user ở cuối)
+    if len(messages) > 1 and messages[-1]["role"] == "user":
+        messages[-1]["content"] += f"\n{request.message}"
+    else:
+        messages.append({"role": "user", "content": request.message})
+        
     return messages
 
 
@@ -209,12 +225,10 @@ def _extract_json(raw_content: str) -> Dict[str, Any]:
 
 
 def validate_analysis(payload: Dict[str, Any]) -> Dict[str, Any]:
-    missing = [field for field in REQUIRED_FIELDS if not payload.get(field)]
-    if missing:
-        raise HTTPException(
-            status_code=502,
-            detail=f"Groq thiếu trường: {', '.join(missing)}",
-        )
+    # Nếu AI thiếu trả về khóa, tự động gán rỗng để tránh lỗi 502
+    for field in REQUIRED_FIELDS:
+        if field not in payload:
+            payload[field] = ""
 
     payload["word"] = generalize_word(str(payload["word"]))
     return payload
@@ -222,12 +236,10 @@ def validate_analysis(payload: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def validate_chat_payload(payload: Dict[str, Any]) -> Dict[str, Any]:
-    missing = [field for field in CHAT_REQUIRED_FIELDS if field not in payload]
-    if missing:
-        raise HTTPException(
-            status_code=502,
-            detail=f"Groq thiếu trường chat: {', '.join(missing)}",
-        )
+    # Nếu AI thiếu trả về khóa, tự động gán rỗng để tránh lỗi 502
+    for field in CHAT_REQUIRED_FIELDS:
+        if field not in payload:
+            payload[field] = ""
 
     intent = str(payload.get("intent_type", "other")).strip().lower()
     if intent not in {"action", "object", "other"}:

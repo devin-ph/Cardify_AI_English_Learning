@@ -1,3 +1,4 @@
+import '../services/topic_classifier.dart';
 import 'package:flutter/material.dart';
 
 import '../models/saved_card.dart';
@@ -349,7 +350,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             .where(
                               (card) => SavedCardsRepository.instance.isKnown(
                                 card.id,
-                                topic: card.topic,
+                                topic: TopicClassifier.normalizeTopic(
+                                  card.topic,
+                                ),
                               ),
                             )
                             .length;

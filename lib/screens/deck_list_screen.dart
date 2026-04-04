@@ -52,49 +52,49 @@ class _DeckListScreenState extends State<DeckListScreen> {
   final List<Map<String, dynamic>> decks = [
     {
       'icon': Icons.electrical_services,
-      'title': 'Đồ điện tử',
+      'title': 'Electronics',
       'desc': 'Từ vựng về thiết bị điện tử thông dụng',
       'favorite': false,
     },
     {
       'icon': Icons.chair_alt,
-      'title': 'Đồ nội thất',
+      'title': 'Furniture',
       'desc': 'Từ vựng về nội thất và vật dụng trong nhà',
       'favorite': false,
     },
     {
       'icon': Icons.pets,
-      'title': 'Động vật',
+      'title': 'Animals',
       'desc': 'Từ vựng về các loài động vật',
       'favorite': true,
     },
     {
       'icon': Icons.nature,
-      'title': 'Thiên nhiên',
+      'title': 'Nature',
       'desc': 'Từ vựng liên quan đến thiên nhiên',
       'favorite': false,
     },
     {
       'icon': Icons.memory,
-      'title': 'Công nghệ',
+      'title': 'Technology',
       'desc': 'Từ vựng về phần mềm, dữ liệu và internet',
       'favorite': false,
     },
     {
       'icon': Icons.school,
-      'title': 'Học tập',
+      'title': 'Learning',
       'desc': 'Từ vựng liên quan đến trường lớp và học tập',
       'favorite': true,
     },
     {
       'icon': Icons.restaurant,
-      'title': 'Đồ ăn',
+      'title': 'Food',
       'desc': 'Từ vựng về thức ăn và đồ uống',
       'favorite': false,
     },
     {
       'icon': Icons.directions_car,
-      'title': 'Phương tiện',
+      'title': 'Vehicles',
       'desc': 'Từ vựng về phương tiện giao thông',
       'favorite': false,
     },
@@ -144,7 +144,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
       return true;
     }
 
-    final topicCards = cards.where((card) => card.topic == title);
+    final topicCards = cards.where((card) => TopicClassifier.normalizeTopic(card.topic) == title);
     for (final card in topicCards) {
       final searchableText = _normalizeText(
         '${card.word} ${card.meaning} ${card.phonetic} ${card.example}',
@@ -729,8 +729,8 @@ class _DeckListScreenState extends State<DeckListScreen> {
       ),
       ...decks.map(
         (deck) => DropdownMenuItem<String>(
-          value: deck['title'] as String,
-          child: Text(deck['title'] as String),
+          value: TopicClassifier.getVietnameseTopic(deck['title'] as String),
+          child: Text(TopicClassifier.getVietnameseTopic(deck['title'] as String)),
         ),
       ),
     ];
@@ -889,7 +889,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                deck['title'] as String,
+                                TopicClassifier.getVietnameseTopic(deck['title'] as String),
                                 style: const TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,

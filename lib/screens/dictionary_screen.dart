@@ -10,6 +10,7 @@ import '../models/saved_card.dart';
 import '../services/saved_cards_repository.dart';
 import '../services/topic_classifier.dart';
 import '../services/translation_service.dart';
+import '../services/xp_service.dart';
 
 class DictionaryScreen extends StatefulWidget {
   const DictionaryScreen({super.key, this.onSearchModeChanged});
@@ -393,6 +394,9 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
   }
 
   Future<void> _openCardDetails(SavedCard card) async {
+    bool isUploadingImage = false;
+    final ImagePicker picker = ImagePicker();
+
     await showGeneralDialog<void>(
       context: context,
       barrierDismissible: true,
@@ -408,71 +412,138 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                 borderRadius: BorderRadius.circular(20),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _CardDetailImage(
-                        imageUrl: card.imageUrl,
-                        imageBytes: card.imageBytes,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        card.word,
-                        style: const TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        card.phonetic.isEmpty
-                            ? 'Chưa có phiên âm'
-                            : card.phonetic,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.black54,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        card.meaning,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 18),
-                      ),
-                      if (card.example.isNotEmpty) ...[
-                        const SizedBox(height: 12),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: Colors.blue[50],
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          child: Text(
-                            card.example,
-                            style: const TextStyle(fontSize: 15, height: 1.4),
-                          ),
-                        ),
-                      ],
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                  child: StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setStateDialog) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              _openEditCardSheet(card);
+                          _CardDetailImage(
+                            imageUrl: card.imageUrl,
+                            imageBytes: card.imageBytes,
+                            isUploading: isUploadingImage,
+                            onAddImage: () async {
+                              final XFile? image = await picker.pickImage(
+                                source: ImageSource.gallery,
+                                maxWidth: 800,
+                              );
+                              if (image != null) {
+                                setStateDialog(() {
+                                  isUploadingImage = true;
+                                });
+                                try {
+                                  final bytes = await image.readAsBytes();
+                                  await SavedCardsRepository.instance
+                                      .upsertManualCardFromReview(
+                                        word: card.word,
+                                        meaning: card.meaning,
+                                        topic: card.topic,
+                                        imageBytes: bytes,
+                                      );
+
+                                  await XPService.instance.addXP(15);
+
+                                  if (mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'Đã cập nhật ảnh thành công! +15 XP',
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  // Update the current card reference silently or just let the repository stream handle UI
+                                  card = SavedCard(
+                                    id: card.id,
+                                    topic: card.topic,
+                                    word: card.word,
+                                    phonetic: card.phonetic,
+                                    meaning: card.meaning,
+                                    example: card.example,
+                                    wordType: card.wordType,
+                                    imageBytes: bytes,
+                                    imageUrl: card.imageUrl,
+                                    savedAt: card.savedAt,
+                                  );
+                                } catch (e) {
+                                  if (mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Lỗi tải ảnh: $e'),
+                                      ),
+                                    );
+                                  }
+                                } finally {
+                                  setStateDialog(() {
+                                    isUploadingImage = false;
+                                  });
+                                }
+                              }
                             },
-                            child: const Text('Chỉnh sửa'),
                           ),
-                          const SizedBox(width: 8),
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: const Text('Đóng'),
+                          const SizedBox(height: 16),
+                          Text(
+                            card.word,
+                            style: const TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            card.phonetic.isEmpty
+                                ? 'Chưa có phiên âm'
+                                : card.phonetic,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            card.meaning,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                          if (card.example.isNotEmpty) ...[
+                            const SizedBox(height: 12),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(14),
+                              decoration: BoxDecoration(
+                                color: Colors.blue[50],
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              child: Text(
+                                card.example,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  height: 1.4,
+                                ),
+                              ),
+                            ),
+                          ],
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  _openEditCardSheet(card);
+                                },
+                                child: const Text('Chỉnh sửa'),
+                              ),
+                              const SizedBox(width: 8),
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text('Đóng'),
+                              ),
+                            ],
                           ),
                         ],
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
               ),
@@ -645,22 +716,54 @@ class _CardThumbnail extends StatelessWidget {
 }
 
 class _CardDetailImage extends StatelessWidget {
-  const _CardDetailImage({required this.imageUrl, required this.imageBytes});
+  const _CardDetailImage({
+    required this.imageUrl,
+    required this.imageBytes,
+    this.onAddImage,
+    this.isUploading = false,
+  });
 
   final String? imageUrl;
   final Uint8List? imageBytes;
+  final VoidCallback? onAddImage;
+  final bool isUploading;
 
   @override
   Widget build(BuildContext context) {
     if (imageUrl == null && imageBytes == null) {
-      return Container(
-        width: 230,
-        height: 230,
-        decoration: BoxDecoration(
-          color: Colors.blue[50],
-          borderRadius: BorderRadius.circular(16),
+      return GestureDetector(
+        onTap: isUploading ? null : onAddImage,
+        child: Container(
+          width: 230,
+          height: 230,
+          decoration: BoxDecoration(
+            color: Colors.blue[50],
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Colors.blue[200]!,
+              width: 2,
+              style: BorderStyle.solid,
+            ),
+          ),
+          child: Center(
+            child: isUploading
+                ? const CircularProgressIndicator()
+                : const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.add_a_photo, size: 64, color: Colors.blue),
+                      SizedBox(height: 8),
+                      Text(
+                        "Add Image",
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
         ),
-        child: const Icon(Icons.image, size: 120, color: Colors.blueGrey),
       );
     }
 

@@ -1,3 +1,4 @@
+import 'topic_classifier.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -170,7 +171,7 @@ class SavedCardsRepository {
 
   int imageCountForTopic(String topic) {
     return _cards.where((card) {
-      if (card.topic != topic) {
+      if (TopicClassifier.normalizeTopic(card.topic) != topic) {
         return false;
       }
 
