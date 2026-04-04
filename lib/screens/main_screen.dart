@@ -173,7 +173,7 @@ class _MainScreenState extends State<MainScreen> {
                     : ListView.separated(
                         shrinkWrap: true,
                         itemCount: pending.length,
-                        separatorBuilder: (_, __) => const Divider(height: 16),
+                        separatorBuilder: (_, _) => const Divider(height: 16),
                         itemBuilder: (context, index) {
                           final item = pending[index];
                           return Row(

@@ -413,7 +413,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                     const SizedBox(height: 4),
                     Text(
                       next != null
-                          ? '${_userTotalXp}/${next['xpReq']} XP để lên bậc tiếp theo'
+                          ? '$_userTotalXp/${next['xpReq']} XP để lên bậc tiếp theo'
                           : 'Bạn đã đạt cấp cao nhất!',
                       style: const TextStyle(
                         color: Color(0xFF42516E),
@@ -448,7 +448,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
           const SizedBox(height: 8),
           Text(
             next != null
-                ? '${_userTotalXp}/${next['xpReq']} XP để lên bậc tiếp theo'
+                ? '$_userTotalXp/${next['xpReq']} XP để lên bậc tiếp theo'
                 : 'Bạn đã đạt cấp cao nhất!',
             style: const TextStyle(
               color: Color(0xFF42516E),
