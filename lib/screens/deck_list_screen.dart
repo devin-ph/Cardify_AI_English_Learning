@@ -35,66 +35,53 @@ class _DeckListScreenState extends State<DeckListScreen> {
   int filterIndex = 0; // 0: All, 1: Recent, 2: Favorites
   bool _speechReady = false;
   bool _isListening = false;
-  String _recentTopicFilter = '__all__';
-  String _recentTimeFilter = 'all';
-  DateTime? _customRecentStartAt;
-  DateTime? _customRecentEndAt;
-
-  static const List<({String value, String label})> _recentTimeFilterOptions = [
-    (value: 'all', label: 'Tất cả thời gian'),
-    (value: '1h', label: '1 giờ gần đây'),
-    (value: '24h', label: '24 giờ gần đây'),
-    (value: '7d', label: '7 ngày gần đây'),
-    (value: '30d', label: '30 ngày gần đây'),
-    (value: 'custom', label: 'Khác...'),
-  ];
 
   final List<Map<String, dynamic>> decks = [
     {
       'icon': Icons.electrical_services,
-      'title': 'Đồ điện tử',
+      'title': 'Electronics',
       'desc': 'Từ vựng về thiết bị điện tử thông dụng',
       'favorite': false,
     },
     {
       'icon': Icons.chair_alt,
-      'title': 'Đồ nội thất',
+      'title': 'Furniture',
       'desc': 'Từ vựng về nội thất và vật dụng trong nhà',
       'favorite': false,
     },
     {
       'icon': Icons.pets,
-      'title': 'Động vật',
+      'title': 'Animals',
       'desc': 'Từ vựng về các loài động vật',
       'favorite': true,
     },
     {
       'icon': Icons.nature,
-      'title': 'Thiên nhiên',
+      'title': 'Nature',
       'desc': 'Từ vựng liên quan đến thiên nhiên',
       'favorite': false,
     },
     {
       'icon': Icons.memory,
-      'title': 'Công nghệ',
+      'title': 'Technology',
       'desc': 'Từ vựng về phần mềm, dữ liệu và internet',
       'favorite': false,
     },
     {
       'icon': Icons.school,
-      'title': 'Học tập',
+      'title': 'Learning',
       'desc': 'Từ vựng liên quan đến trường lớp và học tập',
       'favorite': true,
     },
     {
       'icon': Icons.restaurant,
-      'title': 'Đồ ăn',
+      'title': 'Food',
       'desc': 'Từ vựng về thức ăn và đồ uống',
       'favorite': false,
     },
     {
       'icon': Icons.directions_car,
-      'title': 'Phương tiện',
+      'title': 'Vehicles',
       'desc': 'Từ vựng về phương tiện giao thông',
       'favorite': false,
     },
@@ -144,7 +131,9 @@ class _DeckListScreenState extends State<DeckListScreen> {
       return true;
     }
 
-    final topicCards = cards.where((card) => card.topic == title);
+    final topicCards = cards.where(
+      (card) => TopicClassifier.normalizeTopic(card.topic) == title,
+    );
     for (final card in topicCards) {
       final searchableText = _normalizeText(
         '${card.word} ${card.meaning} ${card.phonetic} ${card.example}',
@@ -273,108 +262,6 @@ class _DeckListScreenState extends State<DeckListScreen> {
     return '$minutes phút $seconds giây';
   }
 
-  DateTime? _recentCutoffTime(String filterValue) {
-    final now = DateTime.now();
-    switch (filterValue) {
-      case '1h':
-        return now.subtract(const Duration(hours: 1));
-      case '24h':
-        return now.subtract(const Duration(hours: 24));
-      case '7d':
-        return now.subtract(const Duration(days: 7));
-      case '30d':
-        return now.subtract(const Duration(days: 30));
-      default:
-        return null;
-    }
-  }
-
-  Future<DateTime?> _pickDateTime({
-    required DateTime initial,
-    required String dateHelpText,
-    required String timeHelpText,
-  }) async {
-    final pickedDate = await showDatePicker(
-      context: context,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(DateTime.now().year + 2),
-      initialDate: initial,
-      helpText: dateHelpText,
-      confirmText: 'Tiếp tục',
-      cancelText: 'Hủy',
-    );
-
-    if (!mounted || pickedDate == null) {
-      return null;
-    }
-
-    final pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(initial),
-      helpText: timeHelpText,
-      confirmText: 'Xong',
-      cancelText: 'Hủy',
-    );
-
-    if (!mounted || pickedTime == null) {
-      return null;
-    }
-
-    return DateTime(
-      pickedDate.year,
-      pickedDate.month,
-      pickedDate.day,
-      pickedTime.hour,
-      pickedTime.minute,
-    );
-  }
-
-  Future<bool> _pickCustomRecentDateTimeRange() async {
-    final now = DateTime.now();
-    final initialStart =
-        _customRecentStartAt ?? now.subtract(const Duration(days: 7));
-    final initialEnd = _customRecentEndAt ?? now;
-
-    final pickedStart = await _pickDateTime(
-      initial: initialStart,
-      dateHelpText: 'Chọn ngày bắt đầu',
-      timeHelpText: 'Chọn giờ bắt đầu',
-    );
-
-    if (!mounted || pickedStart == null) {
-      return false;
-    }
-
-    final pickedEnd = await _pickDateTime(
-      initial: initialEnd.isBefore(pickedStart) ? pickedStart : initialEnd,
-      dateHelpText: 'Chọn ngày kết thúc',
-      timeHelpText: 'Chọn giờ kết thúc',
-    );
-
-    if (!mounted || pickedEnd == null) {
-      return false;
-    }
-
-    final start = pickedStart.isBefore(pickedEnd) ? pickedStart : pickedEnd;
-    final end = pickedStart.isBefore(pickedEnd) ? pickedEnd : pickedStart;
-
-    setState(() {
-      _customRecentStartAt = start;
-      _customRecentEndAt = end;
-    });
-    return true;
-  }
-
-  String _formatDateOnly(DateTime date) {
-    String twoDigits(int value) => value.toString().padLeft(2, '0');
-    return '${twoDigits(date.day)}/${twoDigits(date.month)}/${date.year}';
-  }
-
-  String _formatDateTimeOnly(DateTime date) {
-    String twoDigits(int value) => value.toString().padLeft(2, '0');
-    return '${twoDigits(date.day)}/${twoDigits(date.month)}/${date.year} ${twoDigits(date.hour)}:${twoDigits(date.minute)}';
-  }
-
   Future<void> _initSpeech() async {
     final available = await _speech.initialize(
       onStatus: (status) {
@@ -479,36 +366,10 @@ class _DeckListScreenState extends State<DeckListScreen> {
             final filteredDecks =
                 decks.where((deck) {
                   final title = deck['title'] as String;
-                  final normalizedTitle = _normalizeText(title);
                   final normalizedSearch = _normalizeText(search);
                   if (filterIndex == 1 &&
                       !_recentAccessByTopic.containsKey(title)) {
                     return false;
-                  }
-                  if (filterIndex == 1 &&
-                      _recentTopicFilter != '__all__' &&
-                      title != _recentTopicFilter) {
-                    return false;
-                  }
-                  if (filterIndex == 1) {
-                    final accessAt = DateTime.fromMillisecondsSinceEpoch(
-                      _recentAccessByTopic[title]?.lastAccessAt ?? 0,
-                    );
-
-                    if (_recentTimeFilter == 'custom') {
-                      final start = _customRecentStartAt;
-                      final end = _customRecentEndAt;
-                      if (start != null && end != null) {
-                        if (accessAt.isBefore(start) || accessAt.isAfter(end)) {
-                          return false;
-                        }
-                      }
-                    } else {
-                      final cutoff = _recentCutoffTime(_recentTimeFilter);
-                      if (cutoff != null && accessAt.isBefore(cutoff)) {
-                        return false;
-                      }
-                    }
                   }
                   if (filterIndex == 2 && !(deck['favorite'] as bool)) {
                     return false;
@@ -555,9 +416,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
                     ],
                   ),
                 ),
-                if (filterIndex == 1)
-                  _buildRecentFilterToolbar()
-                else
+                if (filterIndex != 1)
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
@@ -721,123 +580,6 @@ class _DeckListScreenState extends State<DeckListScreen> {
     );
   }
 
-  Widget _buildRecentFilterToolbar() {
-    final topicOptions = <DropdownMenuItem<String>>[
-      const DropdownMenuItem<String>(
-        value: '__all__',
-        child: Text('Mọi chủ đề'),
-      ),
-      ...decks.map(
-        (deck) => DropdownMenuItem<String>(
-          value: deck['title'] as String,
-          child: Text(deck['title'] as String),
-        ),
-      ),
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: _recentTimeFilter,
-                      isExpanded: true,
-                      items: _recentTimeFilterOptions
-                          .map(
-                            (option) => DropdownMenuItem<String>(
-                              value: option.value,
-                              child: Text(option.label),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (value) async {
-                        if (value == null) {
-                          return;
-                        }
-
-                        if (value == 'custom') {
-                          setState(() {
-                            _recentTimeFilter = value;
-                          });
-                          final selected =
-                              await _pickCustomRecentDateTimeRange();
-                          if (!selected && mounted) {
-                            setState(() {
-                              _recentTimeFilter = 'all';
-                            });
-                          }
-                          return;
-                        }
-
-                        setState(() {
-                          _recentTimeFilter = value;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: _recentTopicFilter,
-                      isExpanded: true,
-                      items: topicOptions,
-                      onChanged: (value) {
-                        if (value == null) {
-                          return;
-                        }
-                        setState(() {
-                          _recentTopicFilter = value;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (_recentTimeFilter == 'custom') ...[
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    _customRecentStartAt == null || _customRecentEndAt == null
-                        ? 'Chưa chọn khoảng thời gian'
-                        : 'Khoảng lọc: ${_formatDateTimeOnly(_customRecentStartAt!)} - ${_formatDateTimeOnly(_customRecentEndAt!)}',
-                    style: const TextStyle(fontSize: 13, color: Colors.black54),
-                  ),
-                ),
-                TextButton(
-                  onPressed: _pickCustomRecentDateTimeRange,
-                  child: const Text('Chọn lại'),
-                ),
-              ],
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
   Widget _buildDeckCard(
     Map<String, dynamic> deck,
     List<SavedCard> cards, {
@@ -889,7 +631,9 @@ class _DeckListScreenState extends State<DeckListScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                deck['title'] as String,
+                                TopicClassifier.getVietnameseTopic(
+                                  deck['title'] as String,
+                                ),
                                 style: const TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
