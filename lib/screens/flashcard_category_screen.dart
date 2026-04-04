@@ -1355,22 +1355,35 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
         return false;
       },
       child: Scaffold(
-        body: SafeArea(
-          child: ValueListenableBuilder<List<SavedCard>>(
-            valueListenable: _repository.cardsNotifier,
-            builder: (context, cards, _) {
-              final savedCardsForTopic = cards
-                  .where((card) => card.topic == displayTopic)
-                  .toList();
-              final unlockedWordKeys = savedCardsForTopic
-                  .where(_hasCardImage)
-                  .map((card) => card.word.trim().toLowerCase())
-                  .toSet();
-              final savedCardsByWord = {
-                for (final card in savedCardsForTopic)
-                  card.word.trim().toLowerCase(): card,
-              };
-
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFFE2F3FF),
+                Color(0xFFFFF4FA),
+                Color(0xFFE4FAEF),
+                Color(0xFFF3E5FF),
+              ],
+              stops: [0.0, 0.3, 0.6, 1.0],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: SafeArea(
+            child: ValueListenableBuilder<List<SavedCard>>(
+              valueListenable: _repository.cardsNotifier,
+              builder: (context, cards, _) {
+                final savedCardsForTopic = cards
+                    .where((card) => card.topic == displayTopic)
+                    .toList();
+                final unlockedWordKeys = savedCardsForTopic
+                    .where(_hasCardImage)
+                    .map((card) => card.word.trim().toLowerCase())
+                    .toSet();
+                final savedCardsByWord = {
+                  for (final card in savedCardsForTopic)
+                    card.word.trim().toLowerCase(): card,
+                };
               final flashcardsFromSaved = savedCardsForTopic
                   .map(
                     (card) => Flashcard(
@@ -2015,6 +2028,7 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }

@@ -641,44 +641,60 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
           ),
         ],
       ),
-      body: SafeArea(
-        child: ValueListenableBuilder<List<SavedCard>>(
-          valueListenable: _repository.cardsNotifier,
-          builder: (context, cards, _) {
-            final filteredCards = _filterCardsByVietnameseName(cards);
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFF6F7FA),
+              Color(0xFFF5E6EA),
+              Color(0xFFF3E8F2),
+              Color(0xFFE6F0F2),
+              Color(0xFFDDE7F2),
+            ],
+            stops: [0.0, 0.3, 0.6,0.8, 1.0],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: SafeArea(
+          child: ValueListenableBuilder<List<SavedCard>>(
+            valueListenable: _repository.cardsNotifier,
+            builder: (context, cards, _) {
+              final filteredCards = _filterCardsByVietnameseName(cards);
 
-            if (cards.isEmpty) {
-              return const _CenteredMessage(
-                message: 'Chưa có từ nào được lưu',
-                icon: Icons.menu_book_outlined,
-              );
-            }
-
-            if (filteredCards.isEmpty) {
-              return const _CenteredMessage(
-                message: 'Không tìm thấy thẻ từ phù hợp',
-                icon: Icons.search_off,
-              );
-            }
-
-            return GridView.builder(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                childAspectRatio: 0.70,
-              ),
-              itemCount: filteredCards.length,
-              itemBuilder: (context, index) {
-                final card = filteredCards[index];
-                return _DictionaryCardGridItem(
-                  card: card,
-                  onTap: () => _openCardDetails(card),
+              if (cards.isEmpty) {
+                return const _CenteredMessage(
+                  message: 'Chưa có từ nào được lưu',
+                  icon: Icons.menu_book_outlined,
                 );
-              },
-            );
-          },
+              }
+
+              if (filteredCards.isEmpty) {
+                return const _CenteredMessage(
+                  message: 'Không tìm thấy thẻ từ phù hợp',
+                  icon: Icons.search_off,
+                );
+              }
+
+              return GridView.builder(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 0.70,
+                ),
+                itemCount: filteredCards.length,
+                itemBuilder: (context, index) {
+                  final card = filteredCards[index];
+                  return _DictionaryCardGridItem(
+                    card: card,
+                    onTap: () => _openCardDetails(card),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );

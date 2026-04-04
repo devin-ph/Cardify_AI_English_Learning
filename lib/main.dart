@@ -80,6 +80,7 @@ class _AppBootstrapState extends State<_AppBootstrap> {
   bool _shouldShowOnboarding = false;
 
   static const String _onboardingSeenKey = 'onboarding_seen_v1';
+  static const String _appStartedAtKey = 'app_started_at_v1';
 
   Future<void> _initializeFirebase() {
     return Firebase.initializeApp(
@@ -92,6 +93,26 @@ class _AppBootstrapState extends State<_AppBootstrap> {
     _preferences = await SharedPreferences.getInstance();
     _shouldShowOnboarding =
         !(_preferences?.getBool(_onboardingSeenKey) ?? false);
+  }
+
+  Future<void> _markAppStarted() async {
+    final preferences = _preferences ?? await SharedPreferences.getInstance();
+    if (preferences.containsKey(_appStartedAtKey)) {
+      return;
+    }
+
+    await preferences.setString(
+      _appStartedAtKey,
+      DateTime.now().toIso8601String(),
+    );
+
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _preferences = preferences;
+    });
   }
 
   Future<void> _markOnboardingComplete() async {
@@ -167,7 +188,10 @@ class _AppBootstrapState extends State<_AppBootstrap> {
         }
 
         if (_shouldShowOnboarding) {
-          return OnboardingScreen(onFinished: _markOnboardingComplete);
+          return OnboardingScreen(
+            onFinished: _markOnboardingComplete,
+            onStarted: _markAppStarted,
+          );
         }
 
         return const AuthGate();

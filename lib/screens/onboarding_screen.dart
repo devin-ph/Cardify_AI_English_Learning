@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatefulWidget {
   final VoidCallback onFinished;
+  final VoidCallback? onStarted;
 
-  const OnboardingScreen({super.key, required this.onFinished});
+  const OnboardingScreen({super.key, required this.onFinished, this.onStarted});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -12,6 +13,19 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
+  bool _didReportStart = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _didReportStart) {
+        return;
+      }
+      _didReportStart = true;
+      widget.onStarted?.call();
+    });
+  }
 
   static const List<_OnboardingSlideData> _slides = [
     _OnboardingSlideData(

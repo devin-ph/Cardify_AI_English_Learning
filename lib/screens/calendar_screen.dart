@@ -15,22 +15,12 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   static const String _scheduleStorageKey = 'calendar_scheduled_decks_by_day';
-  static const List<String> _defaultDeckNames = [
-    'Đồ gia dụng',
-    'Thiên nhiên',
-    'Công nghệ',
-    'Đồ ăn',
-    'Con vật',
-    'Phương tiện',
-    'Hoạt động',
-    'Màu sắc',
-    'Không gian',
-    'Thời gian',
-  ];
+  static const String _appStartedAtKey = 'app_started_at_v1';
 
   final SavedCardsRepository _repository = SavedCardsRepository.instance;
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateUtils.dateOnly(DateTime.now());
+  DateTime? _appStartedAt;
   late List<int> _studiedDays;
   late int _currentStreak;
   late List<String> _availableDecks;
@@ -41,10 +31,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
     super.initState();
     _studiedDays = <int>[];
     _currentStreak = 0;
-    _availableDecks = List<String>.from(_defaultDeckNames);
+    _availableDecks = <String>[];
     _repository.watchCards();
     _repository.cardsNotifier.addListener(_onCardsChanged);
     _onCardsChanged();
+    _loadAppStartDate();
     _loadSchedules();
   }
 
@@ -63,22 +54,66 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return DateUtils.dateOnly(DateTime.parse(key));
   }
 
+  Future<void> _loadAppStartDate() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final raw = prefs.getString(_appStartedAtKey);
+      final parsed = raw == null || raw.isEmpty
+          ? DateUtils.dateOnly(DateTime.now())
+          : DateUtils.dateOnly(DateTime.parse(raw));
+
+      if (raw == null || raw.isEmpty) {
+        await prefs.setString(_appStartedAtKey, parsed.toIso8601String());
+      }
+
+      if (!mounted) {
+        _appStartedAt = parsed;
+        _refreshCalendarStats();
+        return;
+      }
+
+      setState(() {
+        _appStartedAt = parsed;
+        _refreshCalendarStats();
+      });
+    } catch (_) {
+      final fallback = DateUtils.dateOnly(DateTime.now());
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _appStartedAt = fallback;
+        _refreshCalendarStats();
+      });
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_appStartedAtKey, fallback.toIso8601String());
+    }
+  }
+
+  bool _isBeforeAppStart(DateTime date) {
+    final appStart = _appStartedAt;
+    if (appStart == null) {
+      return false;
+    }
+    return DateUtils.dateOnly(date).isBefore(appStart);
+  }
+
   void _onCardsChanged() {
     final cards = _repository.cardsNotifier.value;
     final topics = cards
         .map((card) => card.topic.trim())
         .where((topic) => topic.isNotEmpty)
-        .toSet();
-
-    final merged = <String>{..._defaultDeckNames, ...topics}.toList()..sort();
+        .toSet()
+        .toList()
+      ..sort();
 
     if (!mounted) {
-      _availableDecks = merged;
+      _availableDecks = topics;
       return;
     }
 
     setState(() {
-      _availableDecks = merged;
+      _availableDecks = topics;
     });
   }
 
@@ -146,6 +181,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return decks != null && decks.isNotEmpty;
   }
 
+  bool _hasLearningActivityOnDate(DateTime date) {
+    final target = DateUtils.dateOnly(date);
+    return _repository.cardsNotifier.value.any((card) {
+      final savedDate = DateUtils.dateOnly(card.savedAt.toLocal());
+      return DateUtils.isSameDay(savedDate, target);
+    });
+  }
+
   List<String> _decksForDate(DateTime date) {
     return List<String>.from(_scheduledDecksByDay[_dateKey(date)] ?? const []);
   }
@@ -158,9 +201,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     _studiedDays = List.generate(daysInMonth, (index) => index + 1)
         .where(
-          (day) => _hasScheduleOnDate(
-            DateTime(_focusedDay.year, _focusedDay.month, day),
-          ),
+          (day) {
+            final date = DateTime(_focusedDay.year, _focusedDay.month, day);
+            return !_isBeforeAppStart(date) && _hasLearningActivityOnDate(date);
+          },
         )
         .toList();
     _currentStreak = _calculateCurrentStreak();
@@ -169,11 +213,27 @@ class _CalendarScreenState extends State<CalendarScreen> {
   int _calculateCurrentStreak() {
     int streak = 0;
     var cursor = DateUtils.dateOnly(DateTime.now());
-    while (_hasScheduleOnDate(cursor)) {
+    while (!_isBeforeAppStart(cursor) && _hasLearningActivityOnDate(cursor)) {
       streak++;
       cursor = cursor.subtract(const Duration(days: 1));
     }
     return streak;
+  }
+
+  List<DateTime> _recentLearningDays({int limit = 7}) {
+    final today = DateUtils.dateOnly(DateTime.now());
+    final start = _appStartedAt ?? today;
+    final learned = <DateTime>[];
+    var cursor = today;
+
+    while (!cursor.isBefore(start) && learned.length < limit) {
+      if (_hasLearningActivityOnDate(cursor)) {
+        learned.add(cursor);
+      }
+      cursor = cursor.subtract(const Duration(days: 1));
+    }
+
+    return learned.reversed.toList();
   }
 
   void _changeMonth(int offset) {
@@ -430,10 +490,25 @@ class _CalendarScreenState extends State<CalendarScreen> {
     int gridCount = rows * 7;
     final monthLabel = DateFormat('MMMM yyyy').format(_focusedDay);
     final totalStudyDays = _studiedDays.length;
+    final recentLearningDays = _recentLearningDays(limit: 7);
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFE2F3FF),
+              Color(0xFFFFF4FA),
+              Color(0xFFE4FAEF),
+              Color(0xFFF3E5FF),
+            ],
+            stops: [0.0, 0.3, 0.6, 1.0],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics(),
           ),
@@ -490,99 +565,69 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: List.generate(7, (index) {
-                          final today = DateUtils.dateOnly(DateTime.now());
-                          final date = today.subtract(
-                            Duration(days: 6 - index),
-                          );
-                          final scheduled = _hasScheduleOnDate(date);
-                          final isToday = DateUtils.isSameDay(date, today);
-                          final isPast = date.isBefore(today);
-                          final isFuture = date.isAfter(today);
-                          final fillColor = isToday
-                              ? const Color(0xFF1D3557)
-                              : isFuture && scheduled
-                              ? const Color(0xFFFFF3C4)
-                              : isPast && scheduled
-                              ? const Color(0xFFE9F8F1)
-                              : isPast
-                              ? const Color(0xFFFDECEC)
-                              : Colors.white;
-                          final borderColor = isToday
-                              ? const Color(0xFF1D3557)
-                              : isFuture && scheduled
-                              ? const Color(0xFFE1B100)
-                              : isPast && scheduled
-                              ? const Color(0xFF8FDDBD)
-                              : isPast
-                              ? const Color(0xFFF3A2A2)
-                              : const Color(0xFFD8E1EA);
-                          final icon = isToday
-                              ? Icons.star_rounded
-                              : isFuture && scheduled
-                              ? Icons.local_offer_rounded
-                              : isPast && scheduled
-                              ? Icons.check_circle
-                              : isPast
-                              ? Icons.remove_circle_outline
-                              : Icons.circle_outlined;
-                          final iconColor = isToday
-                              ? Colors.white
-                              : isFuture && scheduled
-                              ? const Color(0xFFE1B100)
-                              : isPast && scheduled
-                              ? const Color(0xFF2CB67D)
-                              : isPast
-                              ? const Color(0xFFE45757)
-                              : const Color(0xFFB4C2CF);
+                      if (recentLearningDays.isEmpty)
+                        const Text(
+                          'Chưa có ngày học nào.',
+                          style: TextStyle(color: Color(0xFF627485)),
+                        )
+                      else
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: recentLearningDays.map((date) {
+                            final today = DateUtils.dateOnly(DateTime.now());
+                            final isToday = DateUtils.isSameDay(date, today);
+                            final scheduled = _hasScheduleOnDate(date);
+                            final fillColor = scheduled
+                                ? const Color(0xFFE9F8F1)
+                                : const Color(0xFFE9F8F1);
+                            final borderColor = scheduled
+                                ? const Color(0xFF8FDDBD)
+                                : const Color(0xFF8FDDBD);
 
-                          return Container(
-                            width: 36,
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            decoration: BoxDecoration(
-                              color: fillColor,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: borderColor),
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  DateFormat('E').format(date).substring(0, 2),
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600,
-                                    color:
-                                        isToday ||
-                                            isFuture && scheduled ||
-                                            isPast && scheduled
-                                        ? Colors.white
-                                        : const Color(0xFF516476),
-                                  ),
+                            return Container(
+                              width: 36,
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              decoration: BoxDecoration(
+                                color: fillColor,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: isToday
+                                      ? const Color(0xFF1D3557)
+                                      : borderColor,
+                                  width: isToday ? 2 : 1,
                                 ),
-                                const SizedBox(height: 2),
-                                Text(
-                                  '${date.day}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color:
-                                        isToday ||
-                                            isFuture && scheduled ||
-                                            isPast && scheduled
-                                        ? Colors.white
-                                        : const Color(0xFF1D3557),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    DateFormat('E').format(date).substring(0, 2),
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF516476),
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 1),
-                                Icon(icon, size: 12, color: iconColor),
-                              ],
-                            ),
-                          );
-                        }),
-                      ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    '${date.day}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF1D3557),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 1),
+                                  const Icon(
+                                    Icons.check_circle,
+                                    size: 12,
+                                    color: Color(0xFF2CB67D),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
                     ],
                   ),
                 ),
@@ -713,44 +758,41 @@ class _CalendarScreenState extends State<CalendarScreen> {
                           final today = DateUtils.dateOnly(DateTime.now());
                           final scheduled =
                               isValidDay && _hasScheduleOnDate(dayDate);
+                          final beforeAppStart =
+                              isValidDay && _isBeforeAppStart(dayDate);
                           final isToday =
                               isValidDay && DateUtils.isSameDay(dayDate, today);
+                          final studiedToday =
+                              isToday && _hasLearningActivityOnDate(dayDate);
+                          final isCompleted = scheduled || studiedToday;
                           final isPast = isValidDay && dayDate.isBefore(today);
                           final isFuture = isValidDay && dayDate.isAfter(today);
-                          final fillColor = isToday
-                              ? const Color(0xFF1D3557)
-                              : isFuture && scheduled
+                            final fillColor = isFuture && scheduled
                               ? const Color(0xFFFFF3C4)
-                              : isPast && scheduled
+                              : (isPast || isToday) && isCompleted
                               ? const Color(0xFFE9F8F1)
-                              : isPast
+                              : isPast && !beforeAppStart
                               ? const Color(0xFFFDECEC)
                               : const Color(0xFFF7FAFC);
-                          final borderColor = isToday
-                              ? const Color(0xFF1D3557)
-                              : isFuture && scheduled
+                            final borderColor = isFuture && scheduled
                               ? const Color(0xFFE1B100)
-                              : isPast && scheduled
+                              : (isPast || isToday) && isCompleted
                               ? const Color(0xFF8FDDBD)
-                              : isPast
+                              : isPast && !beforeAppStart
                               ? const Color(0xFFF3A2A2)
                               : const Color(0xFFE4EAF1);
-                          final icon = isToday
-                              ? Icons.star_rounded
-                              : isFuture && scheduled
+                            final icon = isFuture && scheduled
                               ? Icons.local_offer_rounded
-                              : isPast && scheduled
+                              : (isPast || isToday) && isCompleted
                               ? Icons.check_circle
-                              : isPast
+                              : isPast && !beforeAppStart
                               ? Icons.remove_circle_outline
                               : Icons.circle_outlined;
-                          final iconColor = isToday
-                              ? Colors.white
-                              : isFuture && scheduled
+                            final iconColor = isFuture && scheduled
                               ? const Color(0xFFE1B100)
-                              : isPast && scheduled
+                              : (isPast || isToday) && isCompleted
                               ? const Color(0xFF2CB67D)
-                              : isPast
+                              : isPast && !beforeAppStart
                               ? const Color(0xFFE45757)
                               : const Color(0xFFB4C2CF);
                           final isSelected =
@@ -775,10 +817,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 border: isValidDay
                                     ? Border.all(
-                                        color: isSelected
+                                    color: isToday
+                                      ? const Color(0xFF1D3557)
+                                      : isSelected
                                             ? const Color(0xFF1D3557)
                                             : borderColor,
-                                        width: isSelected ? 1.5 : 1,
+                                    width: isToday
+                                      ? 2
+                                      : isSelected
+                                      ? 1.5
+                                      : 1,
                                       )
                                     : null,
                               ),
@@ -792,11 +840,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w700,
-                                            color:
-                                                isToday ||
-                                                    isFuture && scheduled ||
-                                                    isPast && scheduled
-                                                ? Colors.white
+                                            color: beforeAppStart
+                                                ? const Color(0xFF98A6B8)
                                                 : const Color(0xFF1D3557),
                                           ),
                                         ),
@@ -811,25 +856,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    const _LegendDot(
-                      color: Color(0xFFE45757),
-                      label: 'Chưa học',
-                    ),
-                    const SizedBox(width: 14),
-                    const _LegendDot(
-                      color: Color(0xFF1D3557),
-                      label: 'Hôm nay',
-                    ),
-                    const SizedBox(width: 14),
-                    const _LegendDot(
-                      color: Color(0xFFE1B100),
-                      label: 'Đã gắn thẻ',
-                    ),
-                  ],
                 ),
                 const SizedBox(height: 12),
                 Container(
@@ -1004,6 +1030,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 ),
               ],
             ),
+          ),
           ),
         ),
       ),
