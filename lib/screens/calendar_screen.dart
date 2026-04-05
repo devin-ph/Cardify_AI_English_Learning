@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +16,8 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   static const String _scheduleStorageKey = 'calendar_scheduled_decks_by_day';
+  static const String _scheduleTimeStorageKey =
+      'calendar_scheduled_time_by_day';
   static const String _appStartedAtKey = 'app_started_at_v1';
 
   final SavedCardsRepository _repository = SavedCardsRepository.instance;
@@ -25,6 +28,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   late int _currentStreak;
   late List<String> _availableDecks;
   Map<String, List<String>> _scheduledDecksByDay = <String, List<String>>{};
+  Map<String, String> _scheduledTimeByDay = <String, String>{};
 
   @override
   void initState() {
@@ -52,6 +56,53 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   DateTime _keyToDate(String key) {
     return DateUtils.dateOnly(DateTime.parse(key));
+  }
+
+  String _timeToStorage(TimeOfDay time) {
+    final hh = time.hour.toString().padLeft(2, '0');
+    final mm = time.minute.toString().padLeft(2, '0');
+    return '$hh:$mm';
+  }
+
+  TimeOfDay? _timeFromStorage(String? raw) {
+    if (raw == null || raw.trim().isEmpty) {
+      return null;
+    }
+    final parts = raw.split(':');
+    if (parts.length != 2) {
+      return null;
+    }
+    final hour = int.tryParse(parts[0]);
+    final minute = int.tryParse(parts[1]);
+    if (hour == null || minute == null) {
+      return null;
+    }
+    if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+      return null;
+    }
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  String _formatTimeLabel(String? raw) {
+    final parsed = _timeFromStorage(raw);
+    if (parsed == null) {
+      return 'Chưa chọn giờ';
+    }
+    return _timeToStorage(parsed);
+  }
+
+  DateTime _scheduleDateTime(DateTime date, String? rawTime) {
+    final parsedTime = _timeFromStorage(rawTime);
+    if (parsedTime == null) {
+      return DateTime(date.year, date.month, date.day, 23, 59);
+    }
+    return DateTime(
+      date.year,
+      date.month,
+      date.day,
+      parsedTime.hour,
+      parsedTime.minute,
+    );
   }
 
   Future<void> _loadAppStartDate() async {
@@ -150,14 +201,31 @@ class _CalendarScreenState extends State<CalendarScreen> {
         }
       }
 
+      final rawTimes = prefs.getString(_scheduleTimeStorageKey);
+      final parsedTimes = <String, String>{};
+      if (rawTimes != null && rawTimes.isNotEmpty) {
+        final decodedTimes = jsonDecode(rawTimes);
+        if (decodedTimes is Map) {
+          for (final entry in decodedTimes.entries) {
+            final key = entry.key.toString();
+            final value = entry.value?.toString();
+            if (_timeFromStorage(value) != null) {
+              parsedTimes[key] = value!;
+            }
+          }
+        }
+      }
+
       if (!mounted) {
         _scheduledDecksByDay = parsed;
+        _scheduledTimeByDay = parsedTimes;
         _refreshCalendarStats();
         return;
       }
 
       setState(() {
         _scheduledDecksByDay = parsed;
+        _scheduledTimeByDay = parsedTimes;
         _refreshCalendarStats();
       });
     } catch (_) {
@@ -173,6 +241,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
     await prefs.setString(
       _scheduleStorageKey,
       jsonEncode(_scheduledDecksByDay),
+    );
+    await prefs.setString(
+      _scheduleTimeStorageKey,
+      jsonEncode(_scheduledTimeByDay),
     );
   }
 
@@ -245,14 +317,23 @@ class _CalendarScreenState extends State<CalendarScreen> {
     });
   }
 
-  Future<void> _saveSelectedDayDecks(List<String> selectedDecks) async {
+  Future<void> _saveSelectedDayDecks(
+    List<String> selectedDecks, {
+    TimeOfDay? selectedTime,
+  }) async {
     final key = _dateKey(_selectedDay);
     setState(() {
       if (selectedDecks.isEmpty) {
         _scheduledDecksByDay.remove(key);
+        _scheduledTimeByDay.remove(key);
       } else {
         final uniqueSorted = selectedDecks.toSet().toList()..sort();
         _scheduledDecksByDay[key] = uniqueSorted;
+        if (selectedTime != null) {
+          _scheduledTimeByDay[key] = _timeToStorage(selectedTime);
+        } else {
+          _scheduledTimeByDay.remove(key);
+        }
       }
       _refreshCalendarStats();
     });
@@ -261,51 +342,167 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   Future<void> _openDeckPickerForSelectedDay() async {
     final initialSelected = _decksForDate(_selectedDay).toSet();
+    final dayKey = _dateKey(_selectedDay);
+    final initialTime = _timeFromStorage(_scheduledTimeByDay[dayKey]);
 
     await showDialog<void>(
       context: context,
       builder: (dialogContext) {
         final selected = <String>{...initialSelected};
+        TimeOfDay? selectedTime = initialTime;
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18),
               ),
-              title: Text(
-                'Bộ thẻ ngày ${DateFormat('dd/MM/yyyy').format(_selectedDay)}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w800,
-                ),
+              titlePadding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
+              contentPadding: const EdgeInsets.fromLTRB(18, 8, 18, 12),
+              title: Row(
+                children: [
+                  Container(
+                    width: 34,
+                    height: 34,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEAF3FE),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(
+                      Icons.edit_calendar_rounded,
+                      size: 19,
+                      color: Color(0xFF1D3557),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'Kế hoạch ngày ${DateFormat('dd/MM/yyyy').format(_selectedDay)}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               content: SizedBox(
                 width: 360,
-                child: _availableDecks.isEmpty
-                    ? const Text('Chưa có bộ thẻ để chọn.')
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _availableDecks.length,
-                        itemBuilder: (context, index) {
-                          final deck = _availableDecks[index];
-                          final checked = selected.contains(deck);
-                          return CheckboxListTile(
-                            dense: true,
-                            contentPadding: EdgeInsets.zero,
-                            value: checked,
-                            title: Text(deck),
-                            onChanged: (value) {
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF6F9FE),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: const Color(0xFFE0E8F3),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.schedule_rounded,
+                            size: 18,
+                            color: Color(0xFF1D3557),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              'Giờ học: ${selectedTime == null ? 'Chưa chọn giờ' : _timeToStorage(selectedTime!)}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF1D3557),
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              final picked = await showTimePicker(
+                                context: context,
+                                initialTime: selectedTime ?? TimeOfDay.now(),
+                              );
+                              if (picked == null) {
+                                return;
+                              }
                               setDialogState(() {
-                                if (value == true) {
-                                  selected.add(deck);
-                                } else {
-                                  selected.remove(deck);
-                                }
+                                selectedTime = picked;
                               });
                             },
-                          );
-                        },
+                            child: const Text('Chọn giờ'),
+                          ),
+                          if (selectedTime != null)
+                            IconButton(
+                              tooltip: 'Xóa giờ',
+                              onPressed: () {
+                                setDialogState(() {
+                                  selectedTime = null;
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.close_rounded,
+                                size: 18,
+                              ),
+                            ),
+                        ],
                       ),
+                    ),
+                    const SizedBox(height: 12),
+                    if (_availableDecks.isEmpty)
+                      const Text('Chưa có bộ thẻ để chọn.')
+                    else ...[
+                      const Text(
+                        'Chọn bộ thẻ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF1D3557),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Flexible(
+                        child: SingleChildScrollView(
+                          child: Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: _availableDecks.map((deck) {
+                              final checked = selected.contains(deck);
+                              return FilterChip(
+                                selected: checked,
+                                label: Text(deck),
+                                showCheckmark: false,
+                                selectedColor: const Color(0xFFEAF3FE),
+                                backgroundColor: const Color(0xFFF7FAFC),
+                                side: BorderSide(
+                                  color: checked
+                                      ? const Color(0xFF9ABADD)
+                                      : const Color(0xFFDDE5EE),
+                                ),
+                                labelStyle: TextStyle(
+                                  fontWeight: checked
+                                      ? FontWeight.w700
+                                      : FontWeight.w600,
+                                  color: const Color(0xFF1D3557),
+                                ),
+                                onSelected: (value) {
+                                  setDialogState(() {
+                                    if (value) {
+                                      selected.add(deck);
+                                    } else {
+                                      selected.remove(deck);
+                                    }
+                                  });
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
               ),
               actions: [
                 TextButton(
@@ -314,7 +511,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 ),
                 FilledButton(
                   onPressed: () async {
-                    await _saveSelectedDayDecks(selected.toList());
+                    await _saveSelectedDayDecks(
+                      selected.toList(),
+                      selectedTime: selectedTime,
+                    );
                     if (!mounted) {
                       return;
                     }
@@ -335,6 +535,49 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return DateUtils.dateOnly(targetDate).difference(today).inDays;
   }
 
+  String _weekdayVi(DateTime date) {
+    switch (date.weekday) {
+      case DateTime.monday:
+        return 'Thứ Hai';
+      case DateTime.tuesday:
+        return 'Thứ Ba';
+      case DateTime.wednesday:
+        return 'Thứ Tư';
+      case DateTime.thursday:
+        return 'Thứ Năm';
+      case DateTime.friday:
+        return 'Thứ Sáu';
+      case DateTime.saturday:
+        return 'Thứ Bảy';
+      case DateTime.sunday:
+        return 'Chủ nhật';
+      default:
+        return 'Không rõ';
+    }
+  }
+
+  String _upcomingCountdownLabel(_UpcomingSchedule schedule) {
+    final now = DateTime.now();
+    final target = _scheduleDateTime(schedule.date, schedule.time);
+    final diff = target.difference(now);
+
+    if (diff.inMinutes >= 0 && diff.inHours < 24) {
+      if (diff.inMinutes < 60) {
+        final mins = diff.inMinutes <= 0 ? 1 : diff.inMinutes;
+        return 'Còn $mins phút';
+      }
+      final hours = diff.inMinutes ~/ 60;
+      final roundedHours = (diff.inMinutes % 60) == 0 ? hours : hours + 1;
+      return 'Còn $roundedHours giờ';
+    }
+
+    final daysLeft = _daysUntil(schedule.date);
+    if (daysLeft == 0) {
+      return 'Hôm nay';
+    }
+    return 'Còn $daysLeft ngày';
+  }
+
   List<_UpcomingSchedule> _getUpcomingSchedules() {
     final today = DateUtils.dateOnly(DateTime.now());
     final schedules = <_UpcomingSchedule>[];
@@ -347,7 +590,13 @@ class _CalendarScreenState extends State<CalendarScreen> {
       if (date.isBefore(today)) {
         continue;
       }
-      schedules.add(_UpcomingSchedule(date: date, decks: entry.value));
+      schedules.add(
+        _UpcomingSchedule(
+          date: date,
+          decks: entry.value,
+          time: _scheduledTimeByDay[entry.key],
+        ),
+      );
     }
 
     schedules.sort((a, b) => a.date.compareTo(b.date));
@@ -355,10 +604,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   Future<void> _openMonthYearPicker() async {
-    int selectedYear = _focusedDay.year;
     int selectedMonth = _focusedDay.month;
-    final currentYear = DateTime.now().year;
-    final years = List.generate(9, (index) => currentYear - 4 + index);
 
     await showDialog<void>(
       context: context,
@@ -380,29 +626,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    DropdownButtonFormField<int>(
-                      initialValue: selectedYear,
-                      decoration: const InputDecoration(
-                        labelText: 'Năm',
-                        border: OutlineInputBorder(),
-                        isDense: true,
-                      ),
-                      items: years
-                          .map(
-                            (year) => DropdownMenuItem<int>(
-                              value: year,
-                              child: Text('$year'),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (value) {
-                        if (value == null) {
-                          return;
-                        }
-                        setDialogState(() => selectedYear = value);
-                      },
-                    ),
-                    const SizedBox(height: 12),
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -459,8 +682,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 FilledButton(
                   onPressed: () {
                     setState(() {
-                      _focusedDay = DateTime(selectedYear, selectedMonth);
-                      _selectedDay = DateTime(selectedYear, selectedMonth, 1);
+                      _focusedDay = DateTime(_focusedDay.year, selectedMonth);
+                      _selectedDay = DateTime(_focusedDay.year, selectedMonth, 1);
                       _refreshCalendarStats();
                     });
                     Navigator.pop(dialogContext);
@@ -529,12 +752,25 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFFCEE9FF), Color(0xFFE3F5EA)],
+                      colors: [
+                        Color(0xFFD7EEFF),
+                        Color(0xFFE4F6E9),
+                      ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(18),
-                    border: Border.all(color: const Color(0xFFD4E6F7)),
+                    border: Border.all(
+                      color: const Color(0xFFB8D3EE),
+                      width: 1.4,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF7FA7C6).withValues(alpha: 0.26),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -544,14 +780,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
                           const Icon(
                             Icons.local_fire_department_rounded,
                             color: Color(0xFFFF7B2F),
-                            size: 20,
+                            size: 21,
                           ),
                           const SizedBox(width: 6),
                           Text(
                             'Chuỗi ngày học: $_currentStreak ngày',
                             style: const TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF1D3557),
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16,
+                              color: Color(0xFF183153),
                             ),
                           ),
                           const Spacer(),
@@ -564,7 +801,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 12),
                       if (recentLearningDays.isEmpty)
                         const Text(
                           'Chưa có ngày học nào.',
@@ -579,11 +816,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
                             final isToday = DateUtils.isSameDay(date, today);
                             final scheduled = _hasScheduleOnDate(date);
                             final fillColor = scheduled
-                                ? const Color(0xFFE9F8F1)
-                                : const Color(0xFFE9F8F1);
+                                ? const Color(0xFFEAF8F2).withValues(alpha: 0.78)
+                                : const Color(0xFFEAF8F2).withValues(alpha: 0.78);
                             final borderColor = scheduled
-                                ? const Color(0xFF8FDDBD)
-                                : const Color(0xFF8FDDBD);
+                                ? const Color(0xFF74C69D).withValues(alpha: 0.95)
+                                : const Color(0xFF74C69D).withValues(alpha: 0.95);
 
                             return Container(
                               width: 36,
@@ -593,10 +830,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
                                   color: isToday
-                                      ? const Color(0xFF1D3557)
+                                      ? const Color(0xFF183153)
                                       : borderColor,
                                   width: isToday ? 2 : 1,
+                                  
                                 ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(0xFF7FA7C6).withValues(alpha: 0.26),
+                                    blurRadius: 18,
+                                    offset: const Offset(0, 8),
+                                  ),
+                                ],
                               ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -614,7 +859,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                     '${date.day}',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFF1D3557),
+                                      color: Color(0xFF183153),
                                     ),
                                   ),
                                   const SizedBox(height: 1),
@@ -632,15 +877,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                Container(
+                _GlassCard(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 6,
                     vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: const Color(0xFFE1E7EE)),
                   ),
                   child: Row(
                     children: [
@@ -672,11 +912,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                     color: Color(0xFF1D3557),
                                   ),
                                 ),
-                                const SizedBox(width: 2),
-                                const Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: Color(0xFF1D3557),
-                                ),
                               ],
                             ),
                           ),
@@ -691,46 +926,20 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Container(
+                _GlassCard(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 6),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFFE1E7EE)),
-                  ),
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: const [
-                          Text(
-                            'T2',
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          Text(
-                            'T3',
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          Text(
-                            'T4',
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          Text(
-                            'T5',
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          Text(
-                            'T6',
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          Text(
-                            'T7',
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          Text(
-                            'CN',
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
+                          Text('T2', style: TextStyle(fontWeight: FontWeight.w700)),
+                          Text('T3', style: TextStyle(fontWeight: FontWeight.w700)),
+                          Text('T4', style: TextStyle(fontWeight: FontWeight.w700)),
+                          Text('T5', style: TextStyle(fontWeight: FontWeight.w700)),
+                          Text('T6', style: TextStyle(fontWeight: FontWeight.w700)),
+                          Text('T7', style: TextStyle(fontWeight: FontWeight.w700)),
+                          Text('CN', style: TextStyle(fontWeight: FontWeight.w700)),
                         ],
                       ),
                       const SizedBox(height: 8),
@@ -767,34 +976,34 @@ class _CalendarScreenState extends State<CalendarScreen> {
                           final isCompleted = scheduled || studiedToday;
                           final isPast = isValidDay && dayDate.isBefore(today);
                           final isFuture = isValidDay && dayDate.isAfter(today);
-                            final fillColor = isFuture && scheduled
-                              ? const Color(0xFFFFF3C4)
+                          final fillColor = isFuture && scheduled
+                              ? const Color(0xFFFFF3C4).withValues(alpha: 0.65)
                               : (isPast || isToday) && isCompleted
-                              ? const Color(0xFFE9F8F1)
-                              : isPast && !beforeAppStart
-                              ? const Color(0xFFFDECEC)
-                              : const Color(0xFFF7FAFC);
-                            final borderColor = isFuture && scheduled
-                              ? const Color(0xFFE1B100)
+                                  ? const Color(0xFFE9F8F1).withValues(alpha: 0.72)
+                                  : isPast && !beforeAppStart
+                                      ? const Color(0xFFFDECEC).withValues(alpha: 0.72)
+                                      : const Color(0xFFF7FAFC).withValues(alpha: 0.55);
+                          final borderColor = isFuture && scheduled
+                              ? const Color(0xFFE1B100).withValues(alpha: 0.7)
                               : (isPast || isToday) && isCompleted
-                              ? const Color(0xFF8FDDBD)
-                              : isPast && !beforeAppStart
-                              ? const Color(0xFFF3A2A2)
-                              : const Color(0xFFE4EAF1);
-                            final icon = isFuture && scheduled
+                                  ? const Color(0xFF8FDDBD).withValues(alpha: 0.85)
+                                  : isPast && !beforeAppStart
+                                      ? const Color(0xFFF3A2A2).withValues(alpha: 0.8)
+                                      : const Color(0xFFE4EAF1).withValues(alpha: 0.8);
+                          final icon = isFuture && scheduled
                               ? Icons.local_offer_rounded
                               : (isPast || isToday) && isCompleted
-                              ? Icons.check_circle
-                              : isPast && !beforeAppStart
-                              ? Icons.remove_circle_outline
-                              : Icons.circle_outlined;
-                            final iconColor = isFuture && scheduled
+                                  ? Icons.check_circle
+                                  : isPast && !beforeAppStart
+                                      ? Icons.remove_circle_outline
+                                      : Icons.circle_outlined;
+                          final iconColor = isFuture && scheduled
                               ? const Color(0xFFE1B100)
                               : (isPast || isToday) && isCompleted
-                              ? const Color(0xFF2CB67D)
-                              : isPast && !beforeAppStart
-                              ? const Color(0xFFE45757)
-                              : const Color(0xFFB4C2CF);
+                                  ? const Color(0xFF2CB67D)
+                                  : isPast && !beforeAppStart
+                                      ? const Color(0xFFE45757)
+                                      : const Color(0xFFB4C2CF);
                           final isSelected =
                               isValidDay &&
                               DateUtils.isSameDay(dayDate, _selectedDay);
@@ -817,16 +1026,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 border: isValidDay
                                     ? Border.all(
-                                    color: isToday
-                                      ? const Color(0xFF1D3557)
-                                      : isSelected
+                                        color: isToday
                                             ? const Color(0xFF1D3557)
-                                            : borderColor,
-                                    width: isToday
-                                      ? 2
-                                      : isSelected
-                                      ? 1.5
-                                      : 1,
+                                            : isSelected
+                                                ? const Color(0xFF1D3557)
+                                                : borderColor,
+                                        width: isToday
+                                            ? 2
+                                            : isSelected
+                                                ? 1.5
+                                                : 1,
                                       )
                                     : null,
                               ),
@@ -858,41 +1067,130 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                Container(
+                _GlassCard(
                   padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFFE1E7EE)),
-                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Bộ thẻ ngày ${DateFormat('dd/MM/yyyy').format(_selectedDay)}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w800,
-                              color: Color(0xFF1D3557),
-                            ),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color(0xFFFFF5E9).withValues(alpha: 0.9),
+                              const Color(0xFFF7ECFF).withValues(alpha: 0.88),
+                              const Color(0xFFEAF6FF).withValues(alpha: 0.84),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
                           ),
-                          const Spacer(),
-                          TextButton.icon(
-                            onPressed: _openDeckPickerForSelectedDay,
-                            icon: const Icon(
-                              Icons.edit_calendar_rounded,
-                              size: 18,
-                            ),
-                            label: const Text('Chọn bộ thẻ'),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: const Color(0xFFE7D6C1).withValues(alpha: 0.8),
                           ),
-                        ],
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFB79DB0).withValues(alpha: 0.12),
+                              blurRadius: 12,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withValues(alpha: 0.45),
+                                  border: Border.all(
+                                    color: Colors.white.withValues(alpha: 0.8),
+                                  ),
+                                ),
+                                child: Image.asset(
+                                  'assets/onboarding/test.png',
+                                  height: 54,
+                                  width: 54,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Bộ thẻ ngày',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF1D3557),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    DateFormat('dd/MM/yyyy').format(_selectedDay),
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF5D738A),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            TextButton.icon(
+                              onPressed: _openDeckPickerForSelectedDay,
+                              style: TextButton.styleFrom(
+                                backgroundColor: const Color(0xFF1D3557),
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 8,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(999),
+                                ),
+                                visualDensity: VisualDensity.compact,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              icon: const Icon(
+                                Icons.edit_calendar_rounded,
+                                size: 17,
+                              ),
+                              label: const Text('Chọn'),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 10),
+                      const Text(
+                        'Các bộ thẻ đã gán',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF637A90),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
                       if (selectedDateDecks.isEmpty)
-                        const Text(
-                          'Chưa có bộ thẻ nào cho ngày này. Hãy thêm để tạo kế hoạch học.',
-                          style: TextStyle(color: Color(0xFF627485)),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF7FAFC).withValues(alpha: 0.7),
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(
+                              color: const Color(0xFFE4EAF1).withValues(alpha: 0.8),
+                            ),
+                          ),
+                          child: const Text(
+                            'Chưa có bộ thẻ nào cho ngày này. Hãy thêm để tạo kế hoạch học.',
+                            style: TextStyle(color: Color(0xFF627485)),
+                          ),
                         )
                       else
                         Wrap(
@@ -906,8 +1204,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                     vertical: 6,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: const Color(0xFFEAF3FE),
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        const Color(0xFFEAF3FE).withValues(alpha: 0.92),
+                                        const Color(0xFFF1ECFF).withValues(alpha: 0.9),
+                                      ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
                                     borderRadius: BorderRadius.circular(999),
+                                    border: Border.all(
+                                      color: const Color(0xFFD8E7F6).withValues(alpha: 0.92),
+                                    ),
                                   ),
                                   child: Text(
                                     deck,
@@ -924,13 +1232,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                Container(
+                _GlassCard(
                   padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFFE1E7EE)),
-                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -950,74 +1253,199 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       else
                         Column(
                           children: upcomingSchedules.map((schedule) {
-                            final daysLeft = _daysUntil(schedule.date);
-                            final dayLabel = daysLeft == 0
-                                ? 'Hôm nay'
-                                : 'Còn $daysLeft ngày';
+                            final dayLabel = _upcomingCountdownLabel(schedule);
+                            final shortMonth = DateFormat('MM').format(
+                              schedule.date,
+                            );
                             return Container(
                               margin: const EdgeInsets.only(bottom: 8),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 10,
-                              ),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFF7FAFC),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    const Color(0xFFFFF3E8).withValues(alpha: 0.86),
+                                    const Color(0xFFFFEAF3).withValues(alpha: 0.8),
+                                    const Color.fromARGB(255, 238, 216, 249).withValues(alpha: 0.8),
+
+                                    const Color(0xFFEEF7FF).withValues(alpha: 0.78),
+                                  ],
+                                  stops: [0.0, 0.35, 0.7, 1.0],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                  color: const Color(0xFFE4EAF1),
+                                  color: const Color(0xFFEBCFDD).withValues(alpha: 0.82),
                                 ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(0xFFCFA5BC).withValues(alpha: 0.18),
+                                    blurRadius: 14,
+                                    offset: const Offset(0, 7),
+                                  ),
+                                ],
                               ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Icon(
-                                    Icons.event_note_rounded,
-                                    size: 18,
-                                    color: Color(0xFF1D3557),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
+                                  Container(
+                                    width: 52,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFEAF3FE).withValues(alpha: 0.86),
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: const Color(0xFFD4E5F7),
+                                      ),
+                                    ),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                          DateFormat(
-                                            'EEEE, dd/MM/yyyy',
-                                          ).format(schedule.date),
+                                          '${schedule.date.day}',
                                           style: const TextStyle(
-                                            fontWeight: FontWeight.w700,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800,
                                             color: Color(0xFF1D3557),
                                           ),
                                         ),
                                         const SizedBox(height: 2),
                                         Text(
-                                          schedule.decks.join(' • '),
+                                          'Thg $shortMonth',
                                           style: const TextStyle(
-                                            color: Color(0xFF516476),
-                                            fontSize: 12,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF5D738A),
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 5,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFEAF3FE),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Text(
-                                      dayLabel,
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xFF1D3557),
-                                      ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                _weekdayVi(schedule.date),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Color(0xFF1D3557),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                                vertical: 5,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFFEAF3FE).withValues(alpha: 0.72),
+                                                borderRadius: BorderRadius.circular(20),
+                                              ),
+                                              child: Text(
+                                                dayLabel,
+                                                style: const TextStyle(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Color(0xFF1D3557),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 6),
+                                        if (schedule.time != null)
+                                          Padding(
+                                            padding: const EdgeInsets.only(bottom: 6),
+                                            child: Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.schedule,
+                                                  size: 14,
+                                                  color: Color(0xFF5D738A),
+                                                ),
+                                                const SizedBox(width: 4),
+                                                Text(
+                                                  'Giờ học: ${_formatTimeLabel(schedule.time)}',
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF5D738A),
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        Wrap(
+                                          spacing: 6,
+                                          runSpacing: 6,
+                                          children: [
+                                            ...schedule.decks
+                                                .take(4)
+                                                .map(
+                                                  (deck) => Container(
+                                                    padding: const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 4,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color: const Color(0xFFE9F8F1).withValues(alpha: 0.82),
+                                                      borderRadius: BorderRadius.circular(999),
+                                                      border: Border.all(
+                                                        color: const Color(0xFFBEE9D2),
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                      deck,
+                                                      style: const TextStyle(
+                                                        color: Color(0xFF2B4A62),
+                                                        fontSize: 11,
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                                .toList(),
+                                            if (schedule.decks.length > 4)
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(
+                                                  horizontal: 8,
+                                                  vertical: 4,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0xFFF1F5FB).withValues(alpha: 0.85),
+                                                  borderRadius: BorderRadius.circular(999),
+                                                ),
+                                                child: Text(
+                                                  '+${schedule.decks.length - 4}',
+                                                  style: const TextStyle(
+                                                    color: Color(0xFF516476),
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          '${schedule.decks.length} bộ thẻ',
+                                          style: const TextStyle(
+                                            color: Color(0xFF637A90),
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -1071,6 +1499,52 @@ class _LegendDot extends StatelessWidget {
 class _UpcomingSchedule {
   final DateTime date;
   final List<String> decks;
+  final String? time;
 
-  const _UpcomingSchedule({required this.date, required this.decks});
+  const _UpcomingSchedule({
+    required this.date,
+    required this.decks,
+    this.time,
+  });
+}
+
+class _GlassCard extends StatelessWidget {
+  const _GlassCard({
+    required this.child,
+    this.padding = EdgeInsets.zero,
+    this.borderRadius = const BorderRadius.all(Radius.circular(16)),
+  });
+
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final BorderRadius borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: borderRadius,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          padding: padding,
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.58),
+            borderRadius: borderRadius,
+            border: Border.all(
+              color: const Color(0xFFE3EAF2).withValues(alpha: 0.95),
+              width: 1.2,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF8BB3D6).withValues(alpha: 0.16),
+                blurRadius: 18,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
 }

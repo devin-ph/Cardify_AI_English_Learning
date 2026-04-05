@@ -577,7 +577,6 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     );
   }
 
-  // ignore: unused_element
   Future<void> _showAddWordSheet() async {
     if (!mounted) return;
     await showDialog<void>(
@@ -606,53 +605,24 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: _isSearching
-            ? Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                alignment: Alignment.center,
-                child: TextField(
-                  controller: _searchController,
-                  autofocus: true,
-                  textInputAction: TextInputAction.search,
-                  onChanged: (_) => setState(() {}),
-                  style: const TextStyle(color: Colors.black87, fontSize: 15),
-                  decoration: const InputDecoration(
-                    hintText: 'Tìm theo tên tiếng Việt...',
-                    hintStyle: TextStyle(color: Colors.black45, fontSize: 14),
-                    prefixIcon: Icon(Icons.search, color: Colors.black54),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 10),
-                    isDense: true,
-                  ),
-                ),
-              )
-            : const Text('Bộ sưu tập'),
-        backgroundColor: Colors.blue[400],
-        foregroundColor: Colors.white,
+        title: const Text('Bộ sưu tập'),
+        backgroundColor: Colors.transparent,
+        foregroundColor: const Color(0xFF2E2140),
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          IconButton(
-            tooltip: _isSearching ? 'Đóng tìm kiếm' : 'Tìm kiếm',
-            onPressed: _toggleSearch,
-            icon: Icon(_isSearching ? Icons.close : Icons.search),
-          ),
-        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFFF6F7FA),
-              Color(0xFFF5E6EA),
-              Color(0xFFF3E8F2),
-              Color(0xFFE6F0F2),
-              Color(0xFFDDE7F2),
+              Color.fromARGB(255, 251, 231, 248),
+              Color.fromARGB(255, 232, 238, 248),
+              Color.fromARGB(255, 244, 220, 226),
+              Color.fromARGB(255, 221, 231, 247),
+              Color.fromARGB(255, 217, 231, 234),
+              Color.fromARGB(255, 235, 219, 247),
             ],
-            stops: [0.0, 0.3, 0.6,0.8, 1.0],
+            stops: [0.0, 0.2, 0.4,0.6, 0.7, 1.0],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -662,47 +632,200 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
             valueListenable: _repository.cardsNotifier,
             builder: (context, cards, _) {
               final filteredCards = _filterCardsByVietnameseName(cards);
+              final recentCards = filteredCards.take(5).toList(growable: false);
 
-              if (cards.isEmpty) {
-                return const _CenteredMessage(
-                  message: 'Chưa có từ nào được lưu',
-                  icon: Icons.menu_book_outlined,
-                );
-              }
-
-              if (filteredCards.isEmpty) {
-                return const _CenteredMessage(
-                  message: 'Không tìm thấy thẻ từ phù hợp',
-                  icon: Icons.search_off,
-                );
-              }
-
-            return GridView.builder(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                childAspectRatio: 0.58,
-              ),
-              itemCount: filteredCards.length,
-              itemBuilder: (context, index) {
-                final card = filteredCards[index];
-                return _DictionaryCardGridItem(
-                  card: card,
-                  onTap: () => _openCardDetails(card),
-                );
-              },
-            );
-          },
+              return CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                      child: Container(
+                        height: 52,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.65),
+                          borderRadius: BorderRadius.circular(26),
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.8),
+                          ),
+                        ),
+                        child: TextField(
+                          controller: _searchController,
+                          textInputAction: TextInputAction.search,
+                          onChanged: (_) => setState(() {}),
+                          style: const TextStyle(
+                            color: Color(0xFF3D2D53),
+                            fontSize: 16,
+                          ),
+                          decoration: const InputDecoration(
+                            hintText: 'Tìm kiếm thẻ đã lưu',
+                            hintStyle: TextStyle(
+                              color: Color(0xFF8D83A0),
+                              fontSize: 16,
+                            ),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Color(0xFF8D83A0),
+                            ),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(vertical: 14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 26, 16, 10),
+                      child: const Text(
+                        'Thẻ đã lưu gần đây',
+                        style: TextStyle(
+                          fontSize: 21,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF21162F),
+                          letterSpacing: 0.15,
+                          height: 1.2,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 168,
+                      child: recentCards.isEmpty
+                          ? const Center(
+                              child: Text(
+                                'Chưa có dữ liệu gần đây',
+                                style: TextStyle(color: Color(0xFF7A6F8B)),
+                              ),
+                            )
+                          : ListView.separated(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: recentCards.length,
+                              separatorBuilder: (_, _) =>
+                                  const SizedBox(width: 12),
+                              itemBuilder: (context, index) {
+                                final card = recentCards[index];
+                                return GestureDetector(
+                                  onTap: () => _openCardDetails(card),
+                                  child: SizedBox(
+                                    width: 122,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            28,
+                                          ),
+                                          child: Container(
+                                            width: 122,
+                                            height: 122,
+                                            color: Colors.white,
+                                            child: card.imageUrl != null
+                                                ? Image.network(
+                                                    card.imageUrl!,
+                                                    fit: BoxFit.cover,
+                                                    errorBuilder: (_, _, _) =>
+                                                        const Icon(
+                                                          Icons.broken_image,
+                                                          color:
+                                                              Colors.blueGrey,
+                                                        ),
+                                                  )
+                                                : card.imageBytes != null
+                                                ? Image.memory(
+                                                    card.imageBytes!,
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : const Icon(
+                                                    Icons.image_outlined,
+                                                    color: Colors.blueGrey,
+                                                  ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          card.word,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w400,
+                                            color: Color(0xFF2A1D3B),
+                                            letterSpacing: 0.1,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 22, 16, 14),
+                      child: Text(
+                        'Bộ sưu tập ',
+                        style: TextStyle(
+                          fontSize: 21,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.black.withValues(alpha: 0.85),
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (cards.isEmpty)
+                    const SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: _CenteredMessage(
+                        message: 'Chưa có từ nào được lưu',
+                        icon: Icons.menu_book_outlined,
+                      ),
+                    )
+                  else if (filteredCards.isEmpty)
+                    const SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: _CenteredMessage(
+                        message: 'Không tìm thấy thẻ từ phù hợp',
+                        icon: Icons.search_off,
+                      ),
+                    )
+                  else
+                    SliverPadding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                      sliver: SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                              childAspectRatio: 0.70,
+                            ),
+                        delegate: SliverChildBuilderDelegate((context, index) {
+                          final card = filteredCards[index];
+                          return _DictionaryCardGridItem(
+                            card: card,
+                            onTap: () => _openCardDetails(card),
+                          );
+                        }, childCount: filteredCards.length),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
         ),
       ),
-    ),
     );
   }
 }
 
-// ignore: unused_element
 class _CardThumbnail extends StatelessWidget {
   const _CardThumbnail({required this.imageUrl, required this.imageBytes});
 
@@ -887,9 +1010,9 @@ class _DictionaryCardGridItem extends StatelessWidget {
             Expanded(
               flex: 5,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 6),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
@@ -908,28 +1031,25 @@ class _DictionaryCardGridItem extends StatelessWidget {
                       '${card.word} : ${card.meaning}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                        height: 1.15,
+                        fontSize: 14,
                       ),
                       textAlign: TextAlign.center,
                       maxLines: 2,
-                      softWrap: true,
-                      overflow: TextOverflow.visible,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 4),
                     Text(
                       card.phonetic.isNotEmpty ? card.phonetic : '...',
                       style: const TextStyle(
                         color: Colors.black54,
-                        fontSize: 12,
+                        fontSize: 13,
                         fontStyle: FontStyle.italic,
-                        height: 1.0,
                       ),
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 2),
+                    const Spacer(),
                     Align(
                       alignment: Alignment.center,
                       child: IconButton(
@@ -937,7 +1057,7 @@ class _DictionaryCardGridItem extends StatelessWidget {
                         onPressed: _speakWord,
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
-                        iconSize: 22,
+                        iconSize: 24,
                       ),
                     ),
                   ],
