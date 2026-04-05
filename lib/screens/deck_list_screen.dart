@@ -27,6 +27,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
   final SpeechToText _speech = SpeechToText();
   final TextEditingController _searchController = TextEditingController();
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;
+  OverlayEntry? _lockedTopicMessageEntry;
 
   Map<String, int> _hintsCountCache = {};
 
@@ -112,47 +113,98 @@ class _DeckListScreenState extends State<DeckListScreen> {
   bool _matchesDeckByVocabulary(
     Map<String, dynamic> deck,
     String normalizedSearch,
-    List<SavedCard> cards,
   ) {
     if (normalizedSearch.isEmpty) {
       return true;
     }
 
-    final title = deck['title'] as String;
-    final desc = deck['desc'] as String;
-    if (_normalizeText(title).contains(normalizedSearch) ||
-        _normalizeText(desc).contains(normalizedSearch)) {
-      return true;
+    final title = (deck['title'] as String).trim();
+    final vietnameseTitle = TopicClassifier.getVietnameseTopic(title);
+    final normalizedVietnameseTitle = _normalizeText(vietnameseTitle);
+    return normalizedVietnameseTitle.contains(normalizedSearch);
+  }
+
+  void _showLockedTopicMessage() {
+    if (!mounted) {
+      return;
     }
 
-    final keywords = TopicClassifier.keywords[title] ?? const <String>[];
-    final keywordMatched = keywords.any(
-      (keyword) => _normalizeText(keyword).contains(normalizedSearch),
+    _lockedTopicMessageEntry?.remove();
+    _lockedTopicMessageEntry = null;
+
+    final overlay = Overlay.of(context, rootOverlay: true);
+    if (overlay == null) {
+      return;
+    }
+
+    late final OverlayEntry entry;
+    entry = OverlayEntry(
+      builder: (overlayContext) {
+        final topPadding = MediaQuery.of(overlayContext).padding.top;
+        return Positioned(
+          top: topPadding + 14,
+          left: 16,
+          right: 16,
+          child: IgnorePointer(
+            child: Center(
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 520),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF2B2F3A).withValues(alpha: 0.96),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.18),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.lock_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      SizedBox(width: 10),
+                      Flexible(
+                        child: Text(
+                          'Vui lòng chụp ít nhất 1 thẻ để mở khóa chủ đề này!',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
-    if (keywordMatched) {
-      return true;
-    }
 
-    // Fallback: classify the query itself to a topic (works well for English terms
-    // such as "mountain", "keyboard", etc.) and compare against this deck title.
-    final classifiedTopic = TopicClassifier.classifyWord(normalizedSearch, '');
-    if (classifiedTopic == title) {
-      return true;
-    }
+    _lockedTopicMessageEntry = entry;
+    overlay.insert(entry);
 
-    final topicCards = cards.where(
-      (card) => TopicClassifier.normalizeTopic(card.topic) == title,
-    );
-    for (final card in topicCards) {
-      final searchableText = _normalizeText(
-        '${card.word} ${card.meaning} ${card.phonetic} ${card.example}',
-      );
-      if (searchableText.contains(normalizedSearch)) {
-        return true;
+    Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted || !identical(_lockedTopicMessageEntry, entry)) {
+        return;
       }
-    }
-
-    return false;
+      entry.remove();
+      _lockedTopicMessageEntry = null;
+    });
   }
 
   @override
@@ -355,10 +407,15 @@ class _DeckListScreenState extends State<DeckListScreen> {
               .get();
           final legacyRaw = legacySnap.data()?['recent_access_by_topic'];
           if (legacyRaw is Map) {
-            final remoteLoaded = <
-              String,
-              ({int lastAccessAt, bool practiced, int practiceDurationSeconds})
-            >{};
+            final remoteLoaded =
+                <
+                  String,
+                  ({
+                    int lastAccessAt,
+                    bool practiced,
+                    int practiceDurationSeconds,
+                  })
+                >{};
             for (final entry in legacyRaw.entries) {
               final topic = entry.key.toString().trim();
               if (topic.isEmpty || entry.value is! Map) {
@@ -556,6 +613,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
 
   @override
   void dispose() {
+    _lockedTopicMessageEntry?.remove();
     _speech.stop();
     _searchController.dispose();
     super.dispose();
@@ -582,31 +640,32 @@ class _DeckListScreenState extends State<DeckListScreen> {
           valueListenable: _repository.cardsNotifier,
           builder: (context, cards, _) {
             final normalizedSearch = _normalizeText(search);
-            final filteredDecks = decks.where((deck) {
-              final title = deck['title'] as String;
-              if (filterIndex == 1 && !_recentAccessByTopic.containsKey(title)) {
-                return false;
-              }
-              if (filterIndex == 2 && !(deck['favorite'] as bool)) {
-                return false;
-              }
-              if (filterIndex != 1 &&
-                  normalizedSearch.isNotEmpty &&
-                  !_matchesDeckByVocabulary(deck, normalizedSearch, cards)) {
-                return false;
-              }
-              return true;
-            }).toList()
-              ..sort((a, b) {
-                if (filterIndex != 1) {
-                  return 0;
-                }
-                final titleA = a['title'] as String;
-                final titleB = b['title'] as String;
-                final timeA = _recentAccessByTopic[titleA]?.lastAccessAt ?? 0;
-                final timeB = _recentAccessByTopic[titleB]?.lastAccessAt ?? 0;
-                return timeB.compareTo(timeA);
-              });
+            final filteredDecks =
+                decks.where((deck) {
+                  final title = deck['title'] as String;
+                  if (filterIndex == 1 &&
+                      !_recentAccessByTopic.containsKey(title)) {
+                    return false;
+                  }
+                  if (filterIndex == 2 && !(deck['favorite'] as bool)) {
+                    return false;
+                  }
+                  if (filterIndex != 1 &&
+                      normalizedSearch.isNotEmpty &&
+                      !_matchesDeckByVocabulary(deck, normalizedSearch)) {
+                    return false;
+                  }
+                  return true;
+                }).toList()..sort((a, b) {
+                  if (filterIndex != 1) {
+                    return 0;
+                  }
+                  final titleA = a['title'] as String;
+                  final titleB = b['title'] as String;
+                  final timeA = _recentAccessByTopic[titleA]?.lastAccessAt ?? 0;
+                  final timeB = _recentAccessByTopic[titleB]?.lastAccessAt ?? 0;
+                  return timeB.compareTo(timeA);
+                });
 
             return Stack(
               children: [
@@ -633,103 +692,6 @@ class _DeckListScreenState extends State<DeckListScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Colors.white.withValues(alpha: 0.78),
-                                const Color(0xFFF8FBFF).withValues(alpha: 0.72),
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(24),
-                            border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.85),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: const Color(0xFF7EA7C9).withValues(alpha: 0.14),
-                                blurRadius: 18,
-                                offset: const Offset(0, 8),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 46,
-                                height: 46,
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      Color(0xFF8AD4FF),
-                                      Color(0xFFB68CFF),
-                                    ],
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: const Icon(
-                                  Icons.view_agenda_rounded,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Bộ thẻ học',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w800,
-                                            color: const Color(0xFF1F2740),
-                                          ),
-                                    ),
-                                    const SizedBox(height: 3),
-                                    Text(
-                                      '${filteredDecks.length} chủ đề đang hiển thị',
-                                      style: const TextStyle(
-                                        fontSize: 13,
-                                        color: Color(0xFF627485),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 6,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFEAF3FE)
-                                      .withValues(alpha: 0.85),
-                                  borderRadius: BorderRadius.circular(999),
-                                ),
-                                child: const Text(
-                                  'AI English Learning',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFF1D3557),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                       if (filterIndex != 1)
                         Padding(
                           padding: const EdgeInsets.fromLTRB(16, 2, 16, 0),
@@ -738,7 +700,9 @@ class _DeckListScreenState extends State<DeckListScreen> {
                               gradient: LinearGradient(
                                 colors: [
                                   Colors.white.withValues(alpha: 0.90),
-                                  const Color(0xFFF6FAFF).withValues(alpha: 0.78),
+                                  const Color(
+                                    0xFFF6FAFF,
+                                  ).withValues(alpha: 0.78),
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -749,8 +713,9 @@ class _DeckListScreenState extends State<DeckListScreen> {
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFF7EA7C9)
-                                      .withValues(alpha: 0.10),
+                                  color: const Color(
+                                    0xFF7EA7C9,
+                                  ).withValues(alpha: 0.10),
                                   blurRadius: 12,
                                   offset: const Offset(0, 6),
                                 ),
@@ -868,19 +833,19 @@ class _DeckListScreenState extends State<DeckListScreen> {
                             return _buildDeckCard(
                               deck,
                               cards,
-                              recentMeta: _recentAccessByTopic[
-                                deck['title'] as String
-                              ],
+                              recentMeta:
+                                  _recentAccessByTopic[deck['title'] as String],
                               showRecentMeta: filterIndex == 1,
                               onTap: () async {
-                                final selectedTopicKey = deck['title'] as String;
+                                final selectedTopicKey =
+                                    deck['title'] as String;
                                 final selectedTopicForFlashcard =
                                     TopicClassifier.getVietnameseTopic(
                                       selectedTopicKey,
                                     );
                                 final isViewingRecentHistory = filterIndex == 1;
-                                final accessedAt = DateTime.now()
-                                    .millisecondsSinceEpoch;
+                                final accessedAt =
+                                    DateTime.now().millisecondsSinceEpoch;
                                 final result = await Navigator.push<dynamic>(
                                   context,
                                   MaterialPageRoute(
@@ -903,7 +868,8 @@ class _DeckListScreenState extends State<DeckListScreen> {
                                   if (rawDuration is int) {
                                     practiceDurationSeconds = rawDuration;
                                   } else if (rawDuration is num) {
-                                    practiceDurationSeconds = rawDuration.toInt();
+                                    practiceDurationSeconds = rawDuration
+                                        .toInt();
                                   }
                                 }
 
@@ -1028,15 +994,7 @@ class _DeckListScreenState extends State<DeckListScreen> {
             child: InkWell(
               borderRadius: BorderRadius.circular(24),
               onTap: isLocked
-                  ? () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Vui lòng chụp ít nhất 1 thẻ để mở khóa chủ đề này!',
-                          ),
-                        ),
-                      );
-                    }
+                  ? _showLockedTopicMessage
                   : onTap,
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -1100,7 +1058,8 @@ class _DeckListScreenState extends State<DeckListScreen> {
                                         color: Color(0xFF6A7486),
                                       ),
                                     ),
-                                    if (showRecentMeta && recentMeta != null) ...[
+                                    if (showRecentMeta &&
+                                        recentMeta != null) ...[
                                       const SizedBox(height: 6),
                                       Text(
                                         'Truy cập: ${_formatRecentAccessTime(recentMeta.lastAccessAt)}',
@@ -1235,10 +1194,7 @@ class _DeckAmbientBlob extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
     );
   }
 }
