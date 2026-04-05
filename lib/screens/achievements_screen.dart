@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/saved_cards_repository.dart';
 import '../services/xp_service.dart';
@@ -17,8 +18,12 @@ class _AchievementsScreenState extends State<AchievementsScreen>
   late final AnimationController _ambientController;
   late final AnimationController _progressController;
 
-  int get _userTotalCardsStudied =>
-      SavedCardsRepository.instance.cardsNotifier.value.length;
+  int get _userTotalCardsStudied => SavedCardsRepository
+      .instance
+      .cardsNotifier
+      .value
+      .where((c) => SavedCardsRepository.instance.isKnown(c.id, topic: c.topic))
+      .length;
   int get _userTotalScans => SavedCardsRepository.instance.cardsNotifier.value
       .where((c) => c.imageBytes != null || c.imageUrl != null)
       .length;
@@ -153,11 +158,11 @@ class _AchievementsScreenState extends State<AchievementsScreen>
 
   static const List<Map<String, dynamic>> _milestoneLeagues = [
     {'name': 'Chưa xếp hạng', 'xpReq': 0, 'color': Color(0xFF9E9E9E)},
-    {'name': 'Đồng (Bronze)', 'xpReq': 200, 'color': Color(0xFFCD7F32)},
-    {'name': 'Bạc (Silver)', 'xpReq': 1000, 'color': Color(0xFFC0C0C0)},
-    {'name': 'Vàng (Gold)', 'xpReq': 3000, 'color': Color(0xFFFFD700)},
-    {'name': 'Kim Cương (Diamond)', 'xpReq': 6000, 'color': Color(0xFF00BFFF)},
-    {'name': 'Cao Thủ (Master)', 'xpReq': 10000, 'color': Color(0xFFFF00FF)},
+    {'name': 'Đồng', 'xpReq': 200, 'color': Color(0xFFCD7F32)},
+    {'name': 'Bạc', 'xpReq': 1000, 'color': Color(0xFFC0C0C0)},
+    {'name': 'Vàng', 'xpReq': 3000, 'color': Color(0xFFFFD700)},
+    {'name': 'Kim Cương', 'xpReq': 6000, 'color': Color(0xFF00BFFF)},
+    {'name': 'Cao Thủ', 'xpReq': 10000, 'color': Color(0xFFFF00FF)},
   ];
 
   static const List<Map<String, dynamic>> _ghostProfiles = [
@@ -197,6 +202,32 @@ class _AchievementsScreenState extends State<AchievementsScreen>
     return (xpInCurrentRank / xpNeededForNext).clamp(0.0, 1.0);
   }
 
+  int? _dailyBaseXp;
+
+  Future<void> _loadDailyBotBaseXp() async {
+    final prefs = await SharedPreferences.getInstance();
+    final now = DateTime.now();
+    final todayKey = '${now.year}_${now.month}_${now.day}';
+    final savedKey = prefs.getString('bot_base_date');
+
+    if (savedKey != todayKey) {
+      int attempt = 0;
+      // Đợi load XPService nếu XP đang bằng 0 (chưa kịp đồng bộ lúc mới mở app)
+      while (_userTotalXp == 0 && attempt < 10) {
+        await Future.delayed(const Duration(milliseconds: 200));
+        if (!mounted) return;
+        attempt++;
+      }
+      final currentXp = _userTotalXp;
+      await prefs.setString('bot_base_date', todayKey);
+      await prefs.setInt('bot_base_xp', currentXp);
+      if (mounted) setState(() => _dailyBaseXp = currentXp);
+    } else {
+      final val = prefs.getInt('bot_base_xp') ?? _userTotalXp;
+      if (mounted) setState(() => _dailyBaseXp = val);
+    }
+  }
+
   List<Map<String, dynamic>> _getDailySeededGhosts() {
     final now = DateTime.now();
 
@@ -226,7 +257,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
         gap = -400 + random.nextInt(350);
       }
 
-      int botXp = _userTotalXp + gap;
+      int botXp = (_dailyBaseXp ?? _userTotalXp) + gap;
 
       // Xử lý không cho âm và làm tròn đến hàng chục
       if (botXp <= 0) {
@@ -251,6 +282,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
   @override
   void initState() {
     super.initState();
+    _loadDailyBotBaseXp();
     _ambientController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 3200),
@@ -325,13 +357,13 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                         delegate: SliverChildListDelegate([
                           _buildHeader(),
                           const SizedBox(height: 14),
-                      _buildLeaguePanel(), // Leo Tháp
-                      const SizedBox(height: 14),
-                      _buildGhostPanel(), // Bóng ma
-                      const SizedBox(height: 14),
-                      _buildOasisPanel(), // Khu vườn
-                      const SizedBox(height: 14),
-                      _buildBadgePanel(), // Bộ sưu tập
+                          _buildLeaguePanel(), // Leo Tháp
+                          const SizedBox(height: 14),
+                          _buildGhostPanel(), // Bóng ma
+                          const SizedBox(height: 14),
+                          _buildOasisPanel(), // Khu vườn
+                          const SizedBox(height: 14),
+                          _buildBadgePanel(), // Bộ sưu tập
                         ]),
                       ),
                     ),
@@ -353,12 +385,12 @@ class _AchievementsScreenState extends State<AchievementsScreen>
         child: Container(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.65),
+            color: Colors.white.withValues(alpha: 0.65),
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: Colors.white.withOpacity(0.9)),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.9)),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF3B82F6).withOpacity(0.15),
+                color: const Color(0xFF3B82F6).withValues(alpha: 0.15),
                 blurRadius: 20,
                 offset: const Offset(0, 8),
               ),
@@ -403,9 +435,9 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                   height: 72,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFF3B82F6).withOpacity(0.12),
+                    color: const Color(0xFF3B82F6).withValues(alpha: 0.12),
                     border: Border.all(
-                      color: const Color(0xFF3B82F6).withOpacity(0.3),
+                      color: const Color(0xFF3B82F6).withValues(alpha: 0.3),
                     ),
                   ),
                   child: const Icon(
@@ -472,9 +504,9 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: leagueColor.withOpacity(0.15),
+                  color: leagueColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: leagueColor.withOpacity(0.3)),
+                  border: Border.all(color: leagueColor.withValues(alpha: 0.3)),
                 ),
                 child: const Text(
                   'Thành tích Cá nhân',
@@ -557,8 +589,8 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                   colors: isMe
                       ? [const Color(0xFFDBEAFE), const Color(0xFFEFF6FF)]
                       : [
-                          Colors.white.withOpacity(0.9),
-                          Colors.white.withOpacity(0.5),
+                          Colors.white.withValues(alpha: 0.9),
+                          Colors.white.withValues(alpha: 0.5),
                         ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -566,15 +598,15 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: isMe
-                      ? const Color(0xFF3B82F6).withOpacity(0.6)
-                      : Colors.white.withOpacity(0.8),
+                      ? const Color(0xFF3B82F6).withValues(alpha: 0.6)
+                      : Colors.white.withValues(alpha: 0.8),
                   width: isMe ? 2 : 1.5,
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: isMe
-                        ? const Color(0xFF3B82F6).withOpacity(0.2)
-                        : Colors.black.withOpacity(0.04),
+                        ? const Color(0xFF3B82F6).withValues(alpha: 0.2)
+                        : Colors.black.withValues(alpha: 0.04),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -603,8 +635,8 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                     ),
                     decoration: BoxDecoration(
                       color: isMe
-                          ? const Color(0xFF3B82F6).withOpacity(0.1)
-                          : Colors.grey.withOpacity(0.1),
+                          ? const Color(0xFF3B82F6).withValues(alpha: 0.1)
+                          : Colors.grey.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -653,7 +685,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.amber.withOpacity(0.2),
+                  color: Colors.amber.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Icon(
@@ -702,7 +734,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                         child: Container(
                           height: 80,
                           decoration: BoxDecoration(
-                            color: Colors.lightBlueAccent.withOpacity(0.4),
+                            color: Colors.lightBlueAccent.withValues(alpha: 0.4),
                             borderRadius: const BorderRadius.all(
                               Radius.elliptical(500, 80),
                             ),
@@ -749,7 +781,7 @@ class _AchievementsScreenState extends State<AchievementsScreen>
                           Radius.elliptical(350, 140),
                         ),
                         border: Border.all(
-                          color: Color(0xFF42516E).withOpacity(0.5),
+                          color: Color(0xFF42516E).withValues(alpha: 0.5),
                           width: 2,
                         ),
                         boxShadow: const [
@@ -1119,8 +1151,8 @@ class _OasisItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final background = unlocked
-        ? color.withOpacity(0.16)
-        : Color(0xFFFFFFFF).withOpacity(0.6);
+        ? color.withValues(alpha: 0.16)
+        : Color(0xFFFFFFFF).withValues(alpha: 0.6);
 
     return TweenAnimationBuilder<double>(
       tween: Tween<double>(begin: 0.8, end: 1.0),
@@ -1135,10 +1167,10 @@ class _OasisItemCard extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: unlocked
-                ? [Colors.white.withOpacity(0.95), color.withOpacity(0.05)]
+                ? [Colors.white.withValues(alpha: 0.95), color.withValues(alpha: 0.05)]
                 : [
-                    Colors.white.withOpacity(0.8),
-                    Colors.white.withOpacity(0.4),
+                    Colors.white.withValues(alpha: 0.8),
+                    Colors.white.withValues(alpha: 0.4),
                   ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -1146,14 +1178,14 @@ class _OasisItemCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
             color: unlocked
-                ? color.withOpacity(0.7)
-                : Colors.white.withOpacity(0.6),
+                ? color.withValues(alpha: 0.7)
+                : Colors.white.withValues(alpha: 0.6),
             width: 1.5,
           ),
           boxShadow: [
             if (unlocked)
               BoxShadow(
-                color: color.withOpacity(0.2),
+                color: color.withValues(alpha: 0.2),
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),
@@ -1171,7 +1203,7 @@ class _OasisItemCard extends StatelessWidget {
                     iconStr,
                     style: TextStyle(
                       fontSize: 65,
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                     ),
                   ),
                 ),
@@ -1195,7 +1227,7 @@ class _OasisItemCard extends StatelessWidget {
                             fontSize: 20,
                             color: unlocked
                                 ? null
-                                : Color(0xFF42516E).withOpacity(0.5),
+                                : Color(0xFF42516E).withValues(alpha: 0.5),
                           ),
                         ),
                       ),
@@ -1205,7 +1237,7 @@ class _OasisItemCard extends StatelessWidget {
                       unlocked ? Icons.verified_rounded : Icons.lock_rounded,
                       color: unlocked
                           ? const Color(0xFF6EE7B7)
-                          : Color(0xFF42516E).withOpacity(0.5),
+                          : Color(0xFF42516E).withValues(alpha: 0.5),
                     ),
                   ],
                 ),
@@ -1224,7 +1256,7 @@ class _OasisItemCard extends StatelessWidget {
                 Text(
                   desc,
                   style: TextStyle(
-                    color: Color(0xFF0B1C3D).withOpacity(0.6),
+                    color: Color(0xFF0B1C3D).withValues(alpha: 0.6),
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
                     height: 1.2,
@@ -1233,7 +1265,7 @@ class _OasisItemCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const Spacer(),
-                if (!unlocked)
+                if (!unlocked && reqType != 'xp')
                   Row(
                     children: [
                       Expanded(
@@ -1242,9 +1274,9 @@ class _OasisItemCard extends StatelessWidget {
                           child: LinearProgressIndicator(
                             value: (currentProgress / reqXp).clamp(0.0, 1.0),
                             minHeight: 6,
-                            backgroundColor: color.withOpacity(0.15),
+                            backgroundColor: color.withValues(alpha: 0.15),
                             valueColor: AlwaysStoppedAnimation<Color>(
-                              color.withOpacity(0.5),
+                              color.withValues(alpha: 0.5),
                             ),
                           ),
                         ),
@@ -1255,7 +1287,7 @@ class _OasisItemCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w800,
-                          color: Color(0xFF42516E).withOpacity(0.6),
+                          color: Color(0xFF42516E).withValues(alpha: 0.6),
                         ),
                       ),
                     ],
@@ -1283,12 +1315,12 @@ class _GlassPanel extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.72),
+            color: Colors.white.withValues(alpha: 0.72),
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(color: Colors.white.withOpacity(0.85)),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.85)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.07),
+                color: Colors.black.withValues(alpha: 0.07),
                 blurRadius: 14,
                 offset: const Offset(0, 8),
               ),
@@ -1323,17 +1355,17 @@ class _QuickStat extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.white.withOpacity(0.9),
-              Colors.white.withOpacity(0.5),
+              Colors.white.withValues(alpha: 0.9),
+              Colors.white.withValues(alpha: 0.5),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: Colors.white.withOpacity(0.9), width: 1.5),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.9), width: 1.5),
           boxShadow: [
             BoxShadow(
-              color: color.withOpacity(0.12),
+              color: color.withValues(alpha: 0.12),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -1347,7 +1379,7 @@ class _QuickStat extends StatelessWidget {
               bottom: -12,
               child: Transform.rotate(
                 angle: -0.2,
-                child: Icon(icon, size: 70, color: color.withOpacity(0.12)),
+                child: Icon(icon, size: 70, color: color.withValues(alpha: 0.12)),
               ),
             ),
             Row(
@@ -1359,7 +1391,7 @@ class _QuickStat extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: color.withOpacity(0.15),
+                        color: color.withValues(alpha: 0.15),
                         blurRadius: 6,
                         offset: const Offset(0, 2),
                       ),
@@ -1388,7 +1420,7 @@ class _QuickStat extends StatelessWidget {
                       Text(
                         label,
                         style: TextStyle(
-                          color: color.withOpacity(0.9),
+                          color: color.withValues(alpha: 0.9),
                           fontWeight: FontWeight.w800,
                           fontSize: 12,
                           height: 1.1,
@@ -1439,7 +1471,7 @@ class _AmbientOrb extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: RadialGradient(
-              colors: [color.withOpacity(0.36), color.withOpacity(0.0)],
+              colors: [color.withValues(alpha: 0.36), color.withValues(alpha: 0.0)],
             ),
           ),
         ),
