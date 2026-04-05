@@ -40,10 +40,21 @@ class _MainScreenState extends State<MainScreen> {
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>?
   _profileSubscription;
   String? _boundProfileUid;
+  late final Widget _calendarTab;
+  late final Widget _dictionaryTab;
+  late final Widget _deckListTab;
+  late final Widget _achievementsTab;
 
   @override
   void initState() {
     super.initState();
+    _calendarTab = const CalendarScreen();
+    _dictionaryTab = DictionaryScreen(
+      onSearchModeChanged: _onDictionarySearchModeChanged,
+    );
+    _deckListTab = DeckListScreen();
+    _achievementsTab = const AchievementsScreen();
+
     _authSubscription = firebase_auth.FirebaseAuth.instance
         .authStateChanges()
         .listen((_) {
@@ -321,45 +332,44 @@ class _MainScreenState extends State<MainScreen> {
     return savedWords;
   }
 
-  Widget _getBody() {
-    switch (_currentIndex) {
-      case 0:
+  Widget _buildHomeTab() {
+    return ValueListenableBuilder<int>(
+      valueListenable: XPService.instance.xpNotifier,
+      builder: (context, xp, child) {
         return ValueListenableBuilder<int>(
-          valueListenable: XPService.instance.xpNotifier,
-          builder: (context, xp, child) {
-            return ValueListenableBuilder<int>(
-              valueListenable: XPService.instance.streakNotifier,
-              builder: (context, streak, child) {
-                return HomeScreen(
-                  userName: _userName,
-                  streak: streak,
-                  level: XPService.instance.levelNotifier.value,
-                  experience: xp,
-                  nextLevelExperience:
-                      XPService.instance.levelNotifier.value * 1000,
-                  onOpenDecks: () => _onNavTap(3),
-                  onOpenDictionary: () => _onNavTap(2),
-                  onOpenCameraQuest: _onCameraTap,
-                );
-              },
+          valueListenable: XPService.instance.streakNotifier,
+          builder: (context, streak, child) {
+            return HomeScreen(
+              userName: _userName,
+              streak: streak,
+              level: XPService.instance.levelNotifier.value,
+              experience: xp,
+              nextLevelExperience: XPService.instance.levelNotifier.value * 1000,
+              onOpenDecks: () => _onNavTap(3),
+              onOpenDictionary: () => _onNavTap(2),
+              onOpenCameraQuest: _onCameraTap,
             );
           },
         );
-      case 1:
-        return const CalendarScreen();
-      case 2:
-        return DictionaryScreen(
-          onSearchModeChanged: _onDictionarySearchModeChanged,
-        );
-      case 3:
-        return DeckListScreen();
-      case 4:
-        return const AchievementsScreen();
-      case -1:
-        return ImageCaptureScreen(onDone: () => _onNavTap(2));
-      default:
-        return const Center(child: Text('Trang chủ'));
+      },
+    );
+  }
+
+  Widget _getBody() {
+    if (_currentIndex == -1) {
+      return ImageCaptureScreen(onDone: () => _onNavTap(2));
     }
+
+    return IndexedStack(
+      index: _currentIndex,
+      children: [
+        _buildHomeTab(),
+        _calendarTab,
+        _dictionaryTab,
+        _deckListTab,
+        _achievementsTab,
+      ],
+    );
   }
 
   @override

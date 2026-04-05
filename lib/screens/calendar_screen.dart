@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/firestore_sync_status.dart';
 import '../services/saved_cards_repository.dart';
+import '../services/topic_classifier.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -25,6 +26,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
   static const String _scheduleStyleStorageKey =
       'calendar_scheduled_style_by_day';
   static const String _appStartedAtKey = 'app_started_at_v1';
+  static const List<String> _flashcardUnlockedDecks = [
+    'Đồ điện tử',
+    'Đồ nội thất',
+    'Động vật',
+    'Thiên nhiên',
+    'Công nghệ',
+    'Học tập',
+    'Đồ ăn',
+    'Phương tiện',
+  ];
 
   static const List<List<Color>> _upcomingScheduleGradients = [
     [Color(0xFFFFE8D9), Color(0xFFFFD7E6), Color(0xFFF4ECFF)],
@@ -173,6 +184,37 @@ class _CalendarScreenState extends State<CalendarScreen> {
         error: error,
       );
     }
+  }
+
+  bool _isFlashcardDeck(String deck) {
+    return _flashcardUnlockedDecks.contains(deck.trim());
+  }
+
+  int _deckOrder(String deck) {
+    final idx = _flashcardUnlockedDecks.indexOf(deck.trim());
+    return idx < 0 ? 1 << 20 : idx;
+  }
+
+  bool _isAvailableDeck(String deck) {
+    return _availableDecks.contains(deck.trim());
+  }
+
+  List<String> _sanitizeDeckList(
+    Iterable<dynamic> rawDecks, {
+    bool onlyAvailable = false,
+  }) {
+    final sanitized = rawDecks
+        .map((item) => item.toString().trim())
+        .where(
+          (item) =>
+              item.isNotEmpty &&
+              _isFlashcardDeck(item) &&
+              (!onlyAvailable || _isAvailableDeck(item)),
+        )
+        .toSet()
+        .toList()
+      ..sort((a, b) => _deckOrder(a).compareTo(_deckOrder(b)));
+    return sanitized;
   }
 
   String _dateKey(DateTime date) {
@@ -331,22 +373,19 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   void _onCardsChanged() {
-    final cards = _repository.cardsNotifier.value;
-    final topics = cards
-        .map((card) => card.topic.trim())
-        .where((topic) => topic.isNotEmpty)
-        .toSet()
-        .toList()
-      ..sort();
+    final unlockedDecks = _flashcardUnlockedDecks.where((deck) {
+      final normalizedTopic = TopicClassifier.normalizeTopic(deck);
+      return _repository.imageCountForTopic(normalizedTopic) > 0;
+    }).toList(growable: false);
 
     if (!mounted) {
-      _availableDecks = topics;
+      _availableDecks = unlockedDecks;
       _refreshCalendarStats();
       return;
     }
 
     setState(() {
-      _availableDecks = topics;
+      _availableDecks = unlockedDecks;
       _refreshCalendarStats();
     });
   }
@@ -363,13 +402,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             final key = entry.key.toString();
             final value = entry.value;
             if (value is List) {
-              final decks =
-                  value
-                      .map((item) => item.toString().trim())
-                      .where((item) => item.isNotEmpty)
-                      .toSet()
-                      .toList()
-                    ..sort();
+              final decks = _sanitizeDeckList(value);
               if (decks.isNotEmpty) {
                 parsed[key] = decks;
               }
@@ -447,12 +480,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               final key = entry.key.toString();
               final value = entry.value;
               if (value is List) {
-                final decks = value
-                    .map((item) => item.toString().trim())
-                    .where((item) => item.isNotEmpty)
-                    .toSet()
-                    .toList()
-                  ..sort();
+                final decks = _sanitizeDeckList(value);
                 if (decks.isNotEmpty) {
                   migratedDecks[key] = decks;
                 }
@@ -518,12 +546,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           final key = entry.key.toString();
           final value = entry.value;
           if (value is List) {
-            final decks = value
-                .map((item) => item.toString().trim())
-                .where((item) => item.isNotEmpty)
-                .toSet()
-                .toList()
-              ..sort();
+            final decks = _sanitizeDeckList(value);
             if (decks.isNotEmpty) {
               remoteDecks[key] = decks;
             }
@@ -632,7 +655,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   List<String> _decksForDate(DateTime date) {
-    return List<String>.from(_scheduledDecksByDay[_dateKey(date)] ?? const []);
+    return _sanitizeDeckList(
+      _scheduledDecksByDay[_dateKey(date)] ?? const [],
+      onlyAvailable: true,
+    );
   }
 
   void _refreshCalendarStats() {
@@ -692,15 +718,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
     List<String> selectedDecks, {
     TimeOfDay? selectedTime,
   }) async {
+    final sanitizedSelectedDecks = _sanitizeDeckList(
+      selectedDecks,
+      onlyAvailable: true,
+    );
     final key = _dateKey(_selectedDay);
     setState(() {
-      if (selectedDecks.isEmpty) {
+      if (sanitizedSelectedDecks.isEmpty) {
         _scheduledDecksByDay.remove(key);
         _scheduledTimeByDay.remove(key);
         _scheduledStyleByDay.remove(key);
       } else {
-        final uniqueSorted = selectedDecks.toSet().toList()..sort();
-        _scheduledDecksByDay[key] = uniqueSorted;
+        _scheduledDecksByDay[key] = sanitizedSelectedDecks;
         if (selectedTime != null) {
           _scheduledTimeByDay[key] = _timeToStorage(selectedTime);
         } else {

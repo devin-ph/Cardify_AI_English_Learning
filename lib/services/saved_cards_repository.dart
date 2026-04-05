@@ -85,7 +85,18 @@ class SavedCardsRepository {
   }
 
   Set<String> _knownWordsForTopic(String topic) {
-    return _knownWordsByTopic.putIfAbsent(topic.trim(), () => <String>{});
+    final normalizedTopic = TopicClassifier.toVietnameseCanonical(topic);
+    final knownWords = _knownWordsByTopic.putIfAbsent(
+      normalizedTopic,
+      () => <String>{},
+    );
+
+    final legacyTopic = TopicClassifier.normalizeTopic(topic);
+    if (legacyTopic != normalizedTopic && _knownWordsByTopic.containsKey(legacyTopic)) {
+      knownWords.addAll(_knownWordsByTopic.remove(legacyTopic)!);
+    }
+
+    return knownWords;
   }
 
   bool isKnown(String normalizedWord, {String? topic}) {
@@ -122,7 +133,7 @@ class SavedCardsRepository {
       if (alreadyKnown) {
         return;
       }
-      _knownWordsForTopic('General').add(key);
+      _knownWordsForTopic('Chung').add(key);
     }
 
     _publishCards();
@@ -136,10 +147,10 @@ class SavedCardsRepository {
     }
 
     if (topic != null && topic.trim().isNotEmpty) {
-      final knownWords = _knownWordsByTopic[topic.trim()];
+      final knownWords = _knownWordsForTopic(topic);
       if (knownWords != null && knownWords.remove(key)) {
         if (knownWords.isEmpty) {
-          _knownWordsByTopic.remove(topic.trim());
+          _knownWordsByTopic.remove(TopicClassifier.toVietnameseCanonical(topic));
         }
         _publishCards();
       }
@@ -184,7 +195,10 @@ class SavedCardsRepository {
   }
 
   int savedCountForTopic(String topic) {
-    return _cards.where((card) => card.topic == topic).length;
+    final normalizedTopic = TopicClassifier.toVietnameseCanonical(topic);
+    return _cards
+        .where((card) => TopicClassifier.toVietnameseCanonical(card.topic) == normalizedTopic)
+        .length;
   }
 
   int totalCountForTopic(String topic, {int baseCount = 50}) {
@@ -277,18 +291,21 @@ class SavedCardsRepository {
       if (knownWordsJson != null && knownWordsJson.isNotEmpty) {
         final decoded = jsonDecode(knownWordsJson);
         if (decoded is Map) {
-          _knownWordsByTopic
-            ..clear()
-            ..addAll(
-              decoded.map(
-                (key, value) => MapEntry(
-                  key.toString(),
-                  value is List
-                      ? value.map((item) => item.toString()).toSet()
-                      : <String>{},
-                ),
-              ),
+          _knownWordsByTopic.clear();
+          for (final entry in decoded.entries) {
+            final canonicalTopic = TopicClassifier.toVietnameseCanonical(
+              entry.key.toString(),
             );
+            if (canonicalTopic.isEmpty) {
+              continue;
+            }
+
+            final words = entry.value is List
+                ? entry.value.map((item) => item.toString()).toSet()
+                : <String>{};
+            final knownWords = _knownWordsForTopic(canonicalTopic);
+            knownWords.addAll(words);
+          }
         }
       }
 
@@ -423,7 +440,9 @@ class SavedCardsRepository {
 
     final card = SavedCard(
       id: normalized,
-      topic: topic.trim().isEmpty ? 'Từ mới' : topic.trim(),
+      topic: TopicClassifier.toVietnameseCanonical(
+        topic.trim().isEmpty ? 'Từ mới' : topic.trim(),
+      ),
       word: word.trim(),
       phonetic: phonetic.trim(),
       meaning: meaning.trim(),
@@ -551,7 +570,9 @@ class SavedCardsRepository {
         : null;
     final card = SavedCard(
       id: normalized,
-      topic: topic.trim().isEmpty ? 'Từ mới' : topic.trim(),
+      topic: TopicClassifier.toVietnameseCanonical(
+        topic.trim().isEmpty ? 'Từ mới' : topic.trim(),
+      ),
       word: word.trim(),
       phonetic: phonetic.trim(),
       meaning: meaning.trim(),

@@ -66,6 +66,16 @@ class TopicClassifier {
     }
   }
 
+  // Backward-compatible helper used across repository/model code.
+  // Returns a canonical Vietnamese topic label for consistent storage.
+  static String toVietnameseCanonical(String topic) {
+    final raw = topic.trim();
+    if (raw.isEmpty) {
+      return 'Chung';
+    }
+    return getVietnameseTopic(normalizeTopic(raw));
+  }
+
   static const Map<String, List<String>> keywords = {
     'Electronics': [
       'phone',

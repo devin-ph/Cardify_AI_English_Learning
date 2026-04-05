@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'dart:convert';
 
 import 'analysis_result.dart';
+import '../services/topic_classifier.dart';
 
 class SavedCard {
   final String id;
@@ -37,7 +38,7 @@ class SavedCard {
     final now = timestamp ?? DateTime.now();
     return SavedCard(
       id: result.normalizedWord,
-      topic: result.topic,
+      topic: TopicClassifier.toVietnameseCanonical(result.topic),
       word: result.word,
       phonetic: result.phonetic,
       meaning: result.vietnameseMeaning,
@@ -79,7 +80,9 @@ class SavedCard {
       id: normalizedId.isEmpty
           ? DateTime.now().millisecondsSinceEpoch.toString()
           : normalizedId,
-      topic: data['topic']?.toString() ?? 'General',
+      topic: TopicClassifier.toVietnameseCanonical(
+        data['topic']?.toString() ?? 'Chung',
+      ),
       word: data['word']?.toString() ?? '',
       phonetic: data['phonetic']?.toString() ?? '',
       meaning: data['meaning']?.toString() ?? '',
