@@ -20,6 +20,7 @@ import '../widgets/profile_icon.dart';
 import 'achievements_screen.dart';
 import 'calendar_screen.dart';
 import 'dictionary_screen.dart';
+import 'friend_profile_screen.dart';
 import 'flashcard_category_screen.dart';
 import 'home_screen.dart';
 import 'image_capture_screen.dart';
@@ -516,6 +517,29 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  Future<void> _openFriendProfile(Map<String, dynamic> friend) async {
+    final friendUid = friend['uid']?.toString().trim() ?? '';
+    if (friendUid.isEmpty) {
+      return;
+    }
+
+    _closeFriendsPanel();
+    await Future<void>.delayed(const Duration(milliseconds: 160));
+    if (!mounted) {
+      return;
+    }
+
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => FriendProfileScreen(
+          friendUid: friendUid,
+          fallbackName: friend['display_name']?.toString().trim() ?? '',
+          fallbackSocialId: friend['social_id']?.toString().trim() ?? '',
+        ),
+      ),
+    );
+  }
+
   Widget _buildFriendsPanel(BuildContext context) {
     final panelWidth = MediaQuery.of(context).size.width * 0.75;
     return AnimatedPositioned(
@@ -810,6 +834,7 @@ class _MainScreenState extends State<MainScreen> {
                                   horizontal: 2,
                                   vertical: 2,
                                 ),
+                                onTap: () => _openFriendProfile(friend),
                                 leading: CircleAvatar(
                                   backgroundColor: const Color(0xFFE9EEFF),
                                   backgroundImage: avatarBytes != null
@@ -838,6 +863,10 @@ class _MainScreenState extends State<MainScreen> {
                                   'ID: ${friend['social_id']}',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
+                                ),
+                                trailing: const Icon(
+                                  Icons.chevron_right_rounded,
+                                  color: Color(0xFF7B8BA3),
                                 ),
                               );
                             },
