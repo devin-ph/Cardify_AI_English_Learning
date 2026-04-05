@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/saved_card.dart';
 import '../services/saved_cards_repository.dart';
 import '../services/xp_service.dart';
+import '../services/topic_classifier.dart';
+import 'flashcard_category_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String userName;
@@ -87,13 +89,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Timer? _bannerTimer;
   int _bannerIndex = 0;
   final ValueNotifier<double> _scrollOffsetNotifier = ValueNotifier(0.0);
-    static const String _dailyMissionClaimDateKey =
+  static const String _dailyMissionClaimDateKey =
       'home_daily_mission_claim_date_v1';
-    static const String _dailyMissionClaimedIdsKey =
+  static const String _dailyMissionClaimedIdsKey =
       'home_daily_mission_claimed_ids_v1';
-    Set<String> _claimedMissionIdsToday = <String>{};
-    bool _missionStateLoaded = false;
-    bool _isAutoClaimingMission = false;
+  Set<String> _claimedMissionIdsToday = <String>{};
+  bool _missionStateLoaded = false;
+  bool _isAutoClaimingMission = false;
 
   @override
   void initState() {
@@ -123,8 +125,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final prefs = await SharedPreferences.getInstance();
 
     final localDate = prefs.getString(_dailyMissionClaimDateKey);
-    final localIds = prefs.getStringList(_dailyMissionClaimedIdsKey) ??
-        const <String>[];
+    final localIds =
+        prefs.getStringList(_dailyMissionClaimedIdsKey) ?? const <String>[];
 
     Set<String> claimed = <String>{};
     if (localDate == todayKey) {
@@ -141,9 +143,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         final data = profile.data();
         final remoteDay = data?['daily_mission_claim_day'];
         final remoteIds = data?['daily_mission_claimed_ids'];
-        if (remoteDay is String &&
-            remoteDay == todayKey &&
-            remoteIds is List) {
+        if (remoteDay is String && remoteDay == todayKey && remoteIds is List) {
           claimed = remoteIds
               .map((e) => e.toString())
               .where((e) => e.trim().isNotEmpty)
@@ -235,36 +235,53 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   static const List<Map<String, dynamic>> _unscannedHintsPool = [
     {
+      'word': 'cell phone',
       'hint': 'Một thiết bị điện tử cầm tay dùng để nối mạng, gọi điện',
       'topic': 'Electronics',
     },
     {
+      'word': 'chair',
       'hint': 'Đồ nội thất dùng để ngồi làm việc, thường có tựa lưng',
       'topic': 'Furniture',
     },
     {
+      'word': 'cat',
       'hint': 'Loài động vật gần gũi với con người, thích bắt chuột',
       'topic': 'Animals',
     },
-    {'hint': 'Cây tỏa bóng mát, có nhiều lá xanh', 'topic': 'Nature'},
-    {'hint': 'Máy tính cá nhân có thể gập lại gọn gàng', 'topic': 'Technology'},
     {
+      'word': 'potted plant',
+      'hint':
+          'Cây tỏa bóng xanh, thường được trồng trong chậu cảnh không gian hẹp',
+      'topic': 'Nature',
+    },
+    {
+      'word': 'laptop',
+      'hint': 'Máy tính cá nhân có thể gập lại gọn gàng',
+      'topic': 'Technology',
+    },
+    {
+      'word': 'book',
       'hint': 'Nơi chứa đựng tri thức, gồm nhiều trang giấy',
       'topic': 'Learning',
     },
     {
+      'word': 'banana',
       'hint': 'Loại trái cây màu vàng, thân dài, khỉ rất thích ăn',
       'topic': 'Food',
     },
     {
+      'word': 'bicycle',
       'hint': 'Phương tiện di chuyển hai bánh, dùng sức người để đạp',
       'topic': 'Vehicles',
     },
     {
+      'word': 'cup',
       'hint': 'Vật dụng dùng để uống nước hằng ngày',
       'topic': 'Household Items',
     },
     {
+      'word': 'umbrella',
       'hint': 'Đồ vật che mưa, che nắng khi đi bộ ngoài trời',
       'topic': 'Household Items',
     },
@@ -285,12 +302,54 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   static const List<Map<String, dynamic>> _milestoneLeagues = [
-    {'name': 'Chưa xếp hạng', 'xpReq': 0, 'color': Color(0xFF9E9E9E)},
-    {'name': 'Đồng', 'xpReq': 200, 'color': Color(0xFFCD7F32)},
-    {'name': 'Bạc', 'xpReq': 1000, 'color': Color(0xFFC0C0C0)},
-    {'name': 'Vàng', 'xpReq': 3000, 'color': Color(0xFFFFD700)},
-    {'name': 'Kim Cương', 'xpReq': 6000, 'color': Color(0xFF00BFFF)},
-    {'name': 'Cao Thủ', 'xpReq': 10000, 'color': Color(0xFFFF00FF)},
+    {
+      'name': 'Chưa xếp hạng',
+      'xpReq': 0,
+      'color': Color(0xFF4B5563),
+      'icon': Icons.help_outline_rounded,
+      'bgC': Color(0xFFF3F4F6),
+      'gradC': [Color(0xFFFFFFFF), Color(0xFFE5E7EB)],
+    },
+    {
+      'name': 'Đồng',
+      'xpReq': 200,
+      'color': Color(0xFFCD7F32),
+      'icon': Icons.star_border_rounded,
+      'bgC': Color(0xFFFFF6ED),
+      'gradC': [Color(0xFFFFF0E6), Color(0xFFEDC9AF)],
+    },
+    {
+      'name': 'Bạc',
+      'xpReq': 1000,
+      'color': Color(0xFF6B7280),
+      'icon': Icons.shield_rounded,
+      'bgC': Color(0xFFF3F4F6),
+      'gradC': [Color(0xFFF8F9FA), Color(0xFFD1D5DB)],
+    },
+    {
+      'name': 'Vàng',
+      'xpReq': 3000,
+      'color': Color(0xFFD97706),
+      'icon': Icons.emoji_events_rounded,
+      'bgC': Color(0xFFFFFBEB),
+      'gradC': [Color(0xFFFEF3C7), Color(0xFFFDE68A)],
+    },
+    {
+      'name': 'Kim Cương',
+      'xpReq': 6000,
+      'color': Color(0xFF2563EB),
+      'icon': Icons.diamond_rounded,
+      'bgC': Color(0xFFEFF6FF),
+      'gradC': [Color(0xFFDBEAFE), Color(0xFFBFDBFE)],
+    },
+    {
+      'name': 'Cao Thủ',
+      'xpReq': 10000,
+      'color': Color(0xFF7C3AED),
+      'icon': Icons.workspace_premium_rounded,
+      'bgC': Color(0xFFF5F3FF),
+      'gradC': [Color(0xFFEDE9FE), Color(0xFFDDD6FE)],
+    },
   ];
 
   Map<String, dynamic> get _currentLeague {
@@ -410,47 +469,62 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               return Stack(
                 children: [
                   Positioned(
-                    top: 12 - cloudParallax,
+                    top: 12,
                     left: -20,
-                    child: _GlowBubble(
-                      color: const Color(0xFF5EEAD4),
-                      size: 200,
+                    child: Transform.translate(
+                      offset: Offset(0, -cloudParallax),
+                      child: const _GlowBubble(
+                        color: Color(0xFF5EEAD4),
+                        size: 200,
+                      ),
                     ),
                   ),
                   Positioned(
-                    top: 180 - bubbleParallax,
+                    top: 180,
                     right: -40,
-                    child: _GlowBubble(
-                      color: const Color(0xFFC084FC),
-                      size: 240,
+                    child: Transform.translate(
+                      offset: Offset(0, -bubbleParallax),
+                      child: const _GlowBubble(
+                        color: Color(0xFFC084FC),
+                        size: 240,
+                      ),
                     ),
                   ),
                   Positioned(
-                    bottom: 80 + bubbleParallax,
+                    bottom: 80,
                     left: -30,
-                    child: _GlowBubble(
-                      color: const Color(0xFFC7E4FF),
-                      size: 150,
+                    child: Transform.translate(
+                      offset: Offset(0, bubbleParallax),
+                      child: const _GlowBubble(
+                        color: Color(0xFFC7E4FF),
+                        size: 150,
+                      ),
                     ),
                   ),
                   Positioned(
-                    top: 110 - stickerParallax,
-                    right: 24 + wave * 8,
-                    child: _ParallaxSticker(
-                      icon: Icons.star_rounded,
-                      color: const Color(0xFFFFC929),
-                      size: 30,
-                      angle: wave * 0.3,
+                    top: 110,
+                    right: 24,
+                    child: Transform.translate(
+                      offset: Offset(-wave * 8, -stickerParallax),
+                      child: _ParallaxSticker(
+                        icon: Icons.star_rounded,
+                        color: const Color(0xFFFFC929),
+                        size: 30,
+                        angle: wave * 0.3,
+                      ),
                     ),
                   ),
                   Positioned(
-                    top: 460 - stickerParallax * 0.65,
-                    left: 20 - wave * 6,
-                    child: _ParallaxSticker(
-                      icon: Icons.auto_awesome_rounded,
-                      color: const Color(0xFF52B6FF),
-                      size: 28,
-                      angle: -wave * 0.24,
+                    top: 460,
+                    left: 20,
+                    child: Transform.translate(
+                      offset: Offset(-wave * 6, -stickerParallax * 0.65),
+                      child: _ParallaxSticker(
+                        icon: Icons.auto_awesome_rounded,
+                        color: const Color(0xFF52B6FF),
+                        size: 28,
+                        angle: -wave * 0.24,
+                      ),
                     ),
                   ),
                   child!,
@@ -480,13 +554,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
         boxShadow: [
           BoxShadow(
-            color: activeColors[1].withOpacity(0.42),
+            color: activeColors[1].withValues(alpha: 0.42),
             blurRadius: 24,
             offset: const Offset(0, 10),
             spreadRadius: -4,
           ),
         ],
-        border: Border.all(color: Colors.white.withOpacity(0.46), width: 2),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.46),
+          width: 2,
+        ),
       ),
       clipBehavior: Clip.hardEdge,
       child: Column(
@@ -522,7 +599,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 vertical: 4,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.94),
+                                color: Colors.white.withValues(alpha: 0.94),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
@@ -590,20 +667,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Colors.white.withOpacity(0.96),
-                                Colors.white.withOpacity(0.74),
+                                Colors.white.withValues(alpha: 0.96),
+                                Colors.white.withValues(alpha: 0.74),
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.white.withOpacity(0.64),
+                              color: Colors.white.withValues(alpha: 0.64),
                               width: 2,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.white.withOpacity(0.45),
+                                color: Colors.white.withValues(alpha: 0.45),
                                 blurRadius: 16,
                                 spreadRadius: 1,
                               ),
@@ -636,7 +713,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 decoration: BoxDecoration(
                   color: selected
                       ? Colors.white
-                      : Colors.white.withOpacity(0.4),
+                      : Colors.white.withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(12),
                 ),
               );
@@ -679,10 +756,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               title: 'CẤP BẬC',
               value: '$rankName\n$xpDisplay',
               valueSize: 15,
-              icon: Icons.military_tech_rounded,
-              backgroundColor: const Color(0xFFEAF1FF),
-              iconColor: const Color(0xFF3269FF),
-              gradientColors: const [Color(0xFFF2F6FF), Color(0xFFB9D4FF)],
+              icon: currentL['icon'] as IconData,
+              backgroundColor: currentL['bgC'] as Color,
+              iconColor: currentL['color'] as Color,
+              gradientColors: currentL['gradC'] as List<Color>,
               animationDelay: 100,
               trailing: Padding(
                 padding: const EdgeInsets.only(top: 4.0),
@@ -697,8 +774,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         minHeight: 6,
                         value: animatedProgress,
                         backgroundColor: Colors.white70,
-                        valueColor: const AlwaysStoppedAnimation(
-                          Color(0xFF4A81FF),
+                        valueColor: AlwaysStoppedAnimation(
+                          currentL['color'] as Color,
                         ),
                       );
                     },
@@ -728,9 +805,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             .toList();
 
         final scannedToday = cardsToday
-            .where((c) => c.imageBytes != null)
+            .where((c) => c.imageBytes != null || c.imageUrl != null)
             .length;
-        final wordsToday = cardsToday.length;
+
+        final wordsLearnedToday = cardsToday
+            .where(
+              (c) =>
+                  SavedCardsRepository.instance.isKnown(c.id, topic: c.topic),
+            )
+            .length;
 
         final topicMap = <String, List<SavedCard>>{};
         for (final card in cards) {
@@ -746,48 +829,66 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             )
             .length;
 
+        final user = FirebaseAuth.instance.currentUser;
+        final userSeed = user?.uid.hashCode ?? 0;
+        final todaySeed =
+            today.year * 10000 + today.month * 100 + today.day + userSeed;
+        final random = Random(todaySeed);
+
+        final scanTargets = [3, 5, 7, 10];
+        final selectedScanTarget =
+            scanTargets[random.nextInt(scanTargets.length)];
+
+        final learnTargets = [5, 10, 15, 20];
+        final selectedLearnTarget =
+            learnTargets[random.nextInt(learnTargets.length)];
+
+        final reviewTargets = [1, 2, 3];
+        final selectedReviewTarget =
+            reviewTargets[random.nextInt(reviewTargets.length)];
+
         final List<Map<String, dynamic>> dailyMissions = [
           {
-            'id': 'review',
-            'title': 'Hoàn thành bài ôn tập',
-            'xp': '+100 XP',
-            'rewardXp': 100,
+            'id': 'review_$selectedReviewTarget',
+            'title': selectedReviewTarget == 1
+                ? 'Hoàn thành bài ôn tập'
+                : 'Hoàn thành $selectedReviewTarget bài ôn tập',
+            'xp': '+${selectedReviewTarget * 50} XP',
+            'rewardXp': selectedReviewTarget * 50,
             'current': fullyLearnedSets,
-            'total': 1,
+            'total': selectedReviewTarget,
             'color': const Color(0xFF06C0FF),
             'icon': Icons.style_rounded,
           },
           {
-            'id': 'scan5',
-            'title': 'Quét 5 đồ vật mới',
-            'xp': '+50 XP',
-            'rewardXp': 50,
+            'id': 'scan_$selectedScanTarget',
+            'title': 'Quét $selectedScanTarget đồ vật mới',
+            'xp': '+${selectedScanTarget * 10} XP',
+            'rewardXp': selectedScanTarget * 10,
             'current': scannedToday,
-            'total': 5,
+            'total': selectedScanTarget,
             'color': const Color(0xFF7E6BFF),
             'icon': Icons.camera_alt_rounded,
           },
           {
-            'id': 'learn15',
-            'title': 'Học 15 từ vựng mới',
-            'xp': '+150 XP',
-            'rewardXp': 150,
-            'current': wordsToday,
-            'total': 15,
+            'id': 'learn_$selectedLearnTarget',
+            'title': 'Học thuộc $selectedLearnTarget từ vựng mới',
+            'xp': '+${selectedLearnTarget * 10} XP',
+            'rewardXp': selectedLearnTarget * 10,
+            'current': wordsLearnedToday,
+            'total': selectedLearnTarget,
             'color': const Color(0xFFFF7F45),
             'icon': Icons.menu_book_rounded,
           },
-        ];
+        ]..shuffle(random);
 
         if (_missionStateLoaded && !_isAutoClaimingMission) {
-          final claimable = dailyMissions
-              .where((mission) {
-                final id = mission['id'] as String;
-                final current = mission['current'] as int;
-                final total = mission['total'] as int;
-                return current >= total && !_claimedMissionIdsToday.contains(id);
-              })
-              .toList();
+          final claimable = dailyMissions.where((mission) {
+            final id = mission['id'] as String;
+            final current = mission['current'] as int;
+            final total = mission['total'] as int;
+            return current >= total && !_claimedMissionIdsToday.contains(id);
+          }).toList();
 
           if (claimable.isNotEmpty) {
             WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -839,11 +940,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   decoration: BoxDecoration(
                     color: isCompleted
                         ? const Color(0xFFE8FFF5)
-                        : Colors.grey.shade50.withOpacity(0.8),
+                        : Colors.grey.shade50.withValues(alpha: 0.8),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
                       color: isCompleted
-                          ? displayColor.withOpacity(0.5)
+                          ? displayColor.withValues(alpha: 0.5)
                           : Colors.grey.shade200,
                     ),
                   ),
@@ -854,8 +955,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         height: 42,
                         decoration: BoxDecoration(
                           color: isCompleted
-                              ? const Color(0xFF10B981).withOpacity(0.15)
-                              : color.withOpacity(0.18),
+                              ? const Color(0xFF10B981).withValues(alpha: 0.15)
+                              : color.withValues(alpha: 0.18),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(
@@ -893,8 +994,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       minHeight: 7,
                                       value: progress,
                                       backgroundColor: isCompleted
-                                          ? displayColor.withOpacity(0.2)
-                                          : color.withOpacity(0.15),
+                                          ? displayColor.withValues(alpha: 0.2)
+                                          : color.withValues(alpha: 0.15),
                                       valueColor: AlwaysStoppedAnimation<Color>(
                                         displayColor,
                                       ),
@@ -928,9 +1029,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           style: TextStyle(
                             color: isClaimed
                                 ? const Color(0xFF10B981)
-                                : (isCompleted
-                                    ? Colors.grey.shade500
-                                    : color),
+                                : (isCompleted ? Colors.grey.shade500 : color),
                             fontWeight: FontWeight.w800,
                             fontSize: 13,
                           ),
@@ -947,13 +1046,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
+  Map<String, dynamic> _getDeckStyle(String rawTopic) {
+    final norm = TopicClassifier.normalizeTopic(rawTopic);
+    switch (norm) {
+      case 'Electronics':
+        return {
+          'icon': Icons.electrical_services,
+          'color': const Color(0xFF45C4FF),
+        };
+      case 'Furniture':
+        return {'icon': Icons.chair_alt, 'color': const Color(0xFF8E7CFF)};
+      case 'Animals':
+        return {'icon': Icons.pets, 'color': const Color(0xFFFFA62A)};
+      case 'Nature':
+        return {'icon': Icons.nature, 'color': const Color(0xFF4ADE80)};
+      case 'Technology':
+        return {'icon': Icons.memory, 'color': const Color(0xFF06C0FF)};
+      case 'Learning':
+        return {'icon': Icons.school, 'color': const Color(0xFFFF7F45)};
+      case 'Food':
+        return {'icon': Icons.restaurant, 'color': const Color(0xFFEF4444)};
+      case 'Vehicles':
+        return {'icon': Icons.directions_car, 'color': const Color(0xFF8B5CF6)};
+      case 'Household Items':
+        return {'icon': Icons.kitchen, 'color': const Color(0xFF14B8A6)};
+      default:
+        return {'icon': Icons.style_rounded, 'color': const Color(0xFF0A5DB6)};
+    }
+  }
+
   Widget _buildFlashcardProgressSection() {
     return ValueListenableBuilder<List<SavedCard>>(
       valueListenable: SavedCardsRepository.instance.cardsNotifier,
       builder: (context, cards, _) {
         if (cards.isEmpty) {
           return _FrostedPanel(
-            title: 'Tiến trình Thẻ ghi nhớ',
+            title: 'Thẻ ghi nhớ',
             subtitle: 'Theo dõi tiến trình các bộ thẻ đang học',
             actionLabel: 'Mở bộ thẻ',
             onActionTap: widget.onOpenDecks,
@@ -994,7 +1122,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         }
 
         final decks = topicMap.entries.toList().asMap().entries.map((entry) {
-          final idx = entry.key;
           final topic = entry.value.key;
           final topicCards = entry.value.value;
 
@@ -1009,33 +1136,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               .length;
 
           final progress = total > 0 ? learned / total : 0.0;
-          final colors = const [
-            Color(0xFFFFA62A),
-            Color(0xFF45C4FF),
-            Color(0xFF8E7CFF),
-            Color(0xFF06C0FF),
-            Color(0xFFFF7F45),
-          ];
-          final icons = const [
-            Icons.pets_rounded,
-            Icons.kitchen_rounded,
-            Icons.psychology_rounded,
-            Icons.camera_alt_rounded,
-            Icons.menu_book_rounded,
-          ];
+          final style = _getDeckStyle(topic);
 
           return {
             'name': topic,
             'progress': progress,
             'learned': learned,
             'total': total,
-            'color': colors[idx % colors.length],
-            'icon': icons[idx % icons.length],
+            'color': style['color'],
+            'icon': style['icon'],
           };
         }).toList();
 
         return _FrostedPanel(
-          title: 'Tiến trình Thẻ ghi nhớ',
+          title: 'Thẻ ghi nhớ',
           subtitle: 'Theo dõi tiến trình các bộ thẻ đang học',
           actionLabel: 'Mở bộ thẻ',
           onActionTap: widget.onOpenDecks,
@@ -1050,17 +1164,32 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 final deck = decks[index];
                 final progress = (deck['progress'] as double).clamp(0.0, 1.0);
                 return _BounceTap(
-                  onTap: widget.onOpenDecks ?? () {},
+                  onTap: () {
+                    final selectedTopic = deck['name'] as String;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FlashcardScreen(
+                          selectedTopic: TopicClassifier.normalizeTopic(
+                            selectedTopic,
+                          ),
+                          showOnlyTrackedWords: false,
+                        ),
+                      ),
+                    );
+                  },
                   child: Container(
                     width: 210,
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white.withOpacity(0.8)),
+                      border: Border.all(
+                        color: Colors.white.withValues(alpha: 0.8),
+                      ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.06),
+                          color: Colors.black.withValues(alpha: 0.06),
                           blurRadius: 12,
                           offset: const Offset(0, 6),
                         ),
@@ -1075,8 +1204,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               width: 42,
                               height: 42,
                               decoration: BoxDecoration(
-                                color: (deck['color'] as Color).withOpacity(
-                                  0.14,
+                                color: (deck['color'] as Color).withValues(
+                                  alpha: 0.14,
                                 ),
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -1128,7 +1257,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         Text(
                           'Hoàn thành ${(progress * 100).round()}%',
                           style: TextStyle(
-                            color: (deck['color'] as Color).withOpacity(0.92),
+                            color: (deck['color'] as Color).withValues(
+                              alpha: 0.92,
+                            ),
                             fontWeight: FontWeight.w800,
                           ),
                         ),
@@ -1149,97 +1280,166 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ..._getDailyUnscannedHints([]),
     ];
 
-    return _FrostedPanel(
-      title: 'Từ Bí Ẩn',
-      subtitle: 'Quét để khám phá từ mới',
-      actionLabel: 'Quét ngay',
-      onActionTap: widget.onOpenCameraQuest,
-      child: Column(
-        children: mysteryWords
-            .map((item) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(18),
-                  onTap: () {
-                    /* Show hint or dictionary */
-                  },
-                  child: Ink(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.5), // Faded design
+    return ValueListenableBuilder<List<SavedCard>>(
+      valueListenable: SavedCardsRepository.instance.cardsNotifier,
+      builder: (context, cards, _) {
+        return _FrostedPanel(
+          title: 'Từ Bí Ẩn',
+          subtitle: 'Quét để khám phá từ mới',
+          actionLabel: 'Quét ngay',
+          onActionTap: widget.onOpenCameraQuest,
+          child: Column(
+            children: mysteryWords
+                .map((item) {
+                  final targetWord = item['word'] as String;
+
+                  // Check if user has this card with an image
+                  final foundCard = cards.cast<SavedCard?>().firstWhere(
+                    (c) =>
+                        c != null &&
+                        c.word.toLowerCase() == targetWord.toLowerCase() &&
+                        (c.imageBytes != null || c.imageUrl != null),
+                    orElse: () => null,
+                  );
+
+                  final isFound = foundCard != null;
+
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: InkWell(
                       borderRadius: BorderRadius.circular(18),
-                      border: Border.all(color: Colors.grey.withOpacity(0.2)),
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 52,
-                          height: 52,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.15),
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          child: const Icon(
-                            Icons.camera_alt_rounded,
-                            size: 32,
-                            color: Colors.blueGrey,
-                          ),
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                '???',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                'Gợi ý: ${item['hint']}',
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.blueGrey.shade600,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ],
+                      onTap: () {
+                        if (isFound) {
+                          widget.onOpenDictionary?.call();
+                        } else {
+                          widget.onOpenCameraQuest?.call();
+                        }
+                      },
+                      child: Ink(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: isFound
+                              ? const Color(0xFFF0FDF4)
+                              : Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: isFound
+                                ? const Color(0xFF86EFAC)
+                                : Colors.grey.withValues(alpha: 0.2),
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFB8500).withOpacity(0.14),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Text(
-                            'Chưa Tìm',
-                            style: TextStyle(
-                              color: Color(0xFFFB8500),
-                              fontWeight: FontWeight.w800,
-                              fontSize: 11,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 52,
+                              height: 52,
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: isFound
+                                    ? const Color(0xFFDCFCE7)
+                                    : Colors.grey.withValues(alpha: 0.15),
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              child: isFound
+                                  ? (foundCard.imageBytes != null
+                                        ? Image.memory(
+                                            foundCard.imageBytes!,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.network(
+                                            foundCard.imageUrl!,
+                                            fit: BoxFit.cover,
+                                          ))
+                                  : const Icon(
+                                      Icons.question_mark_rounded,
+                                      size: 32,
+                                      color: Colors.blueGrey,
+                                    ),
                             ),
-                          ),
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    isFound ? foundCard.word : '???',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 16,
+                                      color: isFound
+                                          ? const Color(0xFF065F46)
+                                          : Colors.black87,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    isFound
+                                        ? foundCard.meaning
+                                        : 'Gợi ý: ${item['hint']}',
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: isFound
+                                          ? const Color(0xFF059669)
+                                          : Colors.blueGrey.shade600,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
+                                      fontStyle: isFound
+                                          ? FontStyle.normal
+                                          : FontStyle.italic,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 6,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isFound
+                                    ? const Color(0xFF10B981)
+                                    : const Color(
+                                        0xFFFB8500,
+                                      ).withValues(alpha: 0.14),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (isFound) ...[
+                                    const Icon(
+                                      Icons.check_circle_rounded,
+                                      color: Colors.white,
+                                      size: 14,
+                                    ),
+                                    const SizedBox(width: 4),
+                                  ],
+                                  Text(
+                                    isFound ? 'Đã thêm' : 'Chưa Tìm',
+                                    style: TextStyle(
+                                      color: isFound
+                                          ? Colors.white
+                                          : const Color(0xFFFB8500),
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              );
-            })
-            .toList(growable: false),
-      ),
+                  );
+                })
+                .toList(growable: false),
+          ),
+        );
+      },
     );
   }
 
@@ -1247,17 +1447,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return ValueListenableBuilder<List<SavedCard>>(
       valueListenable: SavedCardsRepository.instance.cardsNotifier,
       builder: (context, cards, _) {
-        if (cards.isEmpty) {
+        final now = DateTime.now();
+        final recentWords = cards
+            .where(
+              (c) =>
+                  c.savedAt.year == now.year &&
+                  c.savedAt.month == now.month &&
+                  c.savedAt.day == now.day,
+            )
+            .toList();
+
+        if (recentWords.isEmpty) {
           return _FrostedPanel(
-            title: 'Từ mới lưu gần đây',
-            subtitle: 'Danh sách từ vựng bạn mới ghi nhớ gần đây',
+            title: 'Từ mới',
+            subtitle: 'Danh sách từ vựng bạn mới thêm trong hôm nay',
             actionLabel: 'Mở từ điển',
             onActionTap: widget.onOpenDictionary,
             child: SizedBox(
               height: 80,
               child: Center(
                 child: Text(
-                  'Chưa có từ vựng nào\nHãy học một vài từ để xem tại đây!',
+                  'Hôm nay bạn chưa học hoặc quét từ vựng nào!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.blueGrey.shade600,
@@ -1269,15 +1479,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           );
         }
 
-        final recentWords = cards.take(10).toList(); // get top 10
-
         return _FrostedPanel(
-          title: 'Từ mới học / quét gần đây',
-          subtitle: 'Danh sách từ vựng bạn mới ghi nhớ gần đây',
+          title: 'Từ mới',
+          subtitle: 'Danh sách từ vựng bạn mới thêm trong hôm nay',
           actionLabel: 'Mở từ điển',
           onActionTap: widget.onOpenDictionary,
           child: SizedBox(
-            height: 80,
+            height: 90,
             child: PageView.builder(
               clipBehavior: Clip.none,
               controller: PageController(
@@ -1300,16 +1508,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   child: Row(
                     children: [
                       Container(
-                        width: 48,
-                        height: 48,
+                        width: 60,
+                        height: 60,
+                        clipBehavior: Clip.hardEdge,
                         decoration: BoxDecoration(
                           color: const Color(0xFFEAF2FF),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Icon(
-                          Icons.bolt_rounded,
-                          color: Color(0xFF3276FF),
-                        ),
+                        child: card.imageBytes != null
+                            ? Image.memory(card.imageBytes!, fit: BoxFit.cover)
+                            : card.imageUrl != null
+                            ? Image.network(card.imageUrl!, fit: BoxFit.cover)
+                            : const Icon(
+                                Icons.psychology_rounded,
+                                color: Color(0xFF3276FF),
+                              ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -1318,20 +1531,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '${card.word} • ${card.meaning}',
+                              card.word,
                               style: const TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 15,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16,
+                                color: Color(0xFF102956),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              '${card.topic} • Mới học',
+                              card.meaning,
                               style: TextStyle(
                                 color: Colors.blueGrey.shade700,
                                 fontWeight: FontWeight.w600,
-                                fontSize: 12,
+                                fontSize: 14,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -1364,7 +1579,10 @@ class _GlowBubble extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           gradient: RadialGradient(
-            colors: [color.withOpacity(0.4), color.withOpacity(0.0)],
+            colors: [
+              color.withValues(alpha: 0.4),
+              color.withValues(alpha: 0.0),
+            ],
           ),
         ),
       ),
@@ -1393,9 +1611,9 @@ class _ParallaxSticker extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: color.withOpacity(0.18),
+          color: color.withValues(alpha: 0.18),
           borderRadius: BorderRadius.circular(size / 2.4),
-          border: Border.all(color: color.withOpacity(0.35)),
+          border: Border.all(color: color.withValues(alpha: 0.35)),
         ),
         child: Icon(icon, color: color, size: size * 0.7),
       ),
@@ -1509,10 +1727,13 @@ class _StatCard extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Colors.white.withOpacity(0.8), width: 2),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.8),
+          width: 2,
+        ),
         boxShadow: [
           BoxShadow(
-            color: iconColor.withOpacity(0.2),
+            color: iconColor.withValues(alpha: 0.2),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),
@@ -1525,7 +1746,11 @@ class _StatCard extends StatelessWidget {
             bottom: -20,
             child: Transform.rotate(
               angle: -0.2,
-              child: Icon(icon, size: 90, color: Colors.white.withOpacity(0.4)),
+              child: Icon(
+                icon,
+                size: 90,
+                color: Colors.white.withValues(alpha: 0.4),
+              ),
             ),
           ),
           Positioned(
@@ -1538,8 +1763,8 @@ class _StatCard extends StatelessWidget {
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    Colors.white.withOpacity(0.6),
-                    Colors.white.withOpacity(0.0),
+                    Colors.white.withValues(alpha: 0.6),
+                    Colors.white.withValues(alpha: 0.0),
                   ],
                 ),
               ),
@@ -1554,11 +1779,11 @@ class _StatCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Colors.white.withValues(alpha: 0.9),
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: iconColor.withOpacity(0.15),
+                          color: iconColor.withValues(alpha: 0.15),
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),
@@ -1572,7 +1797,7 @@ class _StatCard extends StatelessWidget {
                       title,
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
-                        color: iconColor.withOpacity(0.95),
+                        color: iconColor.withValues(alpha: 0.95),
                         fontSize: 12,
                         letterSpacing: 0.5,
                       ),
@@ -1592,7 +1817,7 @@ class _StatCard extends StatelessWidget {
                   height: 1.1,
                   shadows: [
                     Shadow(
-                      color: Colors.white.withOpacity(0.8),
+                      color: Colors.white.withValues(alpha: 0.8),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     ),
@@ -1630,7 +1855,7 @@ class _FrostedPanel extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -1643,10 +1868,10 @@ class _FrostedPanel extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.fromLTRB(14, 14, 14, 10),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.65),
+              color: Colors.white.withValues(alpha: 0.65),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: Colors.white.withOpacity(0.95),
+                color: Colors.white.withValues(alpha: 0.95),
                 width: 1.5,
               ),
             ),
