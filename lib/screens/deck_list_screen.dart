@@ -626,296 +626,309 @@ class _DeckListScreenState extends State<DeckListScreen> {
                     color: const Color(0xFFF472B6).withValues(alpha: 0.10),
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.white.withValues(alpha: 0.78),
-                              const Color(0xFFF8FBFF).withValues(alpha: 0.72),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.85),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFF7EA7C9).withValues(alpha: 0.14),
-                              blurRadius: 18,
-                              offset: const Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 46,
-                              height: 46,
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF8AD4FF),
-                                    Color(0xFFB68CFF),
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              child: const Icon(
-                                Icons.view_agenda_rounded,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Bộ thẻ học',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall
-                                        ?.copyWith(
-                                          fontWeight: FontWeight.w800,
-                                          color: const Color(0xFF1F2740),
-                                        ),
-                                  ),
-                                  const SizedBox(height: 3),
-                                  Text(
-                                    '${filteredDecks.length} chủ đề đang hiển thị',
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      color: Color(0xFF627485),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 6,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFEAF3FE)
-                                    .withValues(alpha: 0.85),
-                                borderRadius: BorderRadius.circular(999),
-                              ),
-                              child: const Text(
-                                'AI English Learning',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xFF1D3557),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    if (filterIndex != 1)
+                SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics(),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 2, 16, 0),
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                         child: Container(
+                          padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [
-                                Colors.white.withValues(alpha: 0.90),
-                                const Color(0xFFF6FAFF).withValues(alpha: 0.78),
+                                Colors.white.withValues(alpha: 0.78),
+                                const Color(0xFFF8FBFF).withValues(alpha: 0.72),
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(24),
                             border: Border.all(
-                              color: const Color(0xFFDCE7F4),
+                              color: Colors.white.withValues(alpha: 0.85),
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF7EA7C9)
-                                    .withValues(alpha: 0.10),
-                                blurRadius: 12,
-                                offset: const Offset(0, 6),
+                                color: const Color(0xFF7EA7C9).withValues(alpha: 0.14),
+                                blurRadius: 18,
+                                offset: const Offset(0, 8),
                               ),
                             ],
                           ),
-                          child: TextField(
-                            controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: 'Tìm bộ thẻ...',
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Container(
-                                  width: 34,
-                                  height: 34,
-                                  decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                      colors: [
-                                        Color(0xFF8AD4FF),
-                                        Color(0xFFB68CFF),
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: const Icon(
-                                    Icons.search_rounded,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                ),
-                              ),
-                              suffixIcon: Container(
-                                margin: const EdgeInsets.all(8),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 46,
+                                height: 46,
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFF2ECFF),
-                                  borderRadius: BorderRadius.circular(12),
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Color(0xFF8AD4FF),
+                                      Color(0xFFB68CFF),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
-                                child: IconButton(
-                                  tooltip: _isListening
-                                      ? 'Dừng tìm kiếm bằng giọng nói'
-                                      : 'Tìm kiếm bằng giọng nói',
-                                  onPressed: _toggleVoiceSearch,
-                                  icon: Icon(
-                                    _isListening ? Icons.mic : Icons.mic_none,
-                                    color: _speechReady
-                                        ? const Color(0xFF0A5DB6)
-                                        : const Color(0xFF9AA8BB),
+                                child: const Icon(
+                                  Icons.view_agenda_rounded,
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Bộ thẻ học',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w800,
+                                            color: const Color(0xFF1F2740),
+                                          ),
+                                    ),
+                                    const SizedBox(height: 3),
+                                    Text(
+                                      '${filteredDecks.length} chủ đề đang hiển thị',
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        color: Color(0xFF627485),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 6,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFEAF3FE)
+                                      .withValues(alpha: 0.85),
+                                  borderRadius: BorderRadius.circular(999),
+                                ),
+                                child: const Text(
+                                  'AI English Learning',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF1D3557),
                                   ),
                                 ),
                               ),
-                              filled: true,
-                              fillColor: Colors.transparent,
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                                horizontal: 16,
-                              ),
-                              border: InputBorder.none,
-                              hintStyle: const TextStyle(
-                                color: Color(0xFF8B96A8),
-                                fontSize: 16,
-                              ),
-                            ),
-                            onChanged: (val) => setState(() => search = val),
+                            ],
                           ),
                         ),
                       ),
-                    const SizedBox(height: 12),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        children: [
-                          _buildFilterButton('Tất cả', 0),
-                          const SizedBox(width: 10),
-                          _buildFilterButton('Gần đây', 1),
-                          const SizedBox(width: 10),
-                          _buildFilterButton('Yêu thích', 2),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Expanded(
-                      child: filteredDecks.isEmpty
-                          ? Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: const [
-                                  Icon(
-                                    Icons.view_agenda_outlined,
-                                    size: 64,
-                                    color: Color(0xFFB8C4D4),
-                                  ),
-                                  SizedBox(height: 12),
-                                  Text(
-                                    'Không tìm thấy bộ thẻ phù hợp',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Color(0xFF627485),
-                                      fontWeight: FontWeight.w600,
+                      if (filterIndex != 1)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 2, 16, 0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.white.withValues(alpha: 0.90),
+                                  const Color(0xFFF6FAFF).withValues(alpha: 0.78),
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: const Color(0xFFDCE7F4),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFF7EA7C9)
+                                      .withValues(alpha: 0.10),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
+                            ),
+                            child: TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: 'Tìm bộ thẻ...',
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Container(
+                                    width: 34,
+                                    height: 34,
+                                    decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                        colors: [
+                                          Color(0xFF8AD4FF),
+                                          Color(0xFFB68CFF),
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: const Icon(
+                                      Icons.search_rounded,
+                                      color: Colors.white,
+                                      size: 20,
                                     ),
                                   ),
-                                ],
+                                ),
+                                suffixIcon: Container(
+                                  margin: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFF2ECFF),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: IconButton(
+                                    tooltip: _isListening
+                                        ? 'Dừng tìm kiếm bằng giọng nói'
+                                        : 'Tìm kiếm bằng giọng nói',
+                                    onPressed: _toggleVoiceSearch,
+                                    icon: Icon(
+                                      _isListening ? Icons.mic : Icons.mic_none,
+                                      color: _speechReady
+                                          ? const Color(0xFF0A5DB6)
+                                          : const Color(0xFF9AA8BB),
+                                    ),
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 16,
+                                  horizontal: 16,
+                                ),
+                                border: InputBorder.none,
+                                hintStyle: const TextStyle(
+                                  color: Color(0xFF8B96A8),
+                                  fontSize: 16,
+                                ),
                               ),
-                            )
-                          : ListView.builder(
-                              padding: const EdgeInsets.fromLTRB(12, 6, 12, 24),
-                              itemCount: filteredDecks.length,
-                              itemBuilder: (context, idx) {
-                                final deck = filteredDecks[idx];
-                                return _buildDeckCard(
-                                  deck,
-                                  cards,
-                                  recentMeta: _recentAccessByTopic[
-                                    deck['title'] as String
-                                  ],
-                                  showRecentMeta: filterIndex == 1,
-                                  onTap: () async {
-                                    final selectedTopic = deck['title'] as String;
-                                    final isViewingRecentHistory = filterIndex == 1;
-                                    final accessedAt = DateTime.now()
-                                        .millisecondsSinceEpoch;
-                                    final result = await Navigator.push<dynamic>(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => FlashcardScreen(
-                                          selectedTopic: selectedTopic,
-                                          showOnlyTrackedWords:
-                                              isViewingRecentHistory,
-                                        ),
-                                      ),
+                              onChanged: (val) => setState(() => search = val),
+                            ),
+                          ),
+                        ),
+                      const SizedBox(height: 12),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          children: [
+                            _buildFilterButton('Tất cả', 0),
+                            const SizedBox(width: 10),
+                            _buildFilterButton('Gần đây', 1),
+                            const SizedBox(width: 10),
+                            _buildFilterButton('Yêu thích', 2),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      if (filteredDecks.isEmpty)
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(12, 48, 12, 40),
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.view_agenda_outlined,
+                                  size: 64,
+                                  color: Color(0xFFB8C4D4),
+                                ),
+                                SizedBox(height: 12),
+                                Text(
+                                  'Không tìm thấy bộ thẻ phù hợp',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xFF627485),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      else
+                        ListView.builder(
+                          padding: const EdgeInsets.fromLTRB(12, 6, 12, 24),
+                          itemCount: filteredDecks.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, idx) {
+                            final deck = filteredDecks[idx];
+                            return _buildDeckCard(
+                              deck,
+                              cards,
+                              recentMeta: _recentAccessByTopic[
+                                deck['title'] as String
+                              ],
+                              showRecentMeta: filterIndex == 1,
+                              onTap: () async {
+                                final selectedTopicKey = deck['title'] as String;
+                                final selectedTopicForFlashcard =
+                                    TopicClassifier.getVietnameseTopic(
+                                      selectedTopicKey,
                                     );
+                                final isViewingRecentHistory = filterIndex == 1;
+                                final accessedAt = DateTime.now()
+                                    .millisecondsSinceEpoch;
+                                final result = await Navigator.push<dynamic>(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FlashcardScreen(
+                                      selectedTopic: selectedTopicForFlashcard,
+                                      showOnlyTrackedWords:
+                                          isViewingRecentHistory,
+                                    ),
+                                  ),
+                                );
 
-                                    var practiced = false;
-                                    var practiceDurationSeconds = 0;
-                                    if (result is bool) {
-                                      practiced = result;
-                                    } else if (result is Map) {
-                                      practiced = result['practiced'] == true;
-                                      final rawDuration =
-                                          result['practiceDurationSeconds'];
-                                      if (rawDuration is int) {
-                                        practiceDurationSeconds = rawDuration;
-                                      } else if (rawDuration is num) {
-                                        practiceDurationSeconds = rawDuration.toInt();
-                                      }
-                                    }
+                                var practiced = false;
+                                var practiceDurationSeconds = 0;
+                                if (result is bool) {
+                                  practiced = result;
+                                } else if (result is Map) {
+                                  practiced = result['practiced'] == true;
+                                  final rawDuration =
+                                      result['practiceDurationSeconds'];
+                                  if (rawDuration is int) {
+                                    practiceDurationSeconds = rawDuration;
+                                  } else if (rawDuration is num) {
+                                    practiceDurationSeconds = rawDuration.toInt();
+                                  }
+                                }
 
-                                    if (!mounted) {
-                                      return;
-                                    }
+                                if (!mounted) {
+                                  return;
+                                }
 
-                                    if (isViewingRecentHistory) {
-                                      return;
-                                    }
+                                if (isViewingRecentHistory) {
+                                  return;
+                                }
 
-                                    _recordTopicAccess(
-                                      selectedTopic,
-                                      timestamp: accessedAt,
-                                      practiced: practiced,
-                                      practiceDurationSeconds: practiced
-                                          ? practiceDurationSeconds
-                                          : 0,
-                                    );
-                                  },
+                                _recordTopicAccess(
+                                  selectedTopicKey,
+                                  timestamp: accessedAt,
+                                  practiced: practiced,
+                                  practiceDurationSeconds: practiced
+                                      ? practiceDurationSeconds
+                                      : 0,
                                 );
                               },
-                            ),
-                    ),
-                  ],
+                            );
+                          },
+                        ),
+                    ],
+                  ),
                 ),
               ],
             );

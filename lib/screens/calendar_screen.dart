@@ -204,7 +204,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
     bool onlyAvailable = false,
   }) {
     final sanitized = rawDecks
-        .map((item) => item.toString().trim())
+        .map((item) => TopicClassifier.toVietnameseCanonical(item.toString()))
+        .map((item) => item.trim())
         .where(
           (item) =>
               item.isNotEmpty &&
@@ -655,10 +656,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   List<String> _decksForDate(DateTime date) {
-    return _sanitizeDeckList(
-      _scheduledDecksByDay[_dateKey(date)] ?? const [],
-      onlyAvailable: true,
-    );
+    return _sanitizeDeckList(_scheduledDecksByDay[_dateKey(date)] ?? const []);
   }
 
   void _refreshCalendarStats() {
@@ -877,7 +875,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   Future<void> _openDeckPickerForSelectedDay() async {
-    final initialSelected = _decksForDate(_selectedDay).toSet();
+    final initialSelected = _decksForDate(
+      _selectedDay,
+    ).where(_isAvailableDeck).toSet();
     final dayKey = _dateKey(_selectedDay);
     final initialTime = _timeFromStorage(_scheduledTimeByDay[dayKey]);
 

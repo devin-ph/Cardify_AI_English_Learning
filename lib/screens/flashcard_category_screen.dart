@@ -778,7 +778,9 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
   }
 
   String _currentDisplayTopic() {
-    return widget.selectedTopic ?? deckNames[selectedDeck];
+    return TopicClassifier.toVietnameseCanonical(
+      widget.selectedTopic ?? deckNames[selectedDeck],
+    );
   }
 
   String _postponedStorageKey(String topic) {
@@ -1561,7 +1563,7 @@ class _FlashcardScreenState extends State<FlashcardScreen> {
   @override
   Widget build(BuildContext context) {
     // Determine which topic to display
-    final displayTopic = widget.selectedTopic ?? deckNames[selectedDeck];
+    final displayTopic = _currentDisplayTopic();
 
     if (_loadedPostponedTopic != displayTopic && !_loadingPostponedWords) {
       _loadPostponedWordsForTopic(displayTopic);
