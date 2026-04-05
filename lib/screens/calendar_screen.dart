@@ -74,7 +74,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
       XPService.instance.learningDayKeysNotifier.value,
     );
     _availableDecks = <String>[];
-    _repository.watchCards();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _repository.watchCards();
+    });
     _repository.cardsNotifier.addListener(_onCardsChanged);
     XPService.instance.streakNotifier.addListener(_onStreakChanged);
     XPService.instance.learningDayKeysNotifier.addListener(
